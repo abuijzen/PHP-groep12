@@ -27,6 +27,7 @@ try{
     <title>Upload Image</title>
 </head>
 <body>
+    <?php include_once("nav.php"); ?>
 <div id="content">
 
 
