@@ -7,7 +7,9 @@
     <title>Inspiration Hunter</title>
 </head>
 <body>
+    <?php include_once("nav.php"); ?>
 <h1>Inspiration Hunter</h1>
-    <?php require('upload.php');?>
+     
+   
 </body>
 </html>
