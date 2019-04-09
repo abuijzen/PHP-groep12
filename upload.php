@@ -1,4 +1,24 @@
-<!DOCTYPE html>
+<?php
+
+//upload can not be empty
+if(!empty($_POST)){
+
+//get submitted data
+$image = $_FILES['image']['name'];
+$text = $_POST['text'];
+
+$conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
+$insert = $conn->prepare("INSERT INTO tl_picture(image, text) VALUES (:image, :text)");
+try{
+    if(!$insert->execute(array(':image' => $image, ':text' => $text)))
+        die("Unknown ERROR!");
+} catch(PDOException $ex) {
+    die($e->getMessage());
+}
+
+}
+
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,17 +27,20 @@
     <title>Upload Image</title>
 </head>
 <body>
-    <div id="content">
-        <form method="post" action ="upload.php">
+<div id="content">
+
+
+    
+        <form method="post" action ="upload.php" enctype="multipart/form-data">
             <input type="hidden" name="size" value="100000">
             <div>
                 <input type="file" name="image">
             </div>
             <div>
-                <textarea name="description" cols="40" rows="4" placeholder="Wat wil je zeggen over deze foto?"></textarea>
+                <textarea name="text" cols="40" rows="4" placeholder="tell me more about the picture?"></textarea>
             </div>
             <div>
-                <input type="submit" name="upload" value = "uploaden">
+                <input type="submit" name="upload" value = "Upload Image">
             </div>
 </form>
     
@@ -25,14 +48,13 @@
 <style>
 #content{
     width: 50%;
-    margin 20px auto;
-    border 1px solid #cbcbcb;
+    margin: 20px auto;
+    border: 1px solid #cbcbcb;
 }
 
 form{
     width:50%;
     margin:20px auto;
-
 }
 
 form div{
@@ -59,9 +81,6 @@ img{
 }
 
 </style>
-
-
-
 
 </body>
 </html>
