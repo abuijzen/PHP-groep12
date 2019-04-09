@@ -1,8 +1,4 @@
-<?php
-
-require('upload.php');
-
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,5 +8,6 @@ require('upload.php');
 </head>
 <body>
 <h1>Inspiration Hunter</h1>
+    <?php require('upload.php');?>
 </body>
 </html>
