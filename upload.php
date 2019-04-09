@@ -30,11 +30,17 @@ try{
 <div id="content">
 
 
-    
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="jpeg_camera/jpeg_camera_with_dependencies.min.js" type="text/javascript"></script>
+
+
         <form method="post" action ="upload.php" enctype="multipart/form-data">
+
+
+        
             <input type="hidden" name="size" value="100000">
             <div>
-                <input type="file" name="image">
+                <input type="file" name="image" accept="image/*" capture="camera"/>
             </div>
             <div>
                 <textarea name="text" cols="40" rows="4" placeholder="tell me more about the picture?"></textarea>
@@ -43,6 +49,8 @@ try{
                 <input type="submit" name="upload" value = "Upload Image">
             </div>
 </form>
+
+
     
 
 <style>
