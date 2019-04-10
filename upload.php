@@ -20,15 +20,15 @@ try{
     die($e->getMessage());
 }
 
-}
+
 
 //zet de geüploadede afbeelding in de map "images"
-if (move_uploaded_file($_FILES['tmp_name']['name'],$target)){
+if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
     $msg="afbeelding is opgeslagen";
 }else{
     $msg="afbeelding is niet opgeslagen";
 }
-
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
