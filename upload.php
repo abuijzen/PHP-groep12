@@ -1,9 +1,13 @@
 <?php
+$msg="";
 
 //upload can not be empty
 if(!empty($_POST)){
 
-//get submitted data
+// pad waar afbeelding wordt opgeslagen
+$target= "images/".basename($_FILES['image']['name']);
+
+//krijg data die gesubmitted is
 $image = $_FILES['image']['name'];
 $text = $_POST['text'];
 
@@ -16,6 +20,13 @@ try{
     die($e->getMessage());
 }
 
+}
+
+//zet de geüploadede afbeelding in de map "images"
+if (move_uploaded_file($_FILES['tmp_name']['name'],$target)){
+    $msg="afbeelding is opgeslagen";
+}else{
+    $msg="afbeelding is niet opgeslagen";
 }
 
 ?><!DOCTYPE html>
