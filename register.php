@@ -1,66 +1,51 @@
 <?php
+    include_once("nav.php");
+    require_once("classes/User.class.php");
+    require_once("classes/Security.class.php");
+    
+    if( !empty($_POST) ){
+        try
+        {
+            $security = new Security();
+            $security->password = $_POST['password'];
+            $security->passwordConfirmation = $_POST['password_confirmation'];
 
-	require_once("classes/User.class.php");
-
-	if(!empty($_POST)){
-		$user= new User();
-		$user->setEmail($_POST['email']);
-		$user->setPassword($_POST['password']);
-		$user->setPasswordConfirmation($_POST['password_confirmation']);
-		$result = $user->register();
-		var_dump($result);
-
-		//dit onder stond er eerst voor we getters en setters gebruikten
-
-		// $email = $_POST['email'];
-    // $password = $_POST['password'];
-		// $passwordConfirmation = $_POST['password_confirmation'];
-		
-		// @todo: form validation
-		// $options = [
-		// 	'cost' => 12 //2^12
-		// ];
-		// $password = password_hash($password,PASSWORD_DEFAULT);
-		
-		// try{
-		// 	//alles wat je wil proberen
-		// 	//$conn = new PDO("mysql:host=localhost;dbname=netflix","root","root",null); indien hij een 4e vraagt
-		// 	$conn = new PDO("mysql:host=localhost;dbname=netflix","root","root");
-		// 	$statement = $conn->prepare("INSERT into users(email,password) VALUES (:email,:password)");
-		// 	$statement->bindParam(":email",$email);
-		// 	$statement->bindParam(":password",$password);
-		// 	$result = $statement->execute();
-		// 	echo $result;
-		// }catch(Throwable $t){
-		// 	/* wanneer het niet werkt
-		// 		---
-		// 		var_dump($t);
-		// 		---
-		// 		mogelijk dat je nog extenties nodig hebt
-		// 	*/
-		// 	//error printen
-		// 	echo "er liep iets mis";
-		// } 
-	}
+            if( $security->passwordsAreSecure() ){
+                $user = new User();        
+                $user->setEmail( $_POST['email'] );
+                $user->setPassword( $_POST['password'] );
+                $user->setPasswordConfirmation($_POST['password_confirmation']);
+				$result = $user->register();
+		        var_dump($result);
+			}
+			else {
+				$error = "Your passwords are not secure or do not match.";
+			}
+        }
+        catch(Exception $e) {
+			$error = $e->getMessage();
+        }
+    }
 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>IMDFlix</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Inspiration Hunter</title>
+  <!-- <link rel="stylesheet" href="css/style.css"> -->
 </head>
 <body>
-	<div class="netflixLogin netflixLogin--register">
-		<div class="form form--login">
+		<div class="form">
 			<form action="" method="post">
 				<h2 form__title>Sign up for an account</h2>
 
-				<div class="form__error hidden">
+                <?php if(isset($error)): ?>
+				<div class="form__error">
 					<p>
-						Some error here
+						💩 <?php echo $error; ?>
 					</p>
 				</div>
+                <?php endif; ?>
 
 				<div class="form__field">
 					<label for="email">Email</label>
@@ -81,6 +66,5 @@
 				</div>
 			</form>
 		</div>
-	</div>
 </body>
 </html>
