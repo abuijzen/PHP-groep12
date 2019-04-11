@@ -1,10 +1,8 @@
 <?php
 if(!empty($_POST)){
 	//email en password opvragen
-	$email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $hashed_password = password_hash($_POST["password"],PASSWORD_DEFAULT);
+	$email = htmlspecialchars($_POST['email']);
+    $password = htmlspecialchars($_POST['password']);
 
     //db connectie
     $conn = new PDO('mysql:host=localhost;dbname=netflix;', "root", "root", null);
@@ -15,18 +13,18 @@ if(!empty($_POST)){
     $result = $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
-    //passwoord en email komen overeen?
-    if(password_verify($password,$hashed_password)){
+    //passwoorden komen overeen?
+    if(password_verify($password,$user['password'])){
         //ja -> naar index 
-		echo "joepie de poepie!!!!";
-		//session_start();
-		//$_SESSION['userid'] = $user['id'];
+		//echo "joepie de poepie!!!!";
+		session_start();
+		$_SESSION['userid'] = $user['id'];
 
-		//header('location: index.php');
+		header('location: index.php');
 	} else{
 		//nee -> error
-        echo "jammer joh";
-        //$error = true;
+        //echo "jammer joh";
+        $error = true;
     }
 }
 ?><!DOCTYPE html>
