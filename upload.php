@@ -1,6 +1,6 @@
 <?php
 
-//upload can not be empty
+//upload moet iets bevatten
 if(!empty($_POST)){
 
 // pad waar afbeelding wordt opgeslagen
@@ -8,7 +8,7 @@ $target= "images/".basename($_FILES['image']['name']);
 
 //krijg data die gesubmitted is
 $image = $_FILES['image']['name'];
-$text = $_POST['text'];
+$text = mysql_real_escape_string(htmlspecialchars($_POST['text']));
 
 $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
 $insert = $conn->prepare("INSERT INTO tl_picture(image, text) VALUES (:image, :text)");
@@ -38,12 +38,15 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
     <?php include_once("nav.php"); ?>
 <div id="content">
 
+<!--Upload formulier-->
 
-
+        <!--zonder enctype kan je geen file uploaden-->
         <form method="post" action ="upload.php" enctype="multipart/form-data">
+        
 
             <input type="hidden" name="size" value="100000">
             <div>
+                <!--HTML5 code die ervoor zorgt dat je op je gsm rechtstreeks een foto kan maken-->
                 <input type="file" name="image" accept="image/*" capture="camera"/>
             </div>
             <div>
@@ -54,35 +57,23 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
             </div>
 </form>
 
-<!--
-    <?php
-    $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-    $selecteren = $conn->prepare("SELECT * FROM tl_picutures order by id desc");
-    $selecteren->execute(array($image,$text));
-    if($selecteren->rowcount()>0)
-    {
 
-        while($row = $selecteren->fetch()) { 
-            echo $row['image'];  
-            echo $row['text'];  
-           }
-    }
-    ?>-->
-
-
+<!--alle posts laten zien-->
 <?php
 $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-$select = $conn->prepare("SELECT * FROM tl_pictures ");
-$select->setFetchMode(PDO::FETCH_ASSOC);
-$select->execute();
-while($data=$select->fetch()){
-echo $data['id']; 
-?>
-<img src="images/<?php echo $data['image']; ?>" width="100" height="100">
-<?php
-}?>
+$statement = $conn->prepare("SELECT * FROM tl_picture");
+$statement->execute();
+$collection = $statement->fetchAll();
+?> 
+<div class="all-posts">
+<?php foreach($collection as $c): ?>
+<div class="post">
+<a href="detail-img.php"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
+<p><?php echo $c['text']; ?></p>
+</div>
+<?php endforeach; ?>
+</div>
 
-    
 
 <style>
 
