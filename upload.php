@@ -1,15 +1,19 @@
 <?php
 //link naar classe Post
 require_once("classes/post.class.php"); 
+
 //upload moet iets bevatten
 if(!empty($_FILES['image']['name'])){
+
 // pad waar afbeelding wordt opgeslagen
 $target= "images/".basename($_FILES['image']['name']);
+
 //new post maken
 $post = new Post();
 $post->setImage($_FILES['image']['name']);
 $post->setText(htmlspecialchars($_POST['text']));
 $post->getSubmittedPosts();
+
 //zet de geüploadede afbeelding in de map "images"
 if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
     echo"afbeelding is opgeslagen";
@@ -54,21 +58,26 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 <!--alle posts laten zien-->
 <?php
 $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-$statement = $conn->prepare("SELECT * FROM tl_picture");
+$statement = $conn->prepare("SELECT * FROM tl_picture ORDER BY id DESC");
 $statement->execute();
 $collection = $statement->fetchAll();
 ?> 
 <div class="all-posts">
 <?php foreach($collection as $c): ?>
+
 <div class="post">
-<a href="detail-img.php"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
+
+<a href="detail-img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
 <p><?php echo $c['text']; ?></p>
+
 </div>
 <?php endforeach; ?>
 </div>
 
 
 <style>
+
+
 form{
     width:100%;
     padding:30px;
@@ -81,14 +90,17 @@ form{
     flex-wrap:wrap;
     justify-content:left;
 }
+
 .post p{
 font-weight:100;
 font-family:sans-serif;
 margin-left:25px;
 }
+
 img{
     margin:5px;
 }
+
 </style>
 
 </body>
