@@ -1,5 +1,4 @@
 <?php
-$msg="";
 
 //upload can not be empty
 if(!empty($_POST)){
@@ -20,13 +19,11 @@ try{
     die($e->getMessage());
 }
 
-
-
 //zet de geüploadede afbeelding in de map "images"
 if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
-    $msg="afbeelding is opgeslagen";
+    echo"afbeelding is opgeslagen";
 }else{
-    $msg="afbeelding is niet opgeslagen";
+    echo"afbeelding is niet opgeslagen";
 }
 }
 ?><!DOCTYPE html>
@@ -42,14 +39,9 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 <div id="content">
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="jpeg_camera/jpeg_camera_with_dependencies.min.js" type="text/javascript"></script>
-
 
         <form method="post" action ="upload.php" enctype="multipart/form-data">
 
-
-        
             <input type="hidden" name="size" value="100000">
             <div>
                 <input type="file" name="image" accept="image/*" capture="camera"/>
@@ -62,10 +54,43 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
             </div>
 </form>
 
+<!--
+    <?php
+    $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
+    $selecteren = $conn->prepare("SELECT * FROM tl_picutures order by id desc");
+    $selecteren->execute(array($image,$text));
+    if($selecteren->rowcount()>0)
+    {
+
+        while($row = $selecteren->fetch()) { 
+            echo $row['image'];  
+            echo $row['text'];  
+           }
+    }
+    ?>-->
+
+
+<?php
+$conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
+$select = $conn->prepare("SELECT * FROM tl_pictures ");
+$select->setFetchMode(PDO::FETCH_ASSOC);
+$select->execute();
+while($data=$select->fetch()){
+echo $data['id']; 
+?>
+<img src="images/<?php echo $data['image']; ?>" width="100" height="100">
+<?php
+}?>
 
     
 
 <style>
+
+#resultaat{
+    display:flex;
+    flex-wrap:wrap;
+}
+
 #content{
     width: 50%;
     margin: 20px auto;
