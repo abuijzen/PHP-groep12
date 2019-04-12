@@ -1,19 +1,18 @@
 <?php
+//link naar classe Post
 require_once("classes/post.class.php"); 
+
 //upload moet iets bevatten
 if(!empty($_FILES['image']['name'])){
 
-
 // pad waar afbeelding wordt opgeslagen
 $target= "images/".basename($_FILES['image']['name']);
-
 
 //new post maken
 $post = new Post();
 $post->setImage($_FILES['image']['name']);
 $post->setText(htmlspecialchars($_POST['text']));
 $post->getSubmittedPosts();
-
 
 //zet de geüploadede afbeelding in de map "images"
 if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
@@ -42,7 +41,6 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
         <!--zonder enctype kan je geen file uploaden-->
         <form method="post" action ="upload.php" enctype="multipart/form-data">
         
-
             <input type="hidden" name="size" value="100000">
             <div>
                 <!--HTML5 code die ervoor zorgt dat je op je gsm rechtstreeks een foto kan maken-->

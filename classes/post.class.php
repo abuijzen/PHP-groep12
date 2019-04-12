@@ -66,7 +66,7 @@
                 return $this;
         }
 
-//krijg data die gesubmitted is
+//krijg data die gesubmitted is om een nieuwe post te maken
 
 public function getSubmittedPosts(){
 
@@ -75,7 +75,7 @@ $insert = $conn->prepare("INSERT INTO tl_picture(image,text) VALUES (:image, :te
 $insert->bindParam(":image",$this->getImage);
 $insert->bindParam(":text",$this->getText);
 try{
-    if(!$insert->execute(array(':image' => $image, ':text' => $text)))
+    if(!$insert->execute(array(':image' => $this->image, ':text' => $this->text)))
         die("Unknown ERROR!");
 } catch(PDOException $ex) {
     die($e->getMessage());
