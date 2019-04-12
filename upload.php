@@ -58,15 +58,19 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 <!--alle posts laten zien-->
 <?php
 $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-$statement = $conn->prepare("SELECT * FROM tl_picture");
+$statement = $conn->prepare("SELECT * FROM tl_picture ORDER BY id DESC");
 $statement->execute();
 $collection = $statement->fetchAll();
 ?> 
 <div class="all-posts">
 <?php foreach($collection as $c): ?>
+
 <div class="post">
-<a href="detail-img.php"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
+
+<a href="detail-img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" 
+style="object-fit: cover"></a>
 <p><?php echo $c['text']; ?></p>
+
 </div>
 <?php endforeach; ?>
 </div>
