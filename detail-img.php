@@ -1,29 +1,39 @@
 <?php 
-$conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-$imageId=$_GET['id'];
-$statement = $conn->prepare("SELECT * FROM tl_picture where tl_picture.id='.$imageId.'");
-$statement->execute();
-$collection = $statement->fetchAll();
 
+if (!empty($_GET["id"])) {
+  $id = ($_GET["id"]);
+  $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
+  $selectId = $conn->prepare("SELECT * FROM tl_picture where id='$id'");
+  $selectId->execute();
+  $selectId = $selectId->fetchAll(PDO::FETCH_ASSOC);
+} 
 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Spotify</title>
+  <title>full view</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   
-  
   <?php include_once("nav.php"); ?>
   
-  <div class="collectionDetails" style="background-image: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(255,255,255,0) 100%), url(<?php echo $collection['cover']; ?>)">
-    <h1 class="collectionDetails__title"><?php echo $collection['text'];?></h1>
-    <img src="<?php echo $collection[$id]['image'];?>" alt="">
-    
+  <img src="images/<?php echo $selectId[0]['image']; ?>" alt="" height="auto" width="50%" style="object-fit: cover"></a>
+  <p><?php echo $selectId[0]['text'] ?></p>
 
-</div>
+<style>
+
+p{
+  font-family:sans-serif;
+  font-weight:100;
+  margin-left:40px;
+}
+img{
+  margin:40px 0px 0px 40px;
+  
+}
+</style>
 
 </body>
 </html>
