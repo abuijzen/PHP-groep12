@@ -67,8 +67,7 @@ $collection = $statement->fetchAll();
 
 <div class="post">
 
-<a href="detail-img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" 
-style="object-fit: cover"></a>
+<a href="detail-img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
 <p><?php echo $c['text']; ?></p>
 
 </div>
