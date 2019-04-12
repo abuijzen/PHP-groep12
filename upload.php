@@ -1,23 +1,19 @@
 <?php
-
+require_once("classes/post.class.php"); 
 //upload moet iets bevatten
 if(!empty($_FILES['image']['name'])){
+
 
 // pad waar afbeelding wordt opgeslagen
 $target= "images/".basename($_FILES['image']['name']);
 
-//krijg data die gesubmitted is
-$image = $_FILES['image']['name'];
-$text = (htmlspecialchars($_POST['text']));
 
-$conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-$insert = $conn->prepare("INSERT INTO tl_picture(image, text) VALUES (:image, :text)");
-try{
-    if(!$insert->execute(array(':image' => $image, ':text' => $text)))
-        die("Unknown ERROR!");
-} catch(PDOException $ex) {
-    die($e->getMessage());
-}
+//new post maken
+$post = new Post();
+$post->setImage($_FILES['image']['name']);
+$post->setText(htmlspecialchars($_POST['text']));
+$post->getSubmittedPosts();
+
 
 //zet de geüploadede afbeelding in de map "images"
 if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
