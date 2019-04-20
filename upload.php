@@ -1,4 +1,5 @@
 <?php
+
 //link naar classe Post
 require_once("classes/post.class.php"); 
 
@@ -33,13 +34,21 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
     <title>Upload Image</title>
 </head>
 <body>
-    <?php include_once("nav.php"); ?>
-<div id="content">
+<!--ajax inladen-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--navigatie inladen-->
+<header>
 
+<?php include_once("nav.php"); ?> 
+<form name='form-search' method='post' action="testing2.php" id="form-search">
+<input type="text" id="search" name="search" value="zoeken">
+</form
+</header>
+<div id="content">
 <!--Upload formulier-->
 
         <!--zonder enctype kan je geen file uploaden-->
-        <form method="post" action ="upload.php" enctype="multipart/form-data">
+        <form method="post" action ="upload.php" enctype="multipart/form-data" id="form-input">
         
             <input type="hidden" name="size" value="100000">
             <div>
@@ -58,7 +67,12 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 <!--alle posts laten zien-->
 <?php
 $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-$statement = $conn->prepare("SELECT * FROM tl_picture ORDER BY id DESC");
+//feature 7: limit in sql
+
+$limit = 20;
+//$innerhtml=$POST_['search'];
+$innerhtml="e";
+$statement = $conn->prepare("SELECT * FROM tl_picture WHERE text LIKE '%$innerhtml%' LIMIT 20");
 $statement->execute();
 $collection = $statement->fetchAll();
 ?> 
@@ -72,13 +86,14 @@ $collection = $statement->fetchAll();
 
 </div>
 <?php endforeach; ?>
-</div>
 
+</div>
+<span id="<?php echo $collection['id']; ?>" class="show_more" title="Load more posts">Show more</span>
 
 <style>
 
 
-form{
+#form-input{
     width:100%;
     padding:30px;
     background-color:#999;
@@ -99,6 +114,18 @@ margin-left:25px;
 
 img{
     margin:5px;
+}
+
+header{
+    display:flex;
+    height:200px;
+    background-color:#000;
+}
+
+#form-search{
+    position:absolute;
+    right:20px;
+    width:200px;
 }
 
 </style>
