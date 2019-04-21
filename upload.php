@@ -40,10 +40,16 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 <header>
 
 <?php include_once("nav.php"); ?> 
-<form name='form-search' method='post' action="testing2.php" id="form-search">
+<form name='form-search' method='get' action="" id="form-search">
 <input type="text" id="search" name="search" value="zoeken">
 </form
+<?php
+?>
+
 </header>
+
+
+
 <div id="content">
 <!--Upload formulier-->
 
@@ -67,12 +73,12 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 <!--alle posts laten zien-->
 <?php
 $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-//feature 7: limit in sql
 
 $limit = 20;
-//$innerhtml=$POST_['search'];
-$innerhtml="e";
-$statement = $conn->prepare("SELECT * FROM tl_picture WHERE text LIKE '%$innerhtml%' LIMIT 20");
+$innerhtml=$_GET['search']; 
+
+//$innerhtml="e";
+$statement = $conn->prepare("SELECT * FROM tl_picture WHERE text LIKE '%$innerhtml%' ORDER BY id DESC LIMIT 20");
 $statement->execute();
 $collection = $statement->fetchAll();
 ?> 
@@ -117,15 +123,15 @@ img{
 }
 
 header{
-    display:flex;
     height:200px;
-    background-color:#000;
+    position:relative;
 }
 
 #form-search{
     position:absolute;
-    right:20px;
-    width:200px;
+    right:10px;
+    top:0px;
+    background-color:#000;
 }
 
 </style>
