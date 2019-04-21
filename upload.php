@@ -41,7 +41,7 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 
 <?php include_once("nav.php"); ?> 
 <form name='form-search' method='get' action="" id="form-search">
-<input type="text" id="search" name="search" value="zoeken">
+<input type="text" id="search" name="search" value="" placeholder="zoeken">
 </form
 <?php
 ?>
