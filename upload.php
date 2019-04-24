@@ -42,7 +42,7 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 <?php include_once("nav.php"); ?> 
 <form name='form-search' method='get' action="" id="form-search">
 <input type="text" id="search" name="search" value="" placeholder="zoeken">
-</form
+</form>
 <?php
 ?>
 
@@ -75,9 +75,16 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
 
 $limit = 20;
-$innerhtml=$_GET['search']; 
 
-//$innerhtml="e";
+if(!empty($_GET['search'])){
+    $innerhtml= $_GET['search']; 
+    
+}else{
+    $innerhtml = "";
+}
+
+//$innerhtml = mysql_real_escape_string($innerhtml);
+
 $statement = $conn->prepare("SELECT * FROM tl_picture WHERE text LIKE '%$innerhtml%' ORDER BY id DESC LIMIT 20");
 $statement->execute();
 $collection = $statement->fetchAll();
@@ -92,9 +99,8 @@ $collection = $statement->fetchAll();
 
 </div>
 <?php endforeach; ?>
-
+<input type="submit" name="loadMore" value = "load more">
 </div>
-<span id="<?php echo $collection['id']; ?>" class="show_more" title="Load more posts">Show more</span>
 
 <style>
 
