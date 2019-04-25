@@ -55,7 +55,6 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 
         <!--zonder enctype kan je geen file uploaden-->
         <form method="post" action ="upload.php" enctype="multipart/form-data" id="form-input">
-        
             <input type="hidden" name="size" value="100000">
             <div>
                 <!--HTML5 code die ervoor zorgt dat je op je gsm rechtstreeks een foto kan maken-->
@@ -70,41 +69,13 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 </form>
 
 
-<!--alle posts laten zien-->
-<?php
-$conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
 
-$limit = 20;
 
-if(!empty($_GET['search'])){
-    $innerhtml= $_GET['search']; 
-    
-}else{
-    $innerhtml = "";
-}
+<body>
 
-//$innerhtml = mysql_real_escape_string($innerhtml);
 
-$statement = $conn->prepare("SELECT * FROM tl_picture WHERE text LIKE '%$innerhtml%' ORDER BY id DESC LIMIT 20");
-$statement->execute();
-$collection = $statement->fetchAll();
-?> 
-<div class="all-posts">
-<?php foreach($collection as $c): ?>
-
-<div class="post">
-
-<a href="detail-img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
-<p><?php echo $c['text']; ?></p>
-
-</div>
-<?php endforeach; ?>
-<input type="submit" name="loadMore" value = "load more">
-</div>
 
 <style>
-
-
 #form-input{
     width:100%;
     padding:30px;
