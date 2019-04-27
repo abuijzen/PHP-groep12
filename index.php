@@ -40,7 +40,6 @@ $count =$statement->rowCount();
     echo "viewable results: ". $count;
     ?>
 
-
     <div class="all-posts">
 
 <!--indien er GEEN resultaten worden gevonden-->
@@ -54,6 +53,36 @@ $count =$statement->rowCount();
 <div class="post">
 <a href="detail-img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
 <p><?php echo $c['text']; ?></p>
+
+<?php 
+
+echo date("Y-m-d h:i:s ")."tijd nu<br>";
+echo $c['time']." tijd upload<br>";
+
+if(date("Y-m-d")>$c['time']){
+    echo "yesterday ". date('H i',strtotime($c['time']));
+}
+
+
+
+//datum van vandaag is kleiner dan gisteren
+/*if(date($c['time'])<date("F j Y g:i a")){
+    echo "today";
+}
+
+
+if(date('d M',time($c['time']."-1 days"))<date('d M ', time($c['time']))){
+    echo "today";
+}
+
+//kleinere datum dan vandaag
+if(date('Y-m-d', time($c['time']))<date('Y-m-d')){
+    echo "yesterday";
+}
+*/
+//echo gisteren
+//echo date('d M',strtotime($c['time']."-1 days"));
+//echo date("F j, Y, g:i a");?>
 <div><a href="#" class="like">Like</a> <span class='likes'>xxx</span> people like this </div>
 </div>
 <?php endforeach; ?>

@@ -13,6 +13,8 @@ $target= "images/".basename($_FILES['image']['name']);
 $post = new Post();
 $post->setImage($_FILES['image']['name']);
 $post->setText(htmlspecialchars($_POST['text']));
+//date_default_timezone_set("Asia/Calcutta");
+//$post->setTime(mktime(20, 20,20, 10, 10, 2010));
 $post->getSubmittedPosts();
 
 //zet de geüploadede afbeelding in de map "images"
