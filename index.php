@@ -57,61 +57,81 @@ $count =$statement->rowCount();
 <?php date_default_timezone_set('Europe/Brussels');
 
 // datum + tijd vandaag
-$nu =date("Y-m-d")."Datum van vandaag<br>";
-echo $nu;
+$vandaag =date("Y-m-d");
 
-//$nuDateTime =date("Y-m-d H:i:s ")."tijd nu<br>";
-//echo $nuDateTime."<br>";
+$vandaagDateTime =date("Y-m-d H:i:s ");
 
+//net gepost
+$nuTime= date("H:i:s", strtotime("-1 sec"));
 
 // datum gisteren
 $yesterday =date('Y-m-d',strtotime("-1 days"));
-echo $yesterday." gisteren<br>";
+
+// vanaf meer dan 1 dag geleden
+$eergisteren =date('Y-m-d',strtotime("-2 days"));
 
 // datum + tijd van de upload
-$uploadTime = $c['time'];
+$uploadTime = date('H:i',strtotime($c['time']));
 
-//echo $uploadTime." tijd upload<br>";
-$uploadDate = date('Y-m-d',strtotime($uploadTime));
-echo $uploadDate." tijd upload<br>";
+// datum van de upload
+$uploadDate = date('Y-m-d',strtotime($c['time']));
 
+//half uur geleden
+$halfHourAgo =date('H:i',strtotime("-30 min"));
+
+//15 min geleden
+$quarterAgo =date('H:i',strtotime("-15 min"));
 
 //een uur geleden
-$hourAgo =date('Y-m-d H:i',strtotime("-1 days"));
-echo $hourAgo." uur geleden<br>";
+$hourAgo =date('H:i',strtotime("-1 hour"));
 
+//2 uur geleden
+$twoHoursAgo =date('H:i',strtotime("-2 hour"));
 
-// Is de post gisteren geplaatst? WERKT!
+// Is de post gisteren geplaatst?
 if($uploadDate==$yesterday){
     echo "gisteren gepost om: ". date('H:i',strtotime($uploadTime))."<br>";
 }
 
-//if($nu-$yesterday==00-00-01){
-  //  echo "vandaag gepost om: ". date('H:i',strtotime($uploadTime))."<br>";
-//}
+//eergisteren gepost?
+if($uploadDate<=$eergisteren){
+    echo "staat langer dan 2 dagen online";
+}
+
+// ---------indien vandaag gepost: meerdere opties van mededelingen ----------
+switch($uploadDate==$vandaag){
+
+//meer dan twee uur geleden gepost
+case($uploadTime<$twoHoursAgo):
+    echo"vandaag".date('H:i',strtotime($uploadTime));
+break;
+
+//meer dan een uur geleden gepost
+case($uploadTime<$hourAgo):
+    echo"1 uur geleden";
+break;
+
+//meer dan een half uur geleden
+case($uploadTime<$halfHourAgo):
+    echo "meer dan een half uur geleden";
+break;
+
+//minder dan een kwartier
+case($uploadTime<$nuTime):
+    echo "zonet";
+
+
+//
 
 
 
-//datum van vandaag is kleiner dan gisteren
-/*if(date($c['time'])<date("F j Y g:i a")){
-    echo "today";
 }
 
 
-if(date('d M',time($c['time']."-1 days"))<date('d M ', time($c['time']))){
-    echo "today";
-}
+?>
+<div>
+<a href="#" class="like">Like</a><span class='likes'>xxx</span> people like this </div>
 
-//kleinere datum dan vandaag
-if(date('Y-m-d', time($c['time']))<date('Y-m-d')){
-    echo "yesterday";
-}
-*/
-//echo gisteren
-//echo date('d M',strtotime($c['time']."-1 days"));
-//echo date("F j, Y, g:i a");?>
-<div><a href="#" class="like">Like</a> <span class='likes'>xxx</span> people like this </div>
-</div>
 <?php endforeach; ?>
 <?php endif; ?>
 
