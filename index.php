@@ -53,15 +53,42 @@ $count =$statement->rowCount();
 <div class="post">
 <a href="detail-img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
 <p><?php echo $c['text']; ?></p>
+<br>
+<?php date_default_timezone_set('Europe/Brussels');
 
-<?php 
+// datum + tijd vandaag
+$nu =date("Y-m-d")."Datum van vandaag<br>";
+echo $nu;
 
-echo date("Y-m-d h:i:s ")."tijd nu<br>";
-echo $c['time']." tijd upload<br>";
+//$nuDateTime =date("Y-m-d H:i:s ")."tijd nu<br>";
+//echo $nuDateTime."<br>";
 
-if(date("Y-m-d")>$c['time']){
-    echo "yesterday ". date('H i',strtotime($c['time']));
+
+// datum gisteren
+$yesterday =date('Y-m-d',strtotime("-1 days"));
+echo $yesterday." gisteren<br>";
+
+// datum + tijd van de upload
+$uploadTime = $c['time'];
+
+//echo $uploadTime." tijd upload<br>";
+$uploadDate = date('Y-m-d',strtotime($uploadTime));
+echo $uploadDate." tijd upload<br>";
+
+
+//een uur geleden
+$hourAgo =date('Y-m-d H:i',strtotime("-1 days"));
+echo $hourAgo." uur geleden<br>";
+
+
+// Is de post gisteren geplaatst? WERKT!
+if($uploadDate==$yesterday){
+    echo "gisteren gepost om: ". date('H:i',strtotime($uploadTime))."<br>";
 }
+
+//if($nu-$yesterday==00-00-01){
+  //  echo "vandaag gepost om: ". date('H:i',strtotime($uploadTime))."<br>";
+//}
 
 
 
