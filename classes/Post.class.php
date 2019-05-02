@@ -67,7 +67,7 @@
 
         public function uploadPosts()
         {
-            $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
+            $conn = Db::getInstance();
             $insert = $conn->prepare('INSERT INTO posts(image,message) VALUES (:image, :text)');
             $insert->bindParam(':image', $this->getImage);
             $insert->bindParam(':text', $this->getText);
@@ -95,7 +95,7 @@
         //alle resultaten tellen
         public function countAll()
         {
-            $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
+            $conn = Db::getInstance();
             $innerhtml = $this->checkIfSearchIsEmpty();
             $allResults = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC");
             $allResults->execute();
@@ -106,7 +106,7 @@
 
         public function selectSearchAndLimit()
         {
-            $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
+            $conn = Db::getInstance();
             $innerhtml = $this->checkIfSearchIsEmpty();
             $result = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
             $result->execute();
