@@ -65,9 +65,7 @@
             return $this;
         }
 
-        //krijg data die gesubmitted is om een nieuwe post te maken
-
-        public function getSubmittedPosts()
+        public function uploadPosts()
         {
             $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
             $insert = $conn->prepare('INSERT INTO posts(image,message) VALUES (:image, :text)');
@@ -80,6 +78,66 @@
                 }
             } catch (PDOException $ex) {
                 die($e->getMessage());
+            }
+        }
+
+        public function checkIfSearchIsEmpty()
+        {
+            if (!empty($_GET['search'])) {
+                $innerhtml = $_GET['search'];
+            } else {
+                $innerhtml = '';
+            }
+
+            return $innerhtml;
+        }
+
+        //alle resultaten tellen
+        public function countAll()
+        {
+            $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
+            $innerhtml = $this->checkIfSearchIsEmpty();
+            $allResults = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC");
+            $allResults->execute();
+            $countAll = $allResults->rowCount();
+
+            return $countAll;
+        }
+
+        public function selectSearchAndLimit()
+        {
+            $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
+            $innerhtml = $this->checkIfSearchIsEmpty();
+            $result = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
+            $result->execute();
+
+            return $result;
+        }
+
+        //zichtbare resultaten tellen (voorbereiding load-more feature)
+        public function countViewable()
+        {
+            $result = $this->selectSearchAndLimit();
+            $collection = $result->fetchAll();
+            $count = $result->rowCount();
+
+            return $count;
+        }
+
+        public function showResults()
+        {
+            $result = $this->selectSearchAndLimit();
+            $collection = $result->fetchAll();
+
+            return $collection;
+        }
+
+        public function noResult()
+        {
+            if ($this->countAll() == 0) {
+                $nothing = 'No results';
+
+                return $nothing;
             }
         }
     }

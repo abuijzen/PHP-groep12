@@ -12,12 +12,12 @@ if (!empty($_FILES['image']['name'])) {
     $post = new Post();
     $post->setImage($_FILES['image']['name']);
     $post->setText(htmlspecialchars($_POST['text']));
-    $post->getSubmittedPosts();
+    $post->uploadPosts();
 
     //zet de geüploadede afbeelding in de map "images"
     if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
         echo'afbeelding is opgeslagen';
-    // location header redirect
+        header('Location:index.php');
     } else {
         echo'afbeelding is niet opgeslagen';
     }
@@ -40,9 +40,7 @@ if (!empty($_FILES['image']['name'])) {
 <header>
 
 <?php include_once 'nav.php'; ?> 
-<form name='form-search' method='get' action="index.php" id="form-search">
-<input type="text" id="search" name="search" value="" placeholder="zoeken">
-</form>
+
 <?php
 ?>
 
