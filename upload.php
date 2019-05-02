@@ -1,7 +1,7 @@
 <?php
 
 //link naar classe Post
-require_once 'classes/post.class.php';
+require_once 'classes/Post.class.php';
 
 //upload moet iets bevatten
 if (!empty($_FILES['image']['name'])) {

@@ -3,7 +3,7 @@
 if (!empty($_GET['id'])) {
     $id = ($_GET['id']);
     $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
-    $selectId = $conn->prepare("SELECT * FROM post where id='$id'");
+    $selectId = $conn->prepare("SELECT * FROM posts where id='$id'");
     $selectId->execute();
     $selectId = $selectId->fetchAll(PDO::FETCH_ASSOC);
 }

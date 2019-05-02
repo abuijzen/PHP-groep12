@@ -70,7 +70,7 @@
         public function getSubmittedPosts()
         {
             $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
-            $insert = $conn->prepare('INSERT INTO post(image,message) VALUES (:image, :text)');
+            $insert = $conn->prepare('INSERT INTO posts(image,message) VALUES (:image, :text)');
             $insert->bindParam(':image', $this->getImage);
             $insert->bindParam(':text', $this->getText);
             //$insert->bindParam(":time",$this->getTime);

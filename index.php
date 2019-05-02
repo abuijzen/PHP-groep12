@@ -8,12 +8,12 @@ if (!empty($_GET['search'])) {
 }
 
 // Alle resultaten
-$alleResultaten = $conn->prepare("SELECT*FROM post WHERE message LIKE '%$innerhtml%' ORDER BY id DESC");
+$alleResultaten = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC");
 $alleResultaten->execute();
 $countAll = $alleResultaten->rowCount();
 
 //zichtbare resultaten
-$statement = $conn->prepare("SELECT*FROM post WHERE message LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
+$statement = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
 $statement->execute();
 $collection = $statement->fetchAll();
 $count = $statement->rowCount();
@@ -46,7 +46,7 @@ $count = $statement->rowCount();
 <?php if ($count >= 1): ?>
 <?php foreach ($collection as $c): ?>
 <div class="post">
-<a href="detail-img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
+<a href="detail_img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
 <p><?php echo $c['message']; ?></p>
 <br>
 <?php date_default_timezone_set('Europe/Brussels');
