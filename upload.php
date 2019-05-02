@@ -1,7 +1,8 @@
 <?php
 
 //link naar classe Post
-require_once 'classes/Post.class.php';
+// require_once 'classes/Post.class.php';
+require_once 'bootstrap.php';
 
 //upload moet iets bevatten
 if (!empty($_FILES['image']['name'])) {
@@ -32,84 +33,29 @@ if (!empty($_FILES['image']['name'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Upload Image</title>
+    <link rel="stylesheet" href="css/screen.css">
 </head>
 <body>
 <!--ajax inladen-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--navigatie inladen-->
-<header>
-
-<?php include_once 'nav.php'; ?> 
-
-<?php
-?>
-
-</header>
-
-
-
-<div id="content">
-<!--Upload formulier-->
-
+    <?php include_once 'nav.php'; ?> 
+    <h2>Upload image</h2>
+    <div id="content">
+    <!--Upload formulier-->
         <!--zonder enctype kan je geen file uploaden-->
         <form method="post" action ="upload.php" enctype="multipart/form-data" id="form-input">
             <input type="hidden" name="size" value="100000">
             <div>
-                <!--HTML5 code die ervoor zorgt dat je op je gsm rechtstreeks een foto kan maken-->
+            <!--HTML5 code die ervoor zorgt dat je op je gsm rechtstreeks een foto kan maken-->
                 <input type="file" name="image" accept="image/*" capture="camera"/>
             </div>
             <div>
                 <textarea name="text" cols="40" rows="4" placeholder="Wat wil je zeggen over jouw post?"></textarea>
             </div>
             <div>
-                <input type="submit" name="upload" value = "Posten">
+                <input type="submit" name="upload" value ="Posten">
             </div>
-</form>
-
-
-
-
-<body>
-
-
-
-<style>
-#form-input{
-    width:100%;
-    padding:30px;
-    background-color:#999;
-    margin: 10px 0px;
-}
-.all-posts{
-    margin-top:40px;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:left;
-}
-
-.post p{
-font-weight:100;
-font-family:sans-serif;
-margin-left:25px;
-}
-
-img{
-    margin:5px;
-}
-
-header{
-    height:200px;
-    position:relative;
-}
-
-#form-search{
-    position:absolute;
-    right:10px;
-    top:0px;
-    background-color:#000;
-}
-
-</style>
-
+        </form>
 </body>
 </html>
