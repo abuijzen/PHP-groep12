@@ -1,84 +1,85 @@
 <?php
-    class Post{
+    class Post
+    {
         private $id;
         protected $image;
         protected $text;
 
-        
         /**
-         * Get the value of id
-         */ 
+         * Get the value of id.
+         */
         public function getId()
         {
-                return $this->id;
+            return $this->id;
         }
 
         /**
-         * Set the value of id
+         * Set the value of id.
          *
-         * @return  self
-         */ 
+         * @return self
+         */
         public function setId($id)
         {
-                $this->id = $id;
+            $this->id = $id;
 
-                return $this;
+            return $this;
         }
 
         /**
-         * Get the value of image
-         */ 
+         * Get the value of image.
+         */
         public function getImage()
         {
-                return $this->image;
+            return $this->image;
         }
 
         /**
-         * Set the value of image
+         * Set the value of image.
          *
-         * @return  self
-         */ 
+         * @return self
+         */
         public function setImage($image)
         {
-                $this->image = $image;
+            $this->image = $image;
 
-                return $this;
+            return $this;
         }
 
         /**
-         * Get the value of text
-         */ 
+         * Get the value of text.
+         */
         public function getText()
         {
-                return $this->text;
+            return $this->text;
         }
 
         /**
-         * Set the value of text
+         * Set the value of text.
          *
-         * @return  self
-         */ 
+         * @return self
+         */
         public function setText($text)
         {
-                $this->text = $text;
-                
+            $this->text = $text;
 
-                return $this;
+            return $this;
         }
 
-//krijg data die gesubmitted is om een nieuwe post te maken
+        //krijg data die gesubmitted is om een nieuwe post te maken
 
-public function getSubmittedPosts(){
-
-$conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-$insert = $conn->prepare("INSERT INTO tl_picture(image,text) VALUES (:image, :text)");
-$insert->bindParam(":image",$this->getImage);
-$insert->bindParam(":text",$this->getText);
-try{
-    if(!$insert->execute(array(':image' => $this->image, ':text' => $this->text)))
-        die("Unknown ERROR!");
-} catch(PDOException $ex) {
-    die($e->getMessage());
+        public function getSubmittedPosts()
+        {
+            $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
+            $insert = $conn->prepare('INSERT INTO post(image,message) VALUES (:image, :text)');
+            $insert->bindParam(':image', $this->getImage);
+            $insert->bindParam(':text', $this->getText);
+            //$insert->bindParam(":time",$this->getTime);
+            try {
+                if (!$insert->execute(array(':image' => $this->image, ':text' => $this->text))) {
+                    die('Unknown ERROR!');
+                }
+            } catch (PDOException $ex) {
+                die($e->getMessage());
+            }
+        }
     }
-}
-        }
