@@ -1,12 +1,13 @@
 <?php
     //links
     $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
-    require_once 'classes/Post.class.php';
-    require_once 'classes/Date.class.php';
+    // require_once 'classes/Post.class.php';
+    // require_once 'classes/Date.class.php';
+    require_once 'bootstrap.php';
 
         //gebruik van klassen
         $post = new Post();
-        $date = new Date();
+        // $date = new Date();
 
 ?><!DOCTYPE html>
     <html lang="en">
