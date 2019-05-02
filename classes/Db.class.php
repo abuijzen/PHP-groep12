@@ -25,7 +25,7 @@
                 $password = $config['password'];
 
                 //echo "💥";
-                self::$conn = new PDO('mysql:host=localhost;dbname='.$database.';charset=utf8mb4', $user, $password);
+                self::$conn = new PDO('mysql:host=localhost;dbname='.$database.';charset=utf8mb4_unicode_ci', $user, $password);
 
                 return self::$conn;
             }
