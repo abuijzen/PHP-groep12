@@ -1,31 +1,6 @@
 <?php
-if(!empty($_POST)){
-	//email en password opvragen
-	$email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
-
-    //db connectie
-    $conn = new PDO('mysql:host=localhost;dbname=eurben;', "root", "root", null);
-
-    //email zoeken in db
-    $statement = $conn->prepare("select * from user where email = :email");
-	$statement->bindParam(":email", $email);
-    $result = $statement->execute();
-    $user = $statement->fetch(PDO::FETCH_ASSOC);
-
-    //passwoorden komen overeen?
-    if(password_verify($password,$user['password'])){
-        //ja -> naar index 
-		//echo "joepie de poepie!!!!";
-		session_start();
-		$_SESSION['userid'] = $user['id'];
-
-		header('location: index.php');
-	} else{
-		//nee -> error
-        //echo "jammer joh";
-        $error = true;
-    }
+if (!empty($_POST)) {
+    $u = new User();
 }
 ?><!DOCTYPE html>
 <html lang="en">
