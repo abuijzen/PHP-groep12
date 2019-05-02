@@ -69,7 +69,7 @@
         public function register()
         {
             $options = [
-                        'cost' => 14, //2^14
+                        'cost' => 12, //2^14
                 ];
             $password = password_hash($this->password, PASSWORD_DEFAULT, $options);
 
@@ -77,7 +77,7 @@
                 //alles wat je wil proberen
                 //$conn = new PDO("mysql:host=localhost;dbname=netflix","root","root",null); indien hij een 4e vraagt
                 $conn = Db::getInstance();
-                $statement = $conn->prepare('INSERT into users(email,password) VALUES (:email,:password)');
+                $statement = $conn->prepare('INSERT into users(firstname,lastname,email,password) VALUES ("'.$_POST['firstname'].'", "'.$_POST['lastname'].'",:email,:password)');
                 $statement->bindParam(':email', $this->email);
                 $statement->bindParam(':password', $password);
                 $result = $statement->execute();
@@ -85,6 +85,7 @@
                 return $result;
             } catch (Throwable $t) {
                 return false;
+                echo 'het is niet gelukt';
             }
         }
     }
