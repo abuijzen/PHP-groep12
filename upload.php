@@ -1,31 +1,29 @@
 <?php
 
 //link naar classe Post
-require_once("classes/post.class.php"); 
+require_once 'classes/post.class.php';
 
 //upload moet iets bevatten
-if(!empty($_FILES['image']['name'])){
+if (!empty($_FILES['image']['name'])) {
+    // pad waar afbeelding wordt opgeslagen
+    $target = 'images/'.basename($_FILES['image']['name']);
 
-// pad waar afbeelding wordt opgeslagen
-$target= "images/".basename($_FILES['image']['name']);
+    //new post maken
+    $post = new Post();
+    $post->setImage($_FILES['image']['name']);
+    $post->setText(htmlspecialchars($_POST['text']));
+    $post->getSubmittedPosts();
 
-//new post maken
-$post = new Post();
-$post->setImage($_FILES['image']['name']);
-$post->setText(htmlspecialchars($_POST['text']));
-//date_default_timezone_set("Asia/Calcutta");
-//$post->setTime(mktime(20, 20,20, 10, 10, 2010));
-$post->getSubmittedPosts();
-
-//zet de geüploadede afbeelding in de map "images"
-if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
-    echo"afbeelding is opgeslagen";
-}else{
-    echo"afbeelding is niet opgeslagen";
-}
-//als de afbeelding niet is gekozen ->empty
-}else{
-    echo "Er is iets foutgelopen";
+    //zet de geüploadede afbeelding in de map "images"
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+        echo'afbeelding is opgeslagen';
+    // location header redirect
+    } else {
+        echo'afbeelding is niet opgeslagen';
+    }
+    //als de afbeelding niet is gekozen ->empty
+} else {
+    echo 'Er is iets foutgelopen';
 }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -41,8 +39,8 @@ if (move_uploaded_file($_FILES['image']['tmp_name'],$target)){
 <!--navigatie inladen-->
 <header>
 
-<?php include_once("nav.php"); ?> 
-<form name='form-search' method='get' action="" id="form-search">
+<?php include_once 'nav.php'; ?> 
+<form name='form-search' method='get' action="index.php" id="form-search">
 <input type="text" id="search" name="search" value="" placeholder="zoeken">
 </form>
 <?php
