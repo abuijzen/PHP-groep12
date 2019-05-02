@@ -1,8 +1,10 @@
 <?php
     //links
-    $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
+    // $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
     // require_once 'classes/Post.class.php';
     // require_once 'classes/Date.class.php';
+
+    //nu worden via bootstrap.php alle functies automatisch ingeladen.
     require_once 'bootstrap.php';
 
         //gebruik van klassen
@@ -16,6 +18,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>Inspiration Hunter</title>
+            <link rel="stylesheet" href="css/screen.css">
         </head>
         <body>
             <?php include_once 'nav.php'; ?>
