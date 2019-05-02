@@ -18,9 +18,8 @@
             <title>Inspiration Hunter</title>
         </head>
         <body>
-            <h1>Inspiration Hunter</h1>
             <?php include_once 'nav.php'; ?>
-
+            <h1>Inspiration Hunter</h1>
             <!--Formulier om te zoeken op input van gebruiker-->
             <form name='form-search' method='get' action="index.php" id="form-search">
                 <input type="text" id="search" name="search" value="" placeholder="zoeken">
