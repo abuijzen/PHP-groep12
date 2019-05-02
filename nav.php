@@ -6,6 +6,7 @@
     <a href="logout.php">Log out</a>
 </nav>
 <style>
-    a{
-        margin:20px;
+    nav a{
+        padding:5px;
+    }
 </style>
