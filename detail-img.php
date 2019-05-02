@@ -1,12 +1,12 @@
-<?php 
+<?php
 
-if (!empty($_GET["id"])) {
-  $id = ($_GET["id"]);
-  $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-  $selectId = $conn->prepare("SELECT * FROM tl_picture where id='$id'");
-  $selectId->execute();
-  $selectId = $selectId->fetchAll(PDO::FETCH_ASSOC);
-} 
+if (!empty($_GET['id'])) {
+    $id = ($_GET['id']);
+    $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
+    $selectId = $conn->prepare("SELECT * FROM post where id='$id'");
+    $selectId->execute();
+    $selectId = $selectId->fetchAll(PDO::FETCH_ASSOC);
+}
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -17,10 +17,10 @@ if (!empty($_GET["id"])) {
 </head>
 <body>
   
-  <?php include_once("nav.php"); ?>
+  <?php include_once 'nav.php'; ?>
   
   <img src="images/<?php echo $selectId[0]['image']; ?>" alt="" height="auto" width="50%" style="object-fit: cover"></a>
-  <p><?php echo $selectId[0]['text'] ?></p>
+  <p><?php echo $selectId[0]['message']; ?></p>
 
 <style>
 
