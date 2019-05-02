@@ -1,28 +1,29 @@
 <?php
-if(!empty($_POST)){
-	//email en password opvragen
-	$email = htmlspecialchars($_POST['email']);
+require_once 'bootstrap.php';
+if (!empty($_POST)) {
+    //email en password opvragen
+    $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
 
     //db connectie
-    $conn = new PDO('mysql:host=localhost;dbname=netflix;', "root", "root", null);
+    $conn = Db::getInstance();
 
     //email zoeken in db
-    $statement = $conn->prepare("select * from users where email = :email");
-	$statement->bindParam(":email", $email);
+    $statement = $conn->prepare('select * from users where email = :email');
+    $statement->bindParam(':email', $email);
     $result = $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     //passwoorden komen overeen?
-    if(password_verify($password,$user['password'])){
-        //ja -> naar index 
-		//echo "joepie de poepie!!!!";
-		session_start();
-		$_SESSION['userid'] = $user['id'];
+    if (password_verify($password, $user['password'])) {
+        //ja -> naar index
+        //echo "joepie de poepie!!!!";
+        session_start();
+        $_SESSION['userid'] = $user['id'];
 
-		header('location: index.php');
-	} else{
-		//nee -> error
+        header('location: index.php');
+    } else {
+        //nee -> error
         //echo "jammer joh";
         $error = true;
     }
@@ -36,7 +37,7 @@ if(!empty($_POST)){
     <title>Inspiration Hunter</title>
 </head>
 <body>
-    <?php include_once("nav.php"); ?>
+    <?php include_once 'nav.php'; ?>
 <h1>Inspiration Hunter</h1>
      
 <div class="form">
