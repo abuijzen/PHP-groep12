@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: May 02, 2019 at 10:42 AM
--- Server version: 5.7.25
--- PHP Version: 7.3.1
+-- Generation Time: May 02, 2019 at 10:51 PM
+-- Server version: 5.7.23
+-- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -81,6 +81,16 @@ CREATE TABLE `posts` (
   `image` varchar(266) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `profileId`, `timePost`, `visibility`, `message`, `image`) VALUES
+(5, 1, '2019-05-03 00:03:34', 1, 'Pink Woman', 'pinkWoman.jpg'),
+(6, 1, '2019-05-03 00:03:47', 1, 'Den John\r\n', 'lennon.jpg'),
+(7, 1, '2019-05-03 00:04:00', 1, 'Blauwe madam\r\n', 'blueWoman.jpg'),
+(8, 1, '2019-05-03 00:04:10', 1, 'Samen \r\n', 'together.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -91,8 +101,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `DoB` date NOT NULL,
-  `profilePic` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `DoB` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -101,8 +110,14 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `lastname`, `DoB`, `profilePic`, `email`, `password`) VALUES
-(1, 'ghj', 'ghjk', '2019-05-22', 'dfghjkl', 'ghjklm', 'fghjk');
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `DoB`, `email`, `password`) VALUES
+(1, 'ghj', 'ghjk', '2019-05-21 22:00:00', 'ghjklm', 'fghjk'),
+(2, 'Ruben', 'Annaert', '2019-05-02 22:35:16', 'rubenannaert@test.be', '$2y$14$nW8BzAGkgrrjD0SpoNODTO4nDi5XQSnRm78yPbx1nCO1Gsv/wF/wy'),
+(3, 'Ruben', 'Annaert', '2019-05-02 22:35:51', 'Ruben@gmail.com', '$2y$14$FZj5qxbRwcKXKwVOv2qSBOiWxKXAE5/U9CluYfa6V.7ICi1FGBfGa'),
+(4, 'Ruben', 'Annaert', '2019-05-02 22:37:55', 'Ruben@gmail.com', '$2y$14$RhJKz.wO5bEIQJYTb4Z2T.jR1N2ses9AJ5Yn2sTR4wXn2FAuoHfpi'),
+(5, 'Ruben', 'test', '2019-05-02 22:38:19', 'test@123.be', '$2y$14$bX9YLe.jOOyt1pT7r79uI.kf7g3.fLzd1qyETePiFdTYRwm6ggBei'),
+(6, 'Ruben', 'testen', '2019-05-02 22:39:42', 'ik@ben.ruben', '$2y$14$178oUnbmJHrYzLBqfLyYL.R8L5q5N1mKAnMb.NUqOBSnhj3Abzwia'),
+(7, 'test', 'testacc', '2019-05-02 22:45:13', 'test@ww.com', '$2y$12$oxKXW7Bs.HSOhTFH06h3N.7g2r0Pn.F/qeYFP/aQXY2kPf/SbN9E.');
 
 --
 -- Indexes for dumped tables
@@ -176,10 +191,10 @@ ALTER TABLE `pictures`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
