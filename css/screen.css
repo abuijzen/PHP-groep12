@@ -1,0 +1,28 @@
+/* UPLOAD.PHP */
+#form-input{
+    width:100%;
+}
+.all-posts{
+    margin-top:40px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:left;
+}
+
+img{
+    margin:5px;
+}
+
+header{
+    height:200px;
+    position:relative;
+    background-color:#588D57;
+}
+
+#form-search{
+    position:absolute;
+    right:10px;
+    top:0px;
+    padding:5px;
+    background-color:#000;
+}
