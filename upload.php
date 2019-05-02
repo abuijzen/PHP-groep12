@@ -23,9 +23,13 @@ if (!empty($_FILES['image']['name'])) {
         echo'afbeelding is niet opgeslagen';
     }
     //als de afbeelding niet is gekozen ->empty
-} else {
-    echo 'Er is iets foutgelopen';
 }
+/* geeft nu telkens error ookal werd er niets gesubmit
+
+else {
+    echo 'Er is iets foutgelopen';
+    }
+*/
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
