@@ -5,10 +5,10 @@ if(!empty($_POST)){
     $password = htmlspecialchars($_POST['password']);
 
     //db connectie
-    $conn = new PDO('mysql:host=localhost;dbname=netflix;', "root", "root", null);
+    $conn = new PDO('mysql:host=localhost;dbname=eurben;', "root", "root", null);
 
     //email zoeken in db
-    $statement = $conn->prepare("select * from users where email = :email");
+    $statement = $conn->prepare("select * from user where email = :email");
 	$statement->bindParam(":email", $email);
     $result = $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
@@ -36,7 +36,7 @@ if(!empty($_POST)){
     <title>Inspiration Hunter</title>
 </head>
 <body>
-    <?php include_once("nav.php"); ?>
+    
 <h1>Inspiration Hunter</h1>
      
 <div class="form">

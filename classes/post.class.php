@@ -70,15 +70,15 @@
 
 public function getSubmittedPosts(){
 
-$conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-$insert = $conn->prepare("INSERT INTO tl_picture(image,text) VALUES (:image, :text)");
+$conn = new PDO("mysql:host=localhost;dbname=eurben","root","root",null);
+$insert = $conn->prepare("INSERT INTO picture(image,text) VALUES (:image, :text)");
 $insert->bindParam(":image",$this->getImage);
 $insert->bindParam(":text",$this->getText);
 try{
     if(!$insert->execute(array(':image' => $this->image, ':text' => $this->text)))
         die("Unknown ERROR!");
 } catch(PDOException $ex) {
-    die($e->getMessage());
+    die($ex->getMessage());
     }
 }
         }

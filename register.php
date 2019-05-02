@@ -1,5 +1,5 @@
 <?php
-    include_once("nav.php");
+
     require_once("classes/User.class.php");
     require_once("classes/Security.class.php");
     

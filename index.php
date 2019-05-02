@@ -1,5 +1,5 @@
 <?php
-$conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
+$conn = new PDO("mysql:host=localhost;dbname=eurben","root","root",null);
 
 
 if(!empty($_GET['search'])){
@@ -11,13 +11,13 @@ else{
 }
 
 // Alle resultaten
-$alleResultaten = $conn->prepare("SELECT*FROM tl_picture WHERE text LIKE '%$innerhtml%' ORDER BY id DESC");
+$alleResultaten = $conn->prepare("SELECT*FROM picture WHERE text LIKE '%$innerhtml%' ORDER BY id DESC");
 $alleResultaten->execute();
 $countAll =$alleResultaten->rowCount();
 
 
 //zichtbare resultaten
-$statement = $conn->prepare("SELECT*FROM tl_picture WHERE text LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
+$statement = $conn->prepare("SELECT*FROM picture WHERE text LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
 $statement->execute();
 $collection = $statement->fetchAll();
 $count =$statement->rowCount();
@@ -54,6 +54,12 @@ $count =$statement->rowCount();
 <div class="post">
 <a href="detail-img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
 <p><?php echo $c['text']; ?></p>
+
+<div class="comments">
+<input type="text" placeholder="What's on your mind?" id="comment" name="comment" />
+<input id="btnSubmit" type="submit" value="Add comment" />
+</div>
+
 <div><a href="#" class="like">Like</a> <span class='likes'>xxx</span> people like this </div>
 </div>
 <?php endforeach; ?>
@@ -62,7 +68,7 @@ $count =$statement->rowCount();
 </div>
 
 <?php
-$conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
+$conn = new PDO("mysql:host=localhost;dbname=eurben","root","root",null);
 
 
 if(!empty($_GET['search'])){

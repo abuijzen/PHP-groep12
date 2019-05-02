@@ -70,15 +70,15 @@
         //@todo: form validation
         public function register(){
                 $options = [
-                        'cost' => 14 //2^14
+                        'cost' => 12 //2^12
                 ];
                 $password = password_hash($this->password,PASSWORD_DEFAULT,$options);
                 
                 try{
                         //alles wat je wil proberen
                         //$conn = new PDO("mysql:host=localhost;dbname=netflix","root","root",null); indien hij een 4e vraagt
-                        $conn = new PDO("mysql:host=localhost;dbname=netflix","root","root");
-                        $statement = $conn->prepare("INSERT into users(email,password) VALUES (:email,:password)");
+                        $conn = new PDO("mysql:host=localhost;dbname=eurben","root","root", null);
+                        $statement = $conn->prepare("INSERT into user(email,password) VALUES (:email,:password)");
                         $statement->bindParam(":email",$this->email);
                         $statement->bindParam(":password",$password);
                         $result = $statement->execute();

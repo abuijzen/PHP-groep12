@@ -2,8 +2,8 @@
 
 if (!empty($_GET["id"])) {
   $id = ($_GET["id"]);
-  $conn = new PDO("mysql:host=localhost;dbname=inspiration_hunter","root","root",null);
-  $selectId = $conn->prepare("SELECT * FROM tl_picture where id='$id'");
+  $conn = new PDO("mysql:host=localhost;dbname=eurben","root","root",null);
+  $selectId = $conn->prepare("SELECT * FROM picture where id='$id'");
   $selectId->execute();
   $selectId = $selectId->fetchAll(PDO::FETCH_ASSOC);
 } 
