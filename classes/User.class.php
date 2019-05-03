@@ -88,4 +88,33 @@
                 echo 'het is niet gelukt';
             }
         }
+
+        public static function canLogin($email, $password)
+        {
+            //db connectie
+            $conn = Db::getInstance();
+
+            //email zoeken in db
+            $statement = $conn->prepare('select * from users where email = :email');
+            $statement->bindParam(':email', $email);
+            $statement->execute();
+            $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+            //passwoorden komen overeen?
+            if (password_verify($password, $user['password'])) {
+                //ja -> naar index
+                //echo "joepie de poepie!!!!";
+                return true;
+            } else {
+                //nee -> error
+                //echo "jammer joh";
+                return false;
+            }
+        }
+
+        public static function doLogin($email)
+        {
+            $_SESSION['email'] = $email;
+            header('location: index.php');
+        }
     }

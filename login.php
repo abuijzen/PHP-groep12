@@ -2,29 +2,13 @@
 require_once 'bootstrap.php';
 if (!empty($_POST)) {
     //email en password opvragen
-    $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    //db connectie
-    $conn = Db::getInstance();
-
-    //email zoeken in db
-    $statement = $conn->prepare('select * from users where email = :email');
-    $statement->bindParam(':email', $email);
-    $result = $statement->execute();
-    $user = $statement->fetch(PDO::FETCH_ASSOC);
-
-    //passwoorden komen overeen?
-    if (password_verify($password, $user['password'])) {
-        //ja -> naar index
-        //echo "joepie de poepie!!!!";
-        session_start();
-        $_SESSION['userid'] = $user['id'];
-
-        header('location: index.php');
+    if (User::canLogin($email, $password)) {
+        $_SESSION['email'] = $email;
+        User::doLogin($email);
     } else {
-        //nee -> error
-        //echo "jammer joh";
         $error = true;
     }
 }
@@ -37,7 +21,7 @@ if (!empty($_POST)) {
     <title>Inspiration Hunter</title>
 </head>
 <body>
-    <?php include_once 'nav.php'; ?>
+    
 <h1>Inspiration Hunter</h1>
      
 <div class="form">
@@ -65,6 +49,8 @@ if (!empty($_POST)) {
                     <input type="submit" value="Sign in" class="btn"> 
                 </div>      
             </form>
+
+            <a href="register.php">Not an account yet? Sign up here!</a>
         </div>
    
 </body>

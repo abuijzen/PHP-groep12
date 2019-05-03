@@ -1,5 +1,5 @@
 <?php
-    include_once 'nav.php';
+
     require_once 'bootstrap.php';
 
     if (!empty($_POST)) {
