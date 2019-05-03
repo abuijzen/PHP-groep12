@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: May 02, 2019 at 10:51 PM
--- Server version: 5.7.23
--- PHP Version: 7.2.10
+-- Generation Time: May 03, 2019 at 11:44 AM
+-- Server version: 5.7.25
+-- PHP Version: 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -117,7 +117,9 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `DoB`, `email`, `password`) 
 (4, 'Ruben', 'Annaert', '2019-05-02 22:37:55', 'Ruben@gmail.com', '$2y$14$RhJKz.wO5bEIQJYTb4Z2T.jR1N2ses9AJ5Yn2sTR4wXn2FAuoHfpi'),
 (5, 'Ruben', 'test', '2019-05-02 22:38:19', 'test@123.be', '$2y$14$bX9YLe.jOOyt1pT7r79uI.kf7g3.fLzd1qyETePiFdTYRwm6ggBei'),
 (6, 'Ruben', 'testen', '2019-05-02 22:39:42', 'ik@ben.ruben', '$2y$14$178oUnbmJHrYzLBqfLyYL.R8L5q5N1mKAnMb.NUqOBSnhj3Abzwia'),
-(7, 'test', 'testacc', '2019-05-02 22:45:13', 'test@ww.com', '$2y$12$oxKXW7Bs.HSOhTFH06h3N.7g2r0Pn.F/qeYFP/aQXY2kPf/SbN9E.');
+(7, 'test', 'testacc', '2019-05-02 22:45:13', 'test@ww.com', '$2y$12$oxKXW7Bs.HSOhTFH06h3N.7g2r0Pn.F/qeYFP/aQXY2kPf/SbN9E.'),
+(8, 'Amelie', 'Mathijs', '2019-05-03 11:18:01', 'ik@ben.amelie', '$2y$12$Wosrs9qA6IYzceSH.wlRIupcLghcAJDOoG7kcUsV/tZDODGLRvtV6'),
+(9, 'skippy', 'de bushkangourou', '2019-05-03 11:33:13', 'skip@skip.be', 'wachtwoord');
 
 --
 -- Indexes for dumped tables
@@ -197,4 +199,4 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
