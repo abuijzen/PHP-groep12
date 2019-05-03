@@ -1,11 +1,17 @@
 <?php
+    require_once 'bootstrap.php';
+
+    //zonder sessie niet naar index gaan.
+    if (isset($_SESSION['email'])) {
+    } else {
+        header('location:login.php');
+    }
     //links
     // $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
     // require_once 'classes/Post.class.php';
     // require_once 'classes/Date.class.php';
 
     //nu worden via bootstrap.php alle functies automatisch ingeladen.
-    require_once 'bootstrap.php';
 
         //gebruik van klassen
         $post = new Post();

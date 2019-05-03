@@ -4,6 +4,12 @@
 // require_once 'classes/Post.class.php';
 require_once 'bootstrap.php';
 
+//niet zonder sessie naar upload kunnen gaan.
+if (isset($_SESSION['email'])) {
+} else {
+    header('location:login.php');
+}
+
 //upload moet iets bevatten
 if (!empty($_FILES['image']['name'])) {
     // pad waar afbeelding wordt opgeslagen
