@@ -16,7 +16,6 @@
         //gebruik van klassen
         $post = new Post();
         // $date = new Date();
-
 ?><!DOCTYPE html>
     <html lang="en">
         <head>
@@ -33,29 +32,26 @@
             <form name='form-search' method='get' action="index.php" id="form-search">
                 <input type="text" id="search" name="search" value="" placeholder="zoeken">
             </form>
-        <?php
+            <?php
             //tel de gevonden resultaten
             echo '<br>Found results: '.$post->countAll().'<br>';
             echo 'Viewable results: '.$post->countViewable();
-        ?>
+            ?>
 
 
-        <!--indien er GEEN resultaten worden gevonden-->
-        <?php echo $post->noResult(); ?>
+            <!--indien er GEEN resultaten worden gevonden-->
+            <?php echo $post->noResult(); ?>
 
-        <!--indien er WEL resultaten worden gevonden-->
-        <?php if ($post->countAll() >= 1): ?>
-            <?php foreach ($post->showResults() as $c): ?>
-                
-                <div class="post">
-                    <a href="detail_img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
-                    <p><?php echo $c['message']; ?></p>
-                    <br>
-                    <a href="#" class="like">Like</a><span class='likes'>xxx</span> people like this </div>
-
-            <?php endforeach; ?>
-        <?php endif; ?>
-
-                </div>
+            <!--indien er WEL resultaten worden gevonden-->
+            <?php if ($post->countAll() >= 1): ?>
+                <?php foreach ($post->showResults() as $c): ?>
+                    <div class="post">
+                        <a href="detail_img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover"></a>
+                        <p><?php echo $c['message']; ?></p>
+                        <br>
+                        <div><a href="#" class="likes">Like</a><span class='likes'>xxx</span> people like this </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+                    </div>
         </body>
-</html>
+    </html>
