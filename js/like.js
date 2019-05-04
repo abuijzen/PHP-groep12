@@ -1,4 +1,4 @@
-<script>
+$(document).ready(() => {
 		$("a.like").on("click", function(e){
 			// op welke post?
 			var postId = $(this).data('id');
@@ -19,4 +19,4 @@
 			});
 			e.preventDefault();
 		});
-</script>
+});
