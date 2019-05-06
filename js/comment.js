@@ -6,11 +6,11 @@ $("#btnSubmit").on("click", function(e){
 	$.ajax({
   		method: "POST",
   		url: "ajax/postcomment.php",
-  		data: { text: text}, //JSON -> naam van het kolommeke met value (variabele) achter
+  		data: {text: text}, 
 		dataType: "json"
 	})
   	.done(function( res ) {
-			//console.log(res.status);
+		//console.log(res.status);
 
 	    if(res.status == "Success"){
 			var li = "<li style='display: none';>" + text + "</li>";

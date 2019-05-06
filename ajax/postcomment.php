@@ -7,8 +7,10 @@
         $text = $_POST['text'];
 
         //wie is er aan het commenten
+       
 
         //welke post
+        
 
         // comment opslaan in databank
         try {

@@ -4,23 +4,26 @@ class Comment
 {
     private $text;
 
-    public static function getAll()
+    public static function getAll($postsId)
     {
+       
         $conn = Db::getInstance();
-        $result = $conn->query('select * from comments order by id asc');
-
-        return $result->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+        $statement = $conn->prepare('select * from comments where postsId = :postsId order by id asc');
+        $statement->bindParam(':postsId', $postsId);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function Save()
     {
+        $usersId = User::getUserId();
+
         $conn = Db::getInstance();
-        $statement = $conn->prepare('insert into comments (postsId, usersId, text) values (:postsId, :usersId, :text)');
-        $statement->bindValue(':postsId', $postsId);
+        $statement = $conn->prepare('INSERT INTO comments(postsId, usersId, text) VALUES (:postsId, :usersId, :text)');
+        $statement->bindValue(':postsId', 7);
         $statement->bindValue(':usersId', $usersId);
         $statement->bindValue(':text', $this->getText());
-
-        return $statement->execute();
+        $statement->execute();
     }
 
     /**
