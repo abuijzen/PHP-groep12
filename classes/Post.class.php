@@ -77,7 +77,7 @@
                     die('Unknown ERROR!');
                 }
             } catch (PDOException $ex) {
-                die($e->getMessage());
+                die($ex->getMessage());
             }
         }
 
