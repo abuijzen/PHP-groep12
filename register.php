@@ -67,6 +67,7 @@
 					<input type="submit" value="Sign me up!" class="btn btn--primary">	
 				</div>
 			</form>
+			<a href="login.php">Already registered? Login here!</a>
 		</div>
 </body>
 </html>
