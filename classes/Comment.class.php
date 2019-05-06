@@ -14,13 +14,12 @@ class Comment
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function Save()
+    public function Save($postsId,$usersId)
     {
-        $usersId = User::getUserId();
-
+       
         $conn = Db::getInstance();
         $statement = $conn->prepare('INSERT INTO comments(postsId, usersId, text) VALUES (:postsId, :usersId, :text)');
-        $statement->bindValue(':postsId', 7);
+        $statement->bindValue(':postsId', $postsId);
         $statement->bindValue(':usersId', $usersId);
         $statement->bindValue(':text', $this->getText());
         $statement->execute();

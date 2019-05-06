@@ -124,6 +124,7 @@
             $statement = $conn->prepare("select id from users where email = :email");
             $statement->bindParam(':email', $email);
             $statement->execute();
-            return $statement->fetch(PDO::FETCH_ASSOC);
+            $user = $statement->fetch(PDO::FETCH_ASSOC);
+            return $user['id'];
         }
     }

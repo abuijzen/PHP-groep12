@@ -1,16 +1,17 @@
 $("#btnSubmit").on("click", function(e){
 
+    var postsId = $(this).data("id");
+
 	var text = $("#comment").val();
-	//console.log(text);
+	//console.log(text + postsId);
 
 	$.ajax({
   		method: "POST",
   		url: "ajax/postcomment.php",
-  		data: {text: text}, 
+  		data: {text: text, postsId: postsId}, 
 		dataType: "json"
 	})
   	.done(function( res ) {
-		//console.log(res.status);
 
 	    if(res.status == "Success"){
 			var li = "<li style='display: none';>" + text + "</li>";
@@ -18,7 +19,9 @@ $("#btnSubmit").on("click", function(e){
 			$("#comment").val("").focus();
 			$("#listupdates li").last().slideDown();
 
-		}
+		} else{
+            alert("Comment failed.");
+        }
 
   	});
 		

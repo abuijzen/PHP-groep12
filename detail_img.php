@@ -19,7 +19,7 @@ if (!empty($_POST)) {
   try {
       $comment = new Comment();
       $comment->setText($_POST['comment']);
-      $comment->Save();
+      $comment->Save($postsId,$usersId);
   } catch (\Throwable $th) {
       //throw $th;
   }
@@ -45,8 +45,8 @@ $comments = Comment::getAll($postsId);
   <p><?php echo $selectId[0]['message']; ?></p>
 
   <input type="text" placeholder="Add a comment..." id="comment" name="comment" />
-  <input id="btnSubmit" type="submit" value="Add comment" /> 
-  
+  <input id="btnSubmit" type="submit" value="Add comment" data-id="<?php echo $id ?>"/> 
+
   <ul id="listupdates">
     <?php foreach($comments as $comment): ?>
     <li><?php echo $comment['text']?></li>
