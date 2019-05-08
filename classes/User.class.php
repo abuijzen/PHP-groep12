@@ -118,13 +118,15 @@
             header('location: index.php');
         }
 
-        public static function getUserId(){
+        public static function getUserId()
+        {
             $email = $_SESSION['email'];
             $conn = Db::getInstance();
-            $statement = $conn->prepare("select id from users where email = :email");
+            $statement = $conn->prepare('select id from users where email = :email');
             $statement->bindParam(':email', $email);
             $statement->execute();
             $user = $statement->fetch(PDO::FETCH_ASSOC);
+
             return $user['id'];
         }
     }
