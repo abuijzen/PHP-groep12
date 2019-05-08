@@ -1,22 +1,22 @@
-$(document).ready(() => {
-		$("a.like").on("click", function(e){
-			// op welke post?
-			var postId = $(this).data('id');
-			var elLikes = $(this).parent().find(".likes");
-			var likes = elLikes.html();
+$(document).ready(function(){
+	$("a.likes").on("click", function(e){
+		var postId = $(this).data('id');
 
-			$.ajax({
-				method: "POST",
-				url: "ajax/like.php",
-				data: { postId: postId },
-				dataType: "json"
-			})
-			.done(function( res ) {
-				if(res.status == "success"){
-					likes++;
-					elLikes.html(likes);
-				}
-			});
-			e.preventDefault();
+		$.ajax({
+			method: "POST",
+			url: "../ajax/like.php",
+			data: { postId: postId },
+			dataType: "json"
+		})
+
+		.done(function( res ) {
+			if(res.status == "success"){
+			likes++;
+			elLikes.html(likes);
+			}
+			// console.log(res);
 		});
+
+		e.preventDefault();
+	});
 });

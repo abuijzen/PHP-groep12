@@ -44,56 +44,56 @@
             return $this;
         }
 
-        // public function save()
+        public function save()
+        {
+            // @todo: hook in a new function that checks if a user has already liked a post
+
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('insert into likes (post_id, user_id, date_created) values (:postid, :userid, NOW())');
+            $statement->bindValue(':postid', $this->getPostId());
+            $statement->bindValue(':userid', $this->getUserId());
+
+            return $statement->execute();
+        }
+
+        // private function Addlike()
         // {
-        //     // @todo: hook in a new function that checks if a user has already liked a post
-
-        //     $conn = Db::getInstance();
-        //     $statement = $conn->prepare('insert into likes (post_id, user_id, date_created) values (:postid, :userid, NOW())');
-        //     $statement->bindValue(':postid', $this->getPostId());
-        //     $statement->bindValue(':userid', $this->getUserId());
-
-        //     return $statement->execute();
+        //     $conn = db::getInstance();
+        //     $query = 'insert into likes (post_id, user_id) values
+        //     (:post_id, :user_id)';
+        //     $statement = $conn->prepare($query);
+        //     $statement->bindValue(':post_id', $this->getPostId());
+        //     $statement->bindValue(':user_id', $this->getUserId());
+        //     $statement->execute();
         // }
 
-        private function Addlike()
-        {
-            $conn = db::getInstance();
-            $query = 'insert into likes (post_id, user_id) values 
-            (:post_id, :user_id)';
-            $statement = $conn->prepare($query);
-            $statement->bindValue(':post_id', $this->getPostId());
-            $statement->bindValue(':user_id', $this->getUserId());
-            $statement->execute();
-        }
+        // private function Deletelike()
+        // {
+        //     $conn = db::getInstance();
+        //     $query = 'DELETE FROM likes WHERE post_id = :post_id
+        //     AND user_id =:user_id';
+        //     $statement = $conn->prepare($query);
+        //     $statement->bindValue(':post_id', $this->getPostId());
+        //     $statement->bindValue(':user_id', $this->getUserId());
+        //     $statement->execute();
+        // }
 
-        private function Deletelike()
-        {
-            $conn = db::getInstance();
-            $query = 'DELETE FROM likes WHERE post_id = :post_id 
-            AND user_id =:user_id';
-            $statement = $conn->prepare($query);
-            $statement->bindValue(':post_id', $this->getPostId());
-            $statement->bindValue(':user_id', $this->getUserId());
-            $statement->execute();
-        }
+        // public function CheckLike()
+        // {
+        //     $conn = db::getInstance();
+        //     $query = 'SELECT COUNT(*) FROM likes WHERE
+        //     post_id=:post_id AND user_id=:user_id';
+        //     $statement = $conn->prepare($query);
+        //     $statement->bindValue(':post_id', $this->getPostId());
+        //     $statement->bindValue(':user_id', $this->getUserId());
+        //     $statement->execute();
+        //     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        //     if ($result['COUNT(*)'] == 0) {
+        //         $this->Addlike();
+        //     } else {
+        //         $this->Deletelike();
+        //     }
 
-        public function CheckLike()
-        {
-            $conn = db::getInstance();
-            $query = 'SELECT COUNT(*) FROM likes WHERE 
-            post_id=:post_id AND user_id=:user_id';
-            $statement = $conn->prepare($query);
-            $statement->bindValue(':post_id', $this->getPostId());
-            $statement->bindValue(':user_id', $this->getUserId());
-            $statement->execute();
-            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-            if ($result['COUNT(*)'] == 0) {
-                $this->Addlike();
-            } else {
-                $this->Deletelike();
-            }
-
-            return $result;
-        }
+        //     return $result;
+        // }
     }
