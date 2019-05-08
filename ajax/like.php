@@ -1,13 +1,12 @@
 <?php
     require_once '../bootstrap.php';
-
+    // POST?
     if (!empty($_POST)) {
+        // welke post
         $postId = $_POST['postId'];
-        // $userId = $_SESSION['uid'];
-        // voorlopig hardcoded
-        $userId = 1;
+        // welke user Id
+        $userId = User::getUserId();
 
-        include_once '../bootstrap.php';
         $l = new Like();
         $l->setPostId($postId);
         $l->setUserId($userId);
