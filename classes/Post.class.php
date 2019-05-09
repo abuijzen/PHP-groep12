@@ -4,6 +4,8 @@
         private $id;
         protected $image;
         protected $text;
+        protected $userId;
+        protected $filter;
 
         /**
          * Get the value of id.
@@ -65,15 +67,69 @@
             return $this;
         }
 
+        /**
+         * Get the value of userId.
+         */
+        public function getUserId()
+        {
+            return $this->userId;
+        }
+
+        /**
+         * Set the value of userId.
+         *
+         * @return self
+         */
+        public function setUserId($userId)
+        {
+            $this->userId = $userId;
+
+            return $this;
+        }
+
+        /**
+         * Get the value of filter.
+         */
+        public function getFilter()
+        {
+            return $this->filter;
+        }
+
+        /**
+         * Set the value of filter.
+         *
+         * @return self
+         */
+        public function setFilter($filter)
+        {
+            $this->filter = $filter;
+
+            return $this;
+        }
+
+        public function getChosenFilter()
+        {
+            if (!empty($_GET['filter'])) {
+                $filter = $_GET['filter'];
+            } else {
+                $filter = '';
+            }
+
+            return $filter;
+        }
+
         public function uploadPosts()
         {
+            $usersId = User::getUserId();
             $conn = Db::getInstance();
-            $insert = $conn->prepare('INSERT INTO posts(image,message) VALUES (:image, :text)');
+            $filter = $this->getChosenFilter();
+            $insert = $conn->prepare('INSERT INTO posts(image,filter,message,usersId) VALUES (:image,:filter,:text,:usersId)');
             $insert->bindParam(':image', $this->getImage);
             $insert->bindParam(':text', $this->getText);
-            //$insert->bindParam(":time",$this->getTime);
+            $insert->bindParam(':filter', $this->getfilter);
+            $insert->bindParam(':usersId', $usersId);
             try {
-                if (!$insert->execute(array(':image' => $this->image, ':text' => $this->text))) {
+                if (!$insert->execute(array(':image' => $this->image, ':text' => $this->text, ':filter' => $this->filter, ':usersId' => $usersId))) {
                     die('Unknown ERROR!');
                 }
             } catch (PDOException $ex) {

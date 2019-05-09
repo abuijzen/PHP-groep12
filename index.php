@@ -9,7 +9,6 @@
 
     //gebruik van klassen
     $post = new Post();
-    // $date = new Date();
 ?><!DOCTYPE html>
     <html lang="en">
         <head>
@@ -17,6 +16,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>Inspiration Hunter</title>
+            <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
             <link rel="stylesheet" href="css/screen.css">
         </head>
         <body>
@@ -30,12 +30,13 @@
             //tel de gevonden resultaten
             echo '<br>Found results: '.$post->countAll().'<br>';
             echo 'Viewable results: '.$post->countViewable();
+
             ?>
 
 
             <!--indien er GEEN resultaten worden gevonden-->
             <?php echo $post->noResult(); ?>
-
+    
             <!--indien er WEL resultaten worden gevonden-->
             <?php if ($post->countAll() >= 1): ?>
                 <?php foreach ($post->showResults() as $c): ?>
@@ -108,6 +109,10 @@
                                 echo '<br>Zonet<br>';
                             }
                         ?>
+                    <div class="image">
+                        <a href="detail_img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>"></a>
+                        </div><p><?php echo $c['message']; ?></p>
+                        <p><?php echo Time::getTime($c['timePost']); ?></p>
                         <br>
                         <div class="likePlace">
                             <a href="#" data-id="<?php echo $c['id']; ?>" class="likes">Like</a> 
