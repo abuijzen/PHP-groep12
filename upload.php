@@ -1,7 +1,5 @@
 <?php
 
-//link naar classe Post
-// require_once 'classes/Post.class.php';
 require_once 'bootstrap.php';
 
 //niet zonder sessie naar upload kunnen gaan.
@@ -9,6 +7,7 @@ if (isset($_SESSION['email'])) {
 } else {
     header('location:login.php');
 }
+$post = new Post();
 
 //upload moet iets bevatten
 if (!empty($_FILES['image']['name'])) {
@@ -16,7 +15,6 @@ if (!empty($_FILES['image']['name'])) {
     $target = 'images/'.basename($_FILES['image']['name']);
 
     //new post maken
-    $post = new Post();
     $post->setImage($_FILES['image']['name']);
     $post->setText(htmlspecialchars($_POST['text']));
     $post->setFilter(htmlspecialchars($_POST['filter']));
@@ -29,14 +27,8 @@ if (!empty($_FILES['image']['name'])) {
     } else {
         echo'afbeelding is niet opgeslagen';
     }
-    //als de afbeelding niet is gekozen ->empty
 }
-/* geeft nu telkens error ookal werd er niets gesubmit
 
-else {
-    echo 'Er is iets foutgelopen';
-    }
-*/
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +54,15 @@ else {
                 <input type="file" name="image" accept="image/*" capture="camera"/>
             </div>
             <div>
-                <textarea name="filter" cols="40" rows="1" placeholder="kies filter _1977 of aden"></textarea>
+                <select name="filter">
+                    <option value="Kies filter" disabled>Kies filter</option>
+                    <option value="rise">rise</option>
+                    <option value="_1977">old look</option>
+                    <option value="toaster">summer</option>
+                    <option value="willow">grayscale</option>
+                    <option value="">geen filter</option>
+                </select>
+
             </div>
             <div>
                 <textarea name="text" cols="40" rows="4" placeholder="Wat wil je zeggen over jouw post?"></textarea>
