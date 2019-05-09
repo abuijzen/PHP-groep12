@@ -111,7 +111,7 @@
                         <br>
                         <div class="likePlace">
                             <a href="#" data-id="<?php echo $c['id']; ?>" class="likes">Like</a> 
-                            <span class='likes'><?php echo LikePost::getLikes($c['id']); ?></span> people liked this 
+                            <span class='likesAmount'><?php echo Like::getLikes($c['id']); ?></span> people liked this 
                         </div>
                     </div>    
                 <?php endforeach; ?> 
