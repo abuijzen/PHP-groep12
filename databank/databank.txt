@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: May 09, 2019 at 07:16 AM
+-- Generation Time: May 09, 2019 at 07:36 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -49,7 +49,123 @@ INSERT INTO `comments` (`id`, `text`, `date`, `usersId`, `postsId`) VALUES
 (20, 'schoon', '2019-05-08 11:38:15', 9, 8),
 (21, 'vhbjn', '2019-05-08 12:59:27', 9, 9),
 (22, 'bhnj;,', '2019-05-09 09:13:42', 10, 27),
-(23, 'testtest', '2019-05-09 09:14:09', 10, 27);
+(23, 'testtest', '2019-05-09 09:14:09', 10, 27),
+(24, 'hallo', '2019-05-09 09:34:22', 10, 28);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `friendships`
+--
+
+CREATE TABLE `friendships` (
+  `id` int(11) NOT NULL,
+  `startdate` datetime NOT NULL,
+  `personA` int(11) NOT NULL,
+  `personB` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `likes`
+--
+
+CREATE TABLE `likes` (
+  `id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `usersId` int(11) NOT NULL,
+  `postsId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pictures`
+--
+
+CREATE TABLE `pictures` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts`
+--
+
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL,
+  `usersId` int(11) NOT NULL,
+  `timePost` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `visibility` tinyint(1) NOT NULL DEFAULT '1',
+  `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(266) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `filter` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `usersId`, `timePost`, `visibility`, `message`, `image`, `filter`) VALUES
+(5, 1, '2019-05-03 00:03:34', 1, 'Pink Woman', 'pinkWoman.jpg', ''),
+(6, 1, '2019-05-03 00:03:47', 1, 'Den John\r\n', 'lennon.jpg', ''),
+(7, 1, '2019-05-03 00:04:00', 1, 'Blauwe madam\r\n', 'blueWoman.jpg', ''),
+(8, 1, '2019-05-03 00:04:10', 1, 'Samen \r\n', 'together.jpg', ''),
+(9, 9, '2019-05-08 12:58:00', 1, 'qerty', 'wp1835235.jpg', ''),
+(10, 9, '2019-05-08 13:09:51', 1, 'van mij', 'wp1835235.jpg', ''),
+(11, 9, '2019-05-08 14:48:52', 1, 'miauw', 'wp1835235.jpg', ''),
+(12, 9, '2019-05-08 14:53:25', 1, 'bla', 'Schermafbeelding 2019-05-08 om 10.30.17.png', ''),
+(13, 9, '2019-05-08 19:33:15', 1, 'fqsgdhfhg', 'Schermafbeelding 2019-05-08 om 17.51.16.png', ''),
+(14, 9, '2019-05-08 19:36:59', 1, 'ezrgt', 'Schermafbeelding 2019-05-08 om 17.51.16.png', ''),
+(15, 9, '2019-05-08 21:51:06', 1, 'sfgrdhf', 'Schermafbeelding 2019-05-08 om 17.51.16.png', ''),
+(16, 9, '2019-05-08 21:52:47', 1, 'dsfg', 'wp1835235.jpg', ''),
+(17, 9, '2019-05-08 21:56:57', 1, 'test', 'Schermafbeelding 2019-05-08 om 17.52.04.png', ''),
+(18, 9, '2019-05-08 21:58:37', 1, 'opnieuw', 'Schermafbeelding 2019-05-08 om 17.52.04.png', ''),
+(19, 9, '2019-05-08 22:00:13', 1, 'testjeeee', 'Schermafbeelding 2019-05-06 om 11.35.55.png', ''),
+(20, 9, '2019-05-08 22:03:18', 1, 'ejlzrkgkreg', 'Schermafbeelding 2019-05-08 om 17.51.36.png', ''),
+(21, 9, '2019-05-08 22:06:00', 1, 'gvhjbknlm', 'wp1835235.jpg', ''),
+(22, 9, '2019-05-08 22:09:46', 1, '1203', 'wp1835235.jpg', '1203'),
+(23, 9, '2019-05-08 22:11:54', 1, 'dfdg', 'wp1835235.jpg', 'aden'),
+(24, 9, '2019-05-08 22:12:29', 1, 'hopelijk', 'wp1835235.jpg', 'aden'),
+(25, 9, '2019-05-08 22:22:17', 1, 'dit is een afbeelding met filter _1977', 'wp1835235.jpg', '_1977'),
+(26, 10, '2019-05-09 08:38:05', 1, 'userid werkt hopelijk', 'wp1835235.jpg', '_1977'),
+(27, 10, '2019-05-09 08:39:07', 1, 'gelukt!', 'wp1835235.jpg', '_1977'),
+(28, 10, '2019-05-09 09:34:11', 1, 'jelkrksjslkg;', 'Schermafbeelding 2019-05-08 om 17.51.16.png', '_1977');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `DoB` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `DoB`, `email`, `password`) VALUES
+(1, 'ghj', 'ghjk', '2019-05-21 22:00:00', 'ghjklm', 'fghjk'),
+(2, 'Ruben', 'Annaert', '2019-05-02 22:35:16', 'rubenannaert@test.be', '$2y$14$nW8BzAGkgrrjD0SpoNODTO4nDi5XQSnRm78yPbx1nCO1Gsv/wF/wy'),
+(3, 'Ruben', 'Annaert', '2019-05-02 22:35:51', 'Ruben@gmail.com', '$2y$14$FZj5qxbRwcKXKwVOv2qSBOiWxKXAE5/U9CluYfa6V.7ICi1FGBfGa'),
+(4, 'Ruben', 'Annaert', '2019-05-02 22:37:55', 'Ruben@gmail.com', '$2y$14$RhJKz.wO5bEIQJYTb4Z2T.jR1N2ses9AJ5Yn2sTR4wXn2FAuoHfpi'),
+(5, 'Ruben', 'test', '2019-05-02 22:38:19', 'test@123.be', '$2y$14$bX9YLe.jOOyt1pT7r79uI.kf7g3.fLzd1qyETePiFdTYRwm6ggBei'),
+(6, 'Ruben', 'testen', '2019-05-02 22:39:42', 'ik@ben.ruben', '$2y$14$178oUnbmJHrYzLBqfLyYL.R8L5q5N1mKAnMb.NUqOBSnhj3Abzwia'),
+(7, 'test', 'testacc', '2019-05-02 22:45:13', 'test@ww.com', '$2y$12$oxKXW7Bs.HSOhTFH06h3N.7g2r0Pn.F/qeYFP/aQXY2kPf/SbN9E.'),
+(8, 'Amelie', 'Mathijs', '2019-05-03 11:18:01', 'ik@ben.amelie', '$2y$12$Wosrs9qA6IYzceSH.wlRIupcLghcAJDOoG7kcUsV/tZDODGLRvtV6'),
+(9, 'Angelique', 'Buijzen', '2019-05-08 09:37:53', 'angeliquebuijzen@hotmail.com', '$2y$12$bBL3r6m6SgBxBn10eiudvOMxpQ8WyHRSBi5ShYPG4gu79/0ETsq7W'),
+(10, 'Angelique', 'Buijzen', '2019-05-08 11:09:28', 'info@spam.be', '$2y$12$JyNvY9sNOgj0hUPRfJ3h0ujzOmU/CM6iqXBb3vlYeuybpvV..FrIa');
 
 --
 -- Indexes for dumped tables
@@ -64,6 +180,41 @@ ALTER TABLE `comments`
   ADD KEY `usersId` (`usersId`);
 
 --
+-- Indexes for table `friendships`
+--
+ALTER TABLE `friendships`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `personA` (`personA`),
+  ADD KEY `personB` (`personB`);
+
+--
+-- Indexes for table `likes`
+--
+ALTER TABLE `likes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `postsId` (`postsId`),
+  ADD KEY `usersId` (`usersId`);
+
+--
+-- Indexes for table `pictures`
+--
+ALTER TABLE `pictures`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usersId` (`usersId`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -71,7 +222,37 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `friendships`
+--
+ALTER TABLE `friendships`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `likes`
+--
+ALTER TABLE `likes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pictures`
+--
+ALTER TABLE `pictures`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -83,3 +264,23 @@ ALTER TABLE `comments`
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`postsId`) REFERENCES `posts` (`id`),
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `friendships`
+--
+ALTER TABLE `friendships`
+  ADD CONSTRAINT `friendships_ibfk_1` FOREIGN KEY (`personA`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `friendships_ibfk_2` FOREIGN KEY (`personB`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `likes`
+--
+ALTER TABLE `likes`
+  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`postsId`) REFERENCES `posts` (`id`),
+  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`);
