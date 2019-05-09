@@ -1,7 +1,8 @@
 
 	$("a.likes").on("click", function(e){
 		var postsId = $(this).data('id');
-		console.log(postsId);
+		var elLikes = $(this).parent().find(".likes");
+		var likes = elLikes.html();
 
 		$.ajax({
 			method: "POST",
@@ -11,11 +12,11 @@
 		})
 
 		.done(function( res ) {
-			console.log("test 123")
+			// console.log("test 123");
 
 			if(res.status == "success"){
-			likes++;
-			elLikes.html(likes);
+				likes++;
+				elLikes.html(likes);
 			}
 			// console.log(res);
 		});

@@ -29,7 +29,7 @@ header{
 
 /* LIKE BUTTON */
 
-.like{
+.likePlace{
     border: 2px solid #8a8a8a;
     background-color: transparent;
     text-decoration: none;
@@ -42,7 +42,7 @@ header{
     color: #8a8a8a;
   }
 
-  .like:hover{
+  .likePlace:hover{
     border-color: #cc4b37;
     background-color: transparent;
   }

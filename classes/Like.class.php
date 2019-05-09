@@ -64,16 +64,16 @@
         //     return $result['count'];
         // }
 
-        public function saveLike($postsId, $usersId)
+        public function saveLike($usersId, $postsId)
         {
             // @todo: hook in a new function that checks if a user has already liked a post
 
             $conn = Db::getInstance();
-            $statement = $conn->prepare('insert into likes (postsId, usersId) values (:postid, :userid');
+            $statement = $conn->prepare('insert into likes (usersId, postsId, date) values (:userid, :postid, NOW())');
             $statement->bindParam(':postid', $postsId);
             $statement->bindParam(':userid', $usersId);
 
-            $statement->execute();
+            return $statement->execute();
         }
 
         // private function Addlike()

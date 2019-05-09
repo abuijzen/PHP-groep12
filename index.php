@@ -109,8 +109,10 @@
                             }
                         ?>
                         <br>
-                        <div class="like"><a href="#" data-id="<?php echo $c['id']; ?>" class="likes"><?php echo LikePost::getLikes($c['id']); ?></a> <span class='likes'></span> people liked this </div>
-
+                        <div class="likePlace">
+                            <a href="#" data-id="<?php echo $c['id']; ?>" class="likes">Like</a> 
+                            <span class='likes'><?php echo LikePost::getLikes($c['id']); ?></span> people liked this 
+                        </div>
                     </div>    
                 <?php endforeach; ?> 
             <?php endif; ?>  

@@ -8,12 +8,12 @@
         $postsId = $_POST['postsId'];
 
         // welke user Id
-        $userId = User::getUserId();
+        $usersId = User::getUserId();
 
         $l = new Like();
         // $l->setPostId();
         // $l->setUserId();
-        $l->saveLike($postsId, $usersId);
+        $l->saveLike($usersId, $postsId);
 
         // JSON
         $result = [
@@ -23,7 +23,7 @@
     } else {
         $result = [
             'status' => 'nope',
-            'message' => 'Like has been saved.',
+            'message' => 'Like has not  been saved.',
         ];
     }
     header('Content-Type: application/json');
