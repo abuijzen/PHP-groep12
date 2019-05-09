@@ -16,13 +16,13 @@ if (!empty($_GET['id'])) {
 }
 
 if (!empty($_POST)) {
-  try {
-      $comment = new Comment();
-      $comment->setText($_POST['comment']);
-      $comment->Save($postsId,$usersId);
-  } catch (\Throwable $th) {
-      //throw $th;
-  }
+    try {
+        $comment = new Comment();
+        $comment->setText($_POST['comment']);
+        $comment->Save($postsId, $usersId);
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
 }
 
 $postsId = $_GET['id'];
@@ -35,22 +35,23 @@ $comments = Comment::getAll($postsId);
 <head>
   <meta charset="UTF-8">
   <title>full view</title>
+  <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   
   <?php include_once 'nav.php'; ?>
   
-  <img src="images/<?php echo $selectId[0]['image']; ?>" alt="" height="auto" width="50%" style="object-fit: cover"></a>
+  <img src="images/<?php echo $selectId[0]['image']; ?>" alt="" height="auto" width="50%" style="object-fit: cover" class="<?php echo $selectId[0]['filter']; ?>"></a>
   <p><?php echo $selectId[0]['message']; ?></p>
 
   <input type="text" placeholder="Add a comment..." id="comment" name="comment" />
-  <input id="btnSubmit" type="submit" value="Add comment" data-id="<?php echo $id ?>"/> 
+  <input id="btnSubmit" type="submit" value="Add comment" data-id="<?php echo $id; ?>"/> 
 
   <ul id="listupdates">
-    <?php foreach($comments as $comment): ?>
-    <li><?php echo $comment['text']?></li>
-    <?php endforeach;?>
+    <?php foreach ($comments as $comment): ?>
+    <li><?php echo $comment['text']; ?></li>
+    <?php endforeach; ?>
   </ul>
   
 
