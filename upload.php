@@ -10,6 +10,8 @@ if (isset($_SESSION['email'])) {
     header('location:login.php');
 }
 
+echo User::getUserId();
+
 //upload moet iets bevatten
 if (!empty($_FILES['image']['name'])) {
     // pad waar afbeelding wordt opgeslagen
@@ -19,6 +21,7 @@ if (!empty($_FILES['image']['name'])) {
     $post = new Post();
     $post->setImage($_FILES['image']['name']);
     $post->setText(htmlspecialchars($_POST['text']));
+    $post->setFilter(htmlspecialchars($_POST['filter']));
     $post->uploadPosts();
 
     //zet de geüploadede afbeelding in de map "images"
@@ -59,6 +62,9 @@ else {
             <div>
             <!--HTML5 code die ervoor zorgt dat je op je gsm rechtstreeks een foto kan maken-->
                 <input type="file" name="image" accept="image/*" capture="camera"/>
+            </div>
+            <div>
+                <textarea name="filter" cols="40" rows="1" placeholder="kies filter _1977 of aden"></textarea>
             </div>
             <div>
                 <textarea name="text" cols="40" rows="4" placeholder="Wat wil je zeggen over jouw post?"></textarea>
