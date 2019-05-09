@@ -3,14 +3,14 @@
     // POST?
     if (!empty($_POST)) {
         // welke post
-        $postId = $_POST['postId'];
+        $postsId = $_POST['postsId'];
         // welke user Id
         $userId = User::getUserId();
 
         $l = new Like();
         $l->setPostId($postId);
         $l->setUserId($userId);
-        $l->save();
+        $l->checkLike();
 
         // JSON
         $result = [

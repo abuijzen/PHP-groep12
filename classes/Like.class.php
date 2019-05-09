@@ -44,56 +44,76 @@
             return $this;
         }
 
-        public function save()
+        public static function getAll()
         {
-            // @todo: hook in a new function that checks if a user has already liked a post
-
             $conn = Db::getInstance();
-            $statement = $conn->prepare('insert into likes (post_id, user_id, date_created) values (:postid, :userid, NOW())');
-            $statement->bindValue(':postid', $this->getPostId());
-            $statement->bindValue(':userid', $this->getUserId());
+            $result = $conn->query('select * from posts ');
 
-            return $statement->execute();
+            // fetch all records from the database and return them as objects of this __CLASS__ (Post)
+            return $result->fetchAll(PDO::FETCH_CLASS, __CLASS__);
         }
 
-        // private function Addlike()
+        public function getLikes($postsId)
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('select count(*) as count from likes where postsId = :postsId AND usersId=:usersId');
+            $statement->bindValue(':postsId', $postsId);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+            return $result['count'];
+        }
+
+        // public function save()
         // {
-        //     $conn = db::getInstance();
-        //     $query = 'insert into likes (post_id, user_id) values
-        //     (:post_id, :user_id)';
-        //     $statement = $conn->prepare($query);
-        //     $statement->bindValue(':post_id', $this->getPostId());
-        //     $statement->bindValue(':user_id', $this->getUserId());
-        //     $statement->execute();
+        //     // @todo: hook in a new function that checks if a user has already liked a post
+
+        //     $conn = Db::getInstance();
+        //     $statement = $conn->prepare('insert into likes (postsId, usersId, date_created) values (:postsId, :usersId, NOW())');
+        //     $statement->bindValue(':postsId', $this->getPostId());
+        //     $statement->bindValue(':usersId', $this->getUserId());
+
+        //     return $statement->execute();
         // }
 
-        // private function Deletelike()
-        // {
-        //     $conn = db::getInstance();
-        //     $query = 'DELETE FROM likes WHERE post_id = :post_id
-        //     AND user_id =:user_id';
-        //     $statement = $conn->prepare($query);
-        //     $statement->bindValue(':post_id', $this->getPostId());
-        //     $statement->bindValue(':user_id', $this->getUserId());
-        //     $statement->execute();
-        // }
+        private function Addlike()
+        {
+            $conn = db::getInstance();
+            $query = 'insert into likes (post_id, user_id) values
+            (:post_id, :user_id)';
+            $statement = $conn->prepare($query);
+            $statement->bindValue(':post_id', $this->getPostId());
+            $statement->bindValue(':user_id', $this->getUserId());
+            $statement->execute();
+        }
 
-        // public function CheckLike()
-        // {
-        //     $conn = db::getInstance();
-        //     $query = 'SELECT COUNT(*) FROM likes WHERE
-        //     post_id=:post_id AND user_id=:user_id';
-        //     $statement = $conn->prepare($query);
-        //     $statement->bindValue(':post_id', $this->getPostId());
-        //     $statement->bindValue(':user_id', $this->getUserId());
-        //     $statement->execute();
-        //     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        //     if ($result['COUNT(*)'] == 0) {
-        //         $this->Addlike();
-        //     } else {
-        //         $this->Deletelike();
-        //     }
+        private function Deletelike()
+        {
+            $conn = db::getInstance();
+            $query = 'DELETE FROM likes WHERE post_id = :post_id
+            AND user_id =:user_id';
+            $statement = $conn->prepare($query);
+            $statement->bindValue(':post_id', $this->getPostId());
+            $statement->bindValue(':user_id', $this->getUserId());
+            $statement->execute();
+        }
 
-        //     return $result;
-        // }
+        public function CheckLike()
+        {
+            $conn = db::getInstance();
+            $query = 'SELECT COUNT(*) FROM likes WHERE
+            post_id=:post_id AND user_id=:user_id';
+            $statement = $conn->prepare($query);
+            $statement->bindValue(':post_id', $this->getPostId());
+            $statement->bindValue(':user_id', $this->getUserId());
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            if ($result['COUNT(*)'] == 0) {
+                $this->Addlike();
+            } else {
+                $this->Deletelike();
+            }
+
+            return $result;
+        }
     }
