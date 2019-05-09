@@ -1,15 +1,18 @@
-$(document).ready(function(){
+
 	$("a.likes").on("click", function(e){
-		var postId = $(this).data('id');
+		var postsId = $(this).data('id');
+		console.log(postsId);
 
 		$.ajax({
 			method: "POST",
-			url: "../ajax/like.php",
-			data: { postId: postId },
+			url: "ajax/like.php",
+			data: { postsId: postsId },
 			dataType: "json"
 		})
 
 		.done(function( res ) {
+			console.log("test 123")
+
 			if(res.status == "success"){
 			likes++;
 			elLikes.html(likes);
@@ -19,4 +22,3 @@ $(document).ready(function(){
 
 		e.preventDefault();
 	});
-});

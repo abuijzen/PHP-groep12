@@ -1,6 +1,6 @@
 <?php
 
-class PostLike
+class LikePost
 {
     public static function getAll()
     {
@@ -11,11 +11,11 @@ class PostLike
         return $result->fetchAll(PDO::FETCH_CLASS, __CLASS__);
     }
 
-    public function getLikes()
+    public static function getLikes($postId)
     {
         $conn = Db::getInstance();
-        $statement = $conn->prepare('select count(*) as count from likes where postsId = :postid AND user_id=:usersId');
-        $statement->bindValue(':postid', $this->id);
+        $statement = $conn->prepare('select count(*) as count from likes where postsId = :postsId');
+        $statement->bindParam(':postsId', $postId);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 

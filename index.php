@@ -1,10 +1,5 @@
 <?php
     require_once 'bootstrap.php';
-    //links
-    // $conn = new PDO('mysql:host=localhost;dbname=eurben', 'root', 'root', null);
-    // require_once 'classes/Post.class.php';
-    // require_once 'classes/Date.class.php';
-    //nu worden via bootstrap.php alle functies automatisch ingeladen.
 
     //zonder sessie niet naar index gaan.
     if (isset($_SESSION['email'])) {
@@ -114,7 +109,7 @@
                             }
                         ?>
                         <br>
-                        <div class="like"><a href="#" data-id="1" class="likes"><?php echo $post->getLikes(); ?></a> <span class='likes'></span> people liked this </div>
+                        <div class="like"><a href="#" data-id="<?php echo $c['id']; ?>" class="likes"><?php echo LikePost::getLikes($c['id']); ?></a> <span class='likes'></span> people liked this </div>
 
                     </div>    
                 <?php endforeach; ?> 
