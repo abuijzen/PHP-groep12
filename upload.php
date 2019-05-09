@@ -10,8 +10,6 @@ if (isset($_SESSION['email'])) {
     header('location:login.php');
 }
 
-echo User::getUserId();
-
 //upload moet iets bevatten
 if (!empty($_FILES['image']['name'])) {
     // pad waar afbeelding wordt opgeslagen
