@@ -11,15 +11,25 @@
         $usersId = User::getUserId();
 
         $l = new Like();
-        // $l->setPostId();
-        // $l->setUserId();
-        $l->saveLike($usersId, $postsId);
+        $l->setPostsId($postsId);
+        $l->setUsersId($usersId);
+        if ($l->CheckLike()) {
+            $l->Addlike();
+
+            $result = [
+                'status' => 'success',
+                'message' => 'Like has been saved.',
+            ];
+        } else {
+            $l->Deletelike();
+
+            $result = [
+                'status' => 'fail',
+                'message' => 'Already liked.',
+            ];
+        }
 
         // JSON
-        $result = [
-            'status' => 'succes',
-            'message' => 'Like has been saved.',
-        ];
     } else {
         $result = [
             'status' => 'nope',
