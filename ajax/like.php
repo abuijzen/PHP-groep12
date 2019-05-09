@@ -1,23 +1,40 @@
 <?php
     require_once '../bootstrap.php';
 
+    $result = [];
+    // POST?
     if (!empty($_POST)) {
-        $postId = $_POST['postId'];
-        // $userId = $_SESSION['uid'];
-        // voorlopig hardcoded
-        $userId = 1;
+        // welke post
+        $postsId = $_POST['postsId'];
 
-        include_once '../bootstrap.php';
+        // welke user Id
+        $usersId = User::getUserId();
+
         $l = new Like();
-        $l->setPostId($postId);
-        $l->setUserId($userId);
-        $l->save();
+        $l->setPostsId($postsId);
+        $l->setUsersId($usersId);
+        if ($l->CheckLike()) {
+            $l->Addlike();
+
+            $result = [
+                'status' => 'success',
+                'message' => 'Like has been saved.',
+            ];
+        } else {
+            $l->Deletelike();
+
+            $result = [
+                'status' => 'fail',
+                'message' => 'Already liked.',
+            ];
+        }
 
         // JSON
+    } else {
         $result = [
-            'status' => 'succes',
-            'message' => 'Like has been saved.',
+            'status' => 'nope',
+            'message' => 'Like has not  been saved.',
         ];
-
-        echo json_encode($result);
     }
+    header('Content-Type: application/json');
+    echo json_encode($result);
