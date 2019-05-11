@@ -7,19 +7,16 @@ class Time
         date_default_timezone_set('Europe/Brussels');
 
         // datum vandaag
-        $vandaag = date('Y-m-d');
-
-        // datum + tijd vandaag
-        $vandaagDateTime = date('Y-m-d H:i:s ');
+        $today = date('Y-m-d');
 
         //net gepost
-        $nuTime = date('H:i:s', strtotime('-1 sec'));
+        $nowTime = date('H:i:s', strtotime('-1 sec'));
 
         // datum gisteren
         $yesterday = date('Y-m-d', strtotime('-1 days'));
 
         // vanaf meer dan 1 dag geleden
-        $eergisteren = date('Y-m-d', strtotime('-2 days'));
+        $twoDaysAgo = date('Y-m-d', strtotime('-2 days'));
 
         // datum + tijd van de upload
         $uploadDateTime = date('Y-m-d H:i', strtotime($timestamp));
@@ -33,20 +30,17 @@ class Time
         //half uur geleden
         $halfHourAgo = date('H:i', strtotime('-30 min'));
 
-        //15 min geleden
-        $quarterAgo = date('H:i', strtotime('-15 min'));
-
         //een uur geleden
         $hourAgo = date('H:i', strtotime('-1 hour'));
 
         // Is de post gisteren geplaatst?
         if ($uploadDate == $yesterday) {
             $timestamp = 'gisteren gepost om: '.date('H:i', strtotime($uploadTime)).'<br>';
-        } elseif ($uploadDate <= $eergisteren) {
+        } elseif ($uploadDate <= $twoDaysAgo) {
             $timestamp = $uploadDateTime;
         } else {
             // ---------indien vandaag gepost: meerdere opties van mededelingen ----------
-            switch ($vandaag) {
+            switch ($today) {
         //meer dan een uur geleden gepost
         case $uploadTime < $hourAgo:
             $timestamp = '1 uur geleden';
@@ -58,7 +52,7 @@ class Time
         break;
 
         //minder dan een kwartier
-        case $uploadTime < $nuTime:
+        case $uploadTime < $nowTime:
             $timestamp = 'Zonet';
         }
         }
