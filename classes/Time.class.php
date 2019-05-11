@@ -19,7 +19,7 @@ class Time
         $twoDaysAgo = date('Y-m-d', strtotime('-2 days'));
 
         // datum + tijd van de upload
-        $uploadDateTime = date('Y-m-d H:i', strtotime($timestamp));
+        $uploadDateTime = date('d M Y', strtotime($timestamp)).' at '.date('H:i', strtotime($timestamp));
 
         // datum van de upload
         $uploadTime = date('H:i', strtotime($timestamp));
@@ -35,7 +35,7 @@ class Time
 
         // Is de post gisteren geplaatst?
         if ($uploadDate == $yesterday) {
-            $timestamp = 'gisteren gepost om: '.date('H:i', strtotime($uploadTime)).'<br>';
+            $timestamp = 'Yesterday at '.date('H:i', strtotime($uploadTime)).'<br>';
         } elseif ($uploadDate <= $twoDaysAgo) {
             $timestamp = $uploadDateTime;
         } else {
@@ -43,17 +43,17 @@ class Time
             switch ($today) {
         //meer dan een uur geleden gepost
         case $uploadTime < $hourAgo:
-            $timestamp = '1 uur geleden';
+            $timestamp = 'An hour ago';
         break;
 
         //meer dan een half uur geleden
         case $uploadTime < $halfHourAgo:
-            $timestamp = 'Half uur geleden';
+            $timestamp = 'An half hour ago';
         break;
 
         //minder dan een kwartier
         case $uploadTime < $nowTime:
-            $timestamp = 'Zonet';
+            $timestamp = 'Just now';
         }
         }
 
