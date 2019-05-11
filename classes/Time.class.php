@@ -42,14 +42,11 @@ class Time
         // Is de post gisteren geplaatst?
         if ($uploadDate == $yesterday) {
             $timestamp = 'gisteren gepost om: '.date('H:i', strtotime($uploadTime)).'<br>';
-        }
-
-        if ($uploadDate <= $eergisteren) {
+        } elseif ($uploadDate <= $eergisteren) {
             $timestamp = $uploadDateTime;
-        }
-
-        // ---------indien vandaag gepost: meerdere opties van mededelingen ----------
-        switch ($vandaag) {
+        } else {
+            // ---------indien vandaag gepost: meerdere opties van mededelingen ----------
+            switch ($vandaag) {
         //meer dan een uur geleden gepost
         case $uploadTime < $hourAgo:
             $timestamp = '1 uur geleden';
@@ -63,6 +60,7 @@ class Time
         //minder dan een kwartier
         case $uploadTime < $nuTime:
             $timestamp = 'Zonet';
+        }
         }
 
         return $timestamp;
