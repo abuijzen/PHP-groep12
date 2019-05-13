@@ -42,8 +42,8 @@
                 <?php foreach ($post->showResults() as $c): ?>
                     <div class="post"> 
                         <div class="inappropriate">
-                            <a class="report" id="" href="">
-                                <img class="report_icon" src="images/report.svg" alt="">
+                            <a class="report" id="" href="#">
+                                <img class="report_Icon" src="images/report.svg" alt="report icon">
                             </a>    
                         </div>
                         <div class="image">
@@ -60,5 +60,6 @@
             <?php endif; ?>  
             <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>   
             <script src="js/like.js"></script>
+            <script scr="js/inappropriate.js"></script>
         </body>
     </html>
