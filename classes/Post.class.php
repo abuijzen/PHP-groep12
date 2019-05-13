@@ -229,7 +229,7 @@
                 if ($count == 0) {
                     return true;
                 } elseif ($count >= 2) {
-                    return 'delete';
+                    return false;
                 }
             } elseif (Post::alreadyReport() == 'false') {
                 return 'er is iets fout';

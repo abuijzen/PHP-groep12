@@ -20,7 +20,7 @@
                 'status' => 'success',
                 'message' => 'We take reports seriously and we will check this content',
             ];
-        } elseif ($r->checkReports()) {
+        } else {
             $r->setInactive();
 
             $result = [
