@@ -153,7 +153,7 @@
         {
             $conn = Db::getInstance();
             $innerhtml = $this->checkIfSearchIsEmpty();
-            $allResults = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC");
+            $allResults = $conn->prepare("SELECT*FROM posts WHERE visibility = 1 AND message LIKE '%$innerhtml%' ORDER BY id DESC");
             $allResults->execute();
             $countAll = $allResults->rowCount();
 
@@ -164,7 +164,7 @@
         {
             $conn = Db::getInstance();
             $innerhtml = $this->checkIfSearchIsEmpty();
-            $result = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
+            $result = $conn->prepare("SELECT*FROM posts WHERE visibility = 1 AND message LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
             $result->execute();
 
             return $result;
@@ -199,10 +199,11 @@
 
         public function addReport()
         {
+            $users_Id = User::getUserId();
             $conn = db::getInstance();
-            $statement = $conn->prepare('INSERT into reports (post_Id, user_Id, date) values (:usersId, :postsId, NOW())');
-            $statement->bindParam(':postsId', $this->postsId);
-            $statement->bindParam(':usersId', $this->usersId);
+            $statement = $conn->prepare('INSERT into reports (post_Id, user_Id) values (:postsId, :usersId)');
+            $statement->bindParam(':postsId', $this->id);
+            $statement->bindParam(':usersId', $users_Id);
 
             $statement->execute();
         }
@@ -210,8 +211,25 @@
         public function setInactive()
         {
             $conn = Db::getInstance();
-            $statement = $conn->prepare('UPDATE posts SET visibility = "0" WHERE id = :postsId');
-            $statement->bindParam(':postsId', $this->postsId);
+            $statement = $conn->prepare('UPDATE posts SET visibility = 0 WHERE id = :postsId');
+            $statement->bindParam(':postsId', $this->id);
+
             $statement->execute();
+        }
+
+        public function checkReports()
+        {
+            $conn = db::getInstance();
+            $statement = $conn->prepare('SELECT count(*) as count from reports where postsId = :postsId');
+            $statement->bindParam(':postsId', $this->id);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            //$count = $statement->rowCount();
+
+            if ($result['count'] <= 2) {
+                return true;
+            } elseif ($result['count'] > 2) {
+                return false;
+            }
         }
     }
