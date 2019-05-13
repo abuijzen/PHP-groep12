@@ -18,14 +18,14 @@
 
             $result = [
                 'status' => 'success',
-                'message' => 'nu is er een report bij ',
+                'message' => 'We take reports seriously and we will check this content',
             ];
-        } else {
+        } elseif ($r->checkReports()) {
             $r->setInactive();
 
             $result = [
                 'status' => 'fail',
-                'message' => 'je hebt 3 reports',
+                'message' => 'This post has been reported by 3 different users and will be deleted',
             ];
         }
 

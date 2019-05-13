@@ -11,7 +11,7 @@ $("a.likes").on("click", function (e) {
 		dataType: "json"
 	}).done(function (res) {
 		// console.log("test 123");
-		console.log(res);
+		console.log("werkt dit?");
 		if (res.status == "success") {
 			likes++;
 			elLikes.text(likes);

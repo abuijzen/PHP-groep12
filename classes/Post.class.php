@@ -220,16 +220,35 @@
         public function checkReports()
         {
             $conn = db::getInstance();
-            $statement = $conn->prepare('SELECT count(*) as count from reports where postsId = :postsId');
+            $statement = $conn->prepare('SELECT * from reports where postsId = :postsId');
             $statement->bindParam(':postsId', $this->id);
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
-            //$count = $statement->rowCount();
-
-            if ($result['count'] <= 2) {
-                return true;
-            } elseif ($result['count'] > 2) {
-                return false;
+            $count = $statement->rowCount();
+            if (Post::alreadyReport() == 'true') {
+                if ($count == 0) {
+                    return true;
+                } elseif ($count >= 2) {
+                    return 'delete';
+                }
+            } elseif (Post::alreadyReport() == 'false') {
+                return 'er is iets fout';
             }
+        }
+
+        public static function alreadyReport()
+        {
+            $conn = db::getInstance();
+            $statement = $conn->prepare('SELECT count(*) as count from reports where usersId = :usersId AND postsId = :postsId');
+            $statement->bindParam(':postsId', $id);
+            $statement->bindParam(':usersId', $userId);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($result['count'] == 0) {
+                return 'true';
+            }
+
+            return 'false';
         }
     }
