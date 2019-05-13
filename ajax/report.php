@@ -10,9 +10,31 @@
         // welke user Id
         $usersId = User::getUserId();
 
-        $l = new Post();
-        $l->setPostsId($postsId);
-        $l->setUsersId($usersId);
+        $r = new Post();
+        $r->setId($postsId);
+        $r->setUserId($usersId);
+        if ($r->checkReports()) {
+            $r->addReport();
+
+            $result = [
+                'status' => 'success',
+                'message' => 'nu is er een report bij ',
+            ];
+        } else {
+            $r->setInactive();
+
+            $result = [
+                'status' => 'fail',
+                'message' => 'je hebt 3 reports',
+            ];
+        }
+
+        // JSON
+    } else {
+        $result = [
+            'status' => 'nope',
+            'message' => 'Report has not  been saved.',
+        ];
     }
     header('Content-Type: application/json');
     echo json_encode($result);
