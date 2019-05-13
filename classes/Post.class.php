@@ -196,4 +196,22 @@
                 return $nothing;
             }
         }
+
+        public function addReport()
+        {
+            $conn = db::getInstance();
+            $statement = $conn->prepare('INSERT into reports (post_Id, user_Id, date) values (:usersId, :postsId, NOW())');
+            $statement->bindParam(':postsId', $this->postsId);
+            $statement->bindParam(':usersId', $this->usersId);
+
+            $statement->execute();
+        }
+
+        public function setInactive()
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('UPDATE posts SET visibility = "0" WHERE id = :postsId');
+            $statement->bindParam(':postsId', $this->postsId);
+            $statement->execute();
+        }
     }
