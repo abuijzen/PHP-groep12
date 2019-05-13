@@ -41,6 +41,11 @@
             <?php if ($post->countAll() >= 1): ?>
                 <?php foreach ($post->showResults() as $c): ?>
                     <div class="post"> 
+                        <div class="inappropriate">
+                            <a class="report" id="" href="">
+                                <img class="report_icon" src="images/report.svg" alt="">
+                            </a>    
+                        </div>
                         <div class="image">
                             <a href="detail_img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>"></a>
                         </div>
