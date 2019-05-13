@@ -9,6 +9,11 @@
     justify-content:left;
 }
 
+.post{
+    background-color: lightgray;
+    margin:25px 0;
+}
+
 img{
     margin:5px;
 }
@@ -46,4 +51,9 @@ header{
     border-color: #cc4b37;
     background-color: transparent;
   }
+
+/* REPORT BUTTON */
+.report_icon{
+    width: 25px;
+}
   
