@@ -42,7 +42,7 @@
                 <?php foreach ($post->showResults() as $c): ?>
                     <div class="post"> 
                         <div class="inappropriate">
-                            <a class="report" id="" href="#">
+                            <a class="report" data-id="<?php echo $c['id']; ?>" href="#">
                                 <img class="report_Icon" src="images/report.svg" alt="report icon">
                             </a>    
                         </div>
@@ -59,7 +59,8 @@
                 <?php endforeach; ?> 
             <?php endif; ?>  
             <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>   
+            <script src="js/report.js"></script>
             <script src="js/like.js"></script>
-            <script scr="js/inappropriate.js"></script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         </body>
     </html>
