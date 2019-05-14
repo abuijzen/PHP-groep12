@@ -8,75 +8,53 @@ if (isset($_SESSION['email'])) {
     header('location:login.php');
 }
 
-$post = new Post();
+if (!empty($_POST['upload'])) {
+    $post = new Post();
 
-$errors = array();
-if (!empty($_FILES['image']['name'])) {
-    $post->setImage($_FILES['image']['name']);
-    $post->setText(htmlspecialchars($_POST['text']));
-    $post->setFilter(htmlspecialchars($_POST['filter']));
-    $post->uploadPosts();
-    //get provided file information
-    $fileName = $_FILES['image']['name'];
-    $fileExtArr = explode('.', $fileName); //make array of file.name.ext as    array(file,name,ext)
-        $fileExt = strtolower(end($fileExtArr)); //get last item of array of user file input
-        $fileSize = $_FILES['image']['size'];
-    $fileTmp = $_FILES['image']['tmp_name'];
+    $errors = array();
+    $file_name = $_FILES['image']['name'];
+    $file_size = $_FILES['image']['size'];
+    $file_tmp = $_FILES['image']['tmp_name'];
+    $file_type = $_FILES['image']['type'];
+    // $file_ext=strtolower(end(explode('.',$_FILES['image']['name'])));
+    $tmp = explode('.', $_FILES['image']['name']);
+    $file_ext = strtolower(end($tmp));
 
-    //which files we accept
-    $allowed_files = ['jpg', 'png', 'gif'];
+    $extensions = array('jpeg', 'jpg', 'png', 'jpeg');
 
-    //validate file size
-    if ($fileSize > (1024 * 1024 * 2)) {
-        $errors[] = 'Maximum 2MB files are allowed';
+    if (in_array($file_ext, $extensions) === false) {
+        $errors[] = 'extension not allowed, please choose a JPEG or PNG file.';
     }
 
-    //validating file extension
-    if (!in_array($fileExt, $allowed_files)) {
-        $errors[] = 'only ('.implode(', ', $allowed_files).') files are allowed.';
+    if ($file_size > 1024 * 1024 * 2) {
+        $errors[] = 'File size must be excately 2 MB';
     }
 
-    //do other validations here if you need more
+    //    move_uploaded_file($_FILES['file']['tmp_name'], 'images/'.$_FILES['file']['name']);
 
-    //error array moet leeg zijn
-    if (empty($errors)) {
-        move_uploaded_file($fileTmp, 'images/'.$fileName);
-        echo 'File uploaded successfully.';
-        header('Location:index.php');
+    if (empty($errors) == true) {
+        if (move_uploaded_file($file_tmp, 'images/'.$file_name)) {
+            $post->setImage($_FILES['image']['name']);
+            $post->setText(htmlspecialchars($_POST['text']));
+            $post->setFilter(htmlspecialchars($_POST['filter']));
+            $post->uploadPosts();
+            $orgfile = 'images/'.$_FILES['image']['name'];
+            list($width, $height, $type, $attr) = getimagesize($orgfile);
+
+            $newfile = imagecreatefrompng($orgfile);
+            $newWidth = 300;
+            $newHeight = 300;
+            $thumb = 'images/thumb/'.$_FILES['image']['name'];
+            $truecolor = imagecreatetruecolor($newWidth, $newHeight);
+            imagecopyresampled($truecolor, $newfile, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+            echo '<br>File uploaded successfully and thumbnail created.';
+            imagepng($truecolor, $thumb);
+            header('location:index.php');
+        }
     } else {
-        echo 'Some Error Occured: <br>'.implode('<br>', $errors);
+        print_r($errors);
     }
-} else {
-    $errors[] = 'No Image is provided.';
 }
-
-/*//function to create thumbnail
-create_thumb($target,$ext,$thumb_path,$w,$h){
-        list($w_orig,$h_orig)=getimagesize($target);
-        $scale_ratio=$w_orig/$h_orig;
-        if(($w/$h)>$scale_ratio)
-            $w=$h*$scale_ratio;
-        else
-            $h=$w/$scale_ratio;
-
-    if($w_orig<=$w){
-        $w=$w_orig;
-        $h=$h_orig;
-    }
-    $img="";
-    if($ext=="gif")
-        $img=imagecreatefromgif($target);
-    else if($ext=="png")
-        $img=imagecreatefrompng($target);
-    else if($ext=="jpg")
-        $img=imagecreatefromjpeg($target);
-
-    $tci=imagecreatetruecolor($w,$h);
-    imagecopyresampled($tci,$img,0,0,0,0,$w,$h,$w_orig,$h_orig);
-    imagejpeg($tci,$thumb_path,80);
-    imagedestroy($tci);
-}
-*/
 
 ?><!DOCTYPE html>
 <html lang="en">
