@@ -15,6 +15,7 @@
         $r->setUserId($usersId);
         if ($r->checkReports()) {
             $r->addReport();
+            var_dump($r->addReport());
 
             $result = [
                 'status' => 'success',
