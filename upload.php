@@ -11,7 +11,7 @@ if (isset($_SESSION['email'])) {
 if (!empty($_POST['upload'])) {
     $post = new Post();
 
-    $errors = array();
+    /*$errors = array();
     $file_name = $_FILES['image']['name'];
     $file_size = $_FILES['image']['size'];
     $file_tmp = $_FILES['image']['tmp_name'];
@@ -31,15 +31,15 @@ if (!empty($_POST['upload'])) {
     }
 
     //    move_uploaded_file($_FILES['file']['tmp_name'], 'images/'.$_FILES['file']['name']);
-
+*/
     if (empty($errors) == true) {
-        if (move_uploaded_file($file_tmp, 'images/'.$file_name)) {
+        if (move_uploaded_file($_FILES['image']['tmp_name'], 'images/'.$_FILES['image']['name'])) {
             $post->setImage($_FILES['image']['name']);
             $post->setText(htmlspecialchars($_POST['text']));
             $post->setFilter(htmlspecialchars($_POST['filter']));
             $post->uploadPosts();
-            $orgfile = 'images/'.$_FILES['image']['name'];
-            list($width, $height, $type, $attr) = getimagesize($orgfile);
+            //$orgfile = 'images/'.$_FILES['image']['name'];
+            /*list($width, $height, $type, $attr) = getimagesize($orgfile);
 
             $newfile = imagecreatefrompng($orgfile);
             $newWidth = 300;
@@ -48,12 +48,12 @@ if (!empty($_POST['upload'])) {
             $truecolor = imagecreatetruecolor($newWidth, $newHeight);
             imagecopyresampled($truecolor, $newfile, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
             echo '<br>File uploaded successfully and thumbnail created.';
-            imagepng($truecolor, $thumb);
+            imagepng($truecolor, $thumb);*/
             header('location:index.php');
         }
-    } else {
+    } /*else {
         print_r($errors);
-    }
+    }*/
 }
 
 ?><!DOCTYPE html>
