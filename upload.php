@@ -8,75 +8,60 @@ if (isset($_SESSION['email'])) {
     header('location:login.php');
 }
 
-$post = new Post();
+if (!empty($_POST['upload'])) {
+    $post = new Post();
 
-$errors = array();
-if (!empty($_FILES['image']['name'])) {
-    $post->setImage($_FILES['image']['name']);
-    $post->setText(htmlspecialchars($_POST['text']));
-    $post->setFilter(htmlspecialchars($_POST['filter']));
-    $post->uploadPosts();
-    //get provided file information
-    $fileName = $_FILES['image']['name'];
-    $fileExtArr = explode('.', $fileName); //make array of file.name.ext as    array(file,name,ext)
+    $errors = array();
+    if (!empty($_FILES['image']['name']) && !empty($_POST['text'])) {
+        $post->setImage($_FILES['image']['name']);
+        $post->setText(htmlspecialchars($_POST['text']));
+        $post->setFilter(htmlspecialchars($_POST['filter']));
+        $post->uploadPosts();
+        //get provided file information
+       /* $fileName = $_FILES['image']['name'];
+        $fileExtArr = explode('.', $fileName); //make array of file.name.ext as    array(file,name,ext)
         $fileExt = strtolower(end($fileExtArr)); //get last item of array of user file input
         $fileSize = $_FILES['image']['size'];
-    $fileTmp = $_FILES['image']['tmp_name'];
+        $fileTmp = $_FILES['image']['tmp_name'];
 
-    //which files we accept
-    $allowed_files = ['jpg', 'png', 'gif'];
+        //which files we accept
+        $allowed_files = ['jpg', 'png', 'gif'];
 
-    //validate file size
-    if ($fileSize > (1024 * 1024 * 2)) {
-        $errors[] = 'Maximum 2MB files are allowed';
-    }
+        //validate file size
+        if ($fileSize > (1024 * 1024 * 2)) {
+            $errors[] = 'Maximum 2MB files are allowed';
+        }
 
-    //validating file extension
-    if (!in_array($fileExt, $allowed_files)) {
-        $errors[] = 'only ('.implode(', ', $allowed_files).') files are allowed.';
-    }
+        //validating file extension
+        if (!in_array($fileExt, $allowed_files)) {
+            $errors[] = 'only ('.implode(', ', $allowed_files).') files are allowed.';
+        }
 
-    //do other validations here if you need more
-
-    //error array moet leeg zijn
-    if (empty($errors)) {
-        move_uploaded_file($fileTmp, 'images/'.$fileName);
-        echo 'File uploaded successfully.';
-        header('Location:index.php');
-    } else {
-        echo 'Some Error Occured: <br>'.implode('<br>', $errors);
-    }
-} else {
-    $errors[] = 'No Image is provided.';
-}
-
-/*//function to create thumbnail
-create_thumb($target,$ext,$thumb_path,$w,$h){
-        list($w_orig,$h_orig)=getimagesize($target);
-        $scale_ratio=$w_orig/$h_orig;
-        if(($w/$h)>$scale_ratio)
-            $w=$h*$scale_ratio;
-        else
-            $h=$w/$scale_ratio;
-
-    if($w_orig<=$w){
-        $w=$w_orig;
-        $h=$h_orig;
-    }
-    $img="";
-    if($ext=="gif")
-        $img=imagecreatefromgif($target);
-    else if($ext=="png")
-        $img=imagecreatefrompng($target);
-    else if($ext=="jpg")
-        $img=imagecreatefromjpeg($target);
-
-    $tci=imagecreatetruecolor($w,$h);
-    imagecopyresampled($tci,$img,0,0,0,0,$w,$h,$w_orig,$h_orig);
-    imagejpeg($tci,$thumb_path,80);
-    imagedestroy($tci);
-}
+        //als er geen errors zijn = array error leeg -> image uploaden
+        if (empty($errors)) {
+            move_uploaded_file($fileTmp, 'images/'.$fileName);
+            //$orgfile = $_FILES['image']['tmp_name'];
 */
+            move_uploaded_file($_FILES['file']['tmp_name'], 'images/'.$_FILES['file']['name']);
+            /*
+            $orgfile= 'images/'.$_FILES['file']['name']
+            list($width, $height) = getimagesize($orgfile);
+            //$newfile = imagecreatefromjpeg($orgfile);
+            $newfile = imagecreatefrompng($orgfile);
+            $newWidth = 300;
+            $newHeight = 300;
+            $thumb = 'images/thumb'.$_FILES['image']['name'];
+            $truecolor = imagecreatetruecolor($newWidth, $newHeight);
+            imagecopyresampled($truecolor, $newfile, 0, 0, 0, 0, $newHeight, $newWidth, $height);
+            echo 'File uploaded successfully.';*/
+            header('Location:index.php');
+        } else {
+            echo 'Some Error Occured: <br>'.implode('<br>', $errors);
+        }
+    } elseif (empty($_FILES['image']['name']) || empty($_POST['text'])) {
+        echo 'niet alle velden zijn ingevuld';
+    }
+}
 
 ?><!DOCTYPE html>
 <html lang="en">
