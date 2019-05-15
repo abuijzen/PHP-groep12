@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 <nav class="navbar navbar-inverse sticky-top navbar-expand-lg bg-primary" role="navigation-demo">
             <div class="container">
               <!-- Brand and toggle get grouped for better mobile display -->
@@ -35,7 +28,7 @@
 
                     <form class="form-inline ml-auto">
                 <div class="form-group no-border">
-                  <input type="text" class="form-control" placeholder="Search">
+                  <input type="text" class="form-control" method='get' action="index.php" id="form-search" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-white btn-just-icon btn-round">
                     <i class="material-icons">search</i>
@@ -87,6 +80,10 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
   <script src="js/material-kit.js?v=2.0.5" type="text/javascript"></script>
+
+
+
+          
 
 
 
