@@ -199,11 +199,10 @@
 
         public function addReport()
         {
-            $users_Id = User::getUserId();
             $conn = db::getInstance();
             $statement = $conn->prepare('INSERT into reports (post_Id, user_Id) values (:postsId, :usersId)');
             $statement->bindParam(':postsId', $this->id);
-            $statement->bindParam(':usersId', $users_Id);
+            $statement->bindParam(':usersId', $this->userId);
 
             $statement->execute();
         }
@@ -217,39 +216,58 @@
             $statement->execute();
         }
 
+        // public function checkReports()
+        // {
+        //     $conn = db::getInstance();
+        //     $statement = $conn->prepare('SELECT * from reports where postsId = :postsId');
+        //     $statement->bindParam(':postsId', $this->id);
+        //     $statement->execute();
+        //     $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        //     $count = $statement->rowCount();
+        //     if ($this->alreadyReport()) {
+        //         // echo 'test van functie';
+        //         if ($count == 0) {
+        //             return true;
+        //             if ($count >= 2) {
+        //                 return false;
+        //             }
+        //         }
+        //     } else {
+        //         return false;
+        //     }
+        // }
+
         public function checkReports()
         {
             $conn = db::getInstance();
-            $statement = $conn->prepare('SELECT * from reports where postsId = :postsId');
+            $statement = $conn->prepare('SELECT count(*) as count from reports where post_Id = :postsId');
             $statement->bindParam(':postsId', $this->id);
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
-            $count = $statement->rowCount();
-            if (Post::alreadyReport() == 'true') {
-                if ($count == 0) {
-                    return true;
-                    if ($count >= 2) {
-                        return false;
-                    }
-                }
-            } elseif (Post::alreadyReport() == 'false') {
-                return 'er is iets fout';
+
+            if ($result['count'] == 3) {
+                $this->setInactive();
             }
         }
 
-        public static function alreadyReport()
+        public function alreadyReport()
         {
-            $conn = db::getInstance();
-            $statement = $conn->prepare('SELECT count(*) as count from reports where usersId = :usersId AND postsId = :postsId');
-            $statement->bindParam(':postsId', $id);
-            $statement->bindParam(':usersId', $userId);
-            $statement->execute();
-            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            try {
+                $conn = db::getInstance();
+                $statement = $conn->prepare('SELECT count(*) as count from reports where user_Id = :usersId AND post_Id = :postsId');
+                $statement->bindParam(':postsId', $this->id);
+                $statement->bindParam(':usersId', $this->userId);
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-            if ($result['count'] == 0) {
-                return 'true';
+                if ($result['count'] == 0) {
+                    return true;
+                }
+
+                return false;
+            } catch (Throwable $t) {
+                echo $t;
             }
-
-            return 'false';
         }
     }

@@ -1,6 +1,6 @@
 $("a.report").on("click",function (e){
     var postsId = $(this).data('id');
-    console.log(postsId);
+    // console.log(postsId);
     
     $.ajax({
 		method: "POST",
@@ -11,9 +11,9 @@ $("a.report").on("click",function (e){
     .done(function(res){
         console.log(res);
 		if (res.status == "success") {
-			swal("Report has been added",res.message);
+			swal("Report has been added",res.message,"success");
 		} else if (res.status == "fail") {
-            swal(res.message);
+            swal("You already reported this",res.message,"error");
 		}
     });
 

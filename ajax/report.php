@@ -9,33 +9,26 @@
 
         // welke user Id
         $usersId = User::getUserId();
+        // echo $usersId.' dit is de user ---- nnn ----';
 
         $r = new Post();
         $r->setId($postsId);
         $r->setUserId($usersId);
-        if ($r->checkReports()) {
+
+        if ($r->alreadyReport()) {
             $r->addReport();
-            var_dump($r->addReport());
+            $r->checkReports();
 
             $result = [
                 'status' => 'success',
                 'message' => 'We take reports seriously and we will check this content',
             ];
         } else {
-            $r->setInactive();
-
             $result = [
                 'status' => 'fail',
-                'message' => 'This post has been reported by 3 different users and will be deleted',
+                'message' => 'You can only report a post once',
             ];
         }
-
-        // JSON
-    } else {
-        $result = [
-            'status' => 'nope',
-            'message' => 'Report has not  been saved.',
-        ];
     }
     header('Content-Type: application/json');
     echo json_encode($result);
