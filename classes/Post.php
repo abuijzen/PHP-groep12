@@ -228,4 +228,13 @@ class Post
             return $nothing;
         }
     }
+
+    public static function getImagesWithSameColors()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare('SELECT * FROM posts WHERE color1 = color or color2 = color or color3 = color or color4 = color ORDER BY posts.id DESC LIMIT 20');
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

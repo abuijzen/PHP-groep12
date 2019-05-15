@@ -46,10 +46,10 @@ $comments = Comment::getAll($postsId);
   <p><?php echo $selectId[0]['message']; ?></p>
 
   <div>
-    <a href="#" style="background-color:<?php echo '#'.$selectId[0]['color1']; ?>" class="color"></a>
-    <a href="#" style="background-color:<?php echo '#'.$selectId[0]['color2']; ?>" class="color"></a>
-    <a href="#" style="background-color:<?php echo '#'.$selectId[0]['color3']; ?>" class="color"></a>
-    <a href="#" style="background-color:<?php echo '#'.$selectId[0]['color4']; ?>" class="color"></a>
+    <a href="index.php?color=<?php echo $selectId[0]['color1']; ?>" style="background-color:<?php echo '#'.$selectId[0]['color1']; ?>" class="color"></a>
+    <a href="index.php?color=<?php echo $selectId[0]['color2']; ?>" style="background-color:<?php echo '#'.$selectId[0]['color2']; ?>" class="color"></a>
+    <a href="index.php?color=<?php echo $selectId[0]['color3']; ?>" style="background-color:<?php echo '#'.$selectId[0]['color3']; ?>" class="color"></a>
+    <a href="index.php?color=<?php echo $selectId[0]['color4']; ?>" style="background-color:<?php echo '#'.$selectId[0]['color4']; ?>" class="color"></a>
   </div>
 
   <input type="text" placeholder="Add a comment..." id="comment" name="comment" />

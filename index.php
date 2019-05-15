@@ -7,6 +7,11 @@
         header('location:login.php');
     }
 
+    if (!empty($_GET['color'])) {
+        $color = $_GET['color'];
+        $results = Post::getImagesWithSameColors();
+    }
+
     //gebruik van klassen
     $post = new Post();
 ?><!DOCTYPE html>
