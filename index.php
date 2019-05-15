@@ -49,7 +49,8 @@
                         <div class="image">
                             <a href="detail_img.php?id=<?php echo $c['id']; ?>"><img src="images/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>"></a>
                         </div>
-                        <p><?php echo $c['message']; ?></p>	                        
+                        <p><?php echo $c['message']; ?></p>	  
+                        <p><?php echo $c['firstname']; ?></p>	                      
                         <p><?php echo Time::getTime($c['timePost']); ?></p>
                         <div class="likePlace">
                             <a href="#" data-id="<?php echo $c['id']; ?>" class="likes">Like</a> 
