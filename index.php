@@ -7,6 +7,11 @@
         header('location:login.php');
     }
 
+    if (!empty($_GET['color'])) {
+        $color = $_GET['color'];
+        $results = Post::getImagesWithSameColors();
+    }
+
     //gebruik van klassen
     $post = new Post();
 ?><!DOCTYPE html>
@@ -48,21 +53,22 @@
                 <?php foreach ($post->showResults() as $c): ?>
                 <div class="col-md-3-fluid text-center card " style="width:25%;">
                     <div class="post"> 
+
                         <div class="image">
-
-                             
-
                         <a href="detail_img.php?id=<?php echo $c[0]; ?>">
                             <img src="images/thumb/<?php echo $c['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
-                            </a>
+                        </a>
                         </div>
+
                         <p><?php echo $c['message']; ?></p>	  
                         <p><?php echo $c['firstname']; ?></p>	                      
                         <p><?php echo Time::getTime($c['timePost']); ?></p>
+                        
                         <div class="likePlace">
                             <a href="#" data-id="<?php echo $c['id']; ?>" class="likes btn btn-primary">thumb_u</a> 
                             <span class='likesAmount'><?php echo Like::getLikes($c['id']); ?></span> people liked this 
                         </div>
+
                     </div>    
 
                     </div>

@@ -60,6 +60,14 @@ $comments = Comment::getAll($postsId);
         <?php echo $selectId[0]['message']; ?>
       </p>
       </div>
+
+      <div>
+        <a href="index.php?color=<?php echo $selectId[0]['color1']; ?>" style="background-color:<?php echo '#'.$selectId[0]['color1']; ?>" class="color"></a>
+        <a href="index.php?color=<?php echo $selectId[0]['color2']; ?>" style="background-color:<?php echo '#'.$selectId[0]['color2']; ?>" class="color"></a>
+        <a href="index.php?color=<?php echo $selectId[0]['color3']; ?>" style="background-color:<?php echo '#'.$selectId[0]['color3']; ?>" class="color"></a>
+        <a href="index.php?color=<?php echo $selectId[0]['color4']; ?>" style="background-color:<?php echo '#'.$selectId[0]['color4']; ?>" class="color"></a>
+      </div>
+
       <input type="text" class="form-control" rows="2" placeholder="Add a comment..." id="comment" name="comment" />
       <input id="btnSubmit" class="btn-primary btn" type="submit" value="Add comment" data-id="<?php echo $id; ?>" />
 
@@ -73,6 +81,15 @@ $comments = Comment::getAll($postsId);
       </div>
 
     </div>
+
+    <style>
+    .color{
+      width: 40px;
+      height: 40px;
+      display: inline-block;
+    }
+    </style>
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"></script>
     <script src="js/comment.js"></script>

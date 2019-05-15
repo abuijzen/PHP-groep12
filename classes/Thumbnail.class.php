@@ -30,6 +30,7 @@ class Thumbnail
                     $post->setText(htmlspecialchars($_POST['text']));
                     $post->setFilter(htmlspecialchars($_POST['filter']));
                     $post->uploadPosts();
+                    $colors = Post::detectColors($_FILES['image']['name']);
                     $orgfile = 'images/'.$_FILES['image']['name'];
                     list($width, $height, $type, $attr) = getimagesize($orgfile);
 
