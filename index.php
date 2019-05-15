@@ -53,7 +53,7 @@
                              
 
                         <a href="detail_img.php?id=<?php echo $c[0]; ?>">
-                            <img src="images/<?php echo $c['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
+                            <img src="images/thumb/<?php echo $c['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
                             </a>
                         </div>
                         <p><?php echo $c['message']; ?></p>	  
