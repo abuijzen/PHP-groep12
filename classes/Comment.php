@@ -6,17 +6,16 @@ class Comment
 
     public static function getAll($postsId)
     {
-       
         $conn = Db::getInstance();
         $statement = $conn->prepare('select * from comments where postsId = :postsId order by id asc');
         $statement->bindParam(':postsId', $postsId);
         $statement->execute();
+
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function Save($postsId,$usersId)
+    public function Save($postsId, $usersId)
     {
-       
         $conn = Db::getInstance();
         $statement = $conn->prepare('INSERT INTO comments(postsId, usersId, text) VALUES (:postsId, :usersId, :text)');
         $statement->bindValue(':postsId', $postsId);

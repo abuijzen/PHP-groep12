@@ -45,6 +45,13 @@ $comments = Comment::getAll($postsId);
   <img src="images/<?php echo $selectId[0]['image']; ?>" alt="" height="auto" width="50%" style="object-fit: cover" class="<?php echo $selectId[0]['filter']; ?>"></a>
   <p><?php echo $selectId[0]['message']; ?></p>
 
+  <div>
+    <a href="#" style="background-color:<?php echo '#'.$selectId[0]['color1']; ?>" class="color"></a>
+    <a href="#" style="background-color:<?php echo '#'.$selectId[0]['color2']; ?>" class="color"></a>
+    <a href="#" style="background-color:<?php echo '#'.$selectId[0]['color3']; ?>" class="color"></a>
+    <a href="#" style="background-color:<?php echo '#'.$selectId[0]['color4']; ?>" class="color"></a>
+  </div>
+
   <input type="text" placeholder="Add a comment..." id="comment" name="comment" />
   <input id="btnSubmit" type="submit" value="Add comment" data-id="<?php echo $id; ?>"/> 
 
@@ -65,6 +72,11 @@ p{
 img{
   margin:40px 0px 0px 40px;
   
+}
+.color{
+  width: 40px;
+  height: 40px;
+  display: inline-block;
 }
 </style>
 

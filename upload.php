@@ -2,6 +2,15 @@
 
 require_once 'bootstrap.php';
 
+// require_once('Db.php');
+// require_once('Post.php');
+// require_once('User.php');
+// require_once('Like.php');
+// require_once('Comment.php');
+// require_once('Time.php');
+// require_once('Security.php');
+// require_once('User.php');
+
 //niet zonder sessie naar upload kunnen gaan.
 if (isset($_SESSION['email'])) {
 } else {
@@ -39,6 +48,7 @@ if (!empty($_POST['upload'])) {
             $post->setText(htmlspecialchars($_POST['text']));
             $post->setFilter(htmlspecialchars($_POST['filter']));
             $post->uploadPosts();
+            $colors = Post::detectColors($_FILES['image']['name']);
             $orgfile = 'images/'.$_FILES['image']['name'];
             list($width, $height, $type, $attr) = getimagesize($orgfile);
 
