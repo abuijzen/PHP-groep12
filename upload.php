@@ -11,7 +11,7 @@ if (isset($_SESSION['email'])) {
 if (!empty($_POST['upload'])) {
     $post = new Post();
 
-    /*$errors = array();
+    $errors = array();
     $file_name = $_FILES['image']['name'];
     $file_size = $_FILES['image']['size'];
     $file_tmp = $_FILES['image']['tmp_name'];
@@ -19,41 +19,84 @@ if (!empty($_POST['upload'])) {
     // $file_ext=strtolower(end(explode('.',$_FILES['image']['name'])));
     $tmp = explode('.', $_FILES['image']['name']);
     $file_ext = strtolower(end($tmp));
+    //$variableName = strtolower(start($tmp));
 
-    $extensions = array('jpeg', 'jpg', 'png', 'jpeg');
+    $extensions = array('jpeg', 'jpg', 'png', 'gif');
 
     if (in_array($file_ext, $extensions) === false) {
         $errors[] = 'extension not allowed, please choose a JPEG or PNG file.';
     }
 
-    if ($file_size > 1024 * 1024 * 2) {
+    if ($file_size > 2097152) {
         $errors[] = 'File size must be excately 2 MB';
     }
 
     //    move_uploaded_file($_FILES['file']['tmp_name'], 'images/'.$_FILES['file']['name']);
-*/
+
     if (empty($errors) == true) {
-        if (move_uploaded_file($_FILES['image']['tmp_name'], 'images/'.$_FILES['image']['name'])) {
+        if (move_uploaded_file($file_tmp, 'images/'.$file_name)) {
             $post->setImage($_FILES['image']['name']);
             $post->setText(htmlspecialchars($_POST['text']));
             $post->setFilter(htmlspecialchars($_POST['filter']));
             $post->uploadPosts();
-            //$orgfile = 'images/'.$_FILES['image']['name'];
-            /*list($width, $height, $type, $attr) = getimagesize($orgfile);
+            $orgfile = 'images/'.$_FILES['image']['name'];
+            list($width, $height, $type, $attr) = getimagesize($orgfile);
 
-            $newfile = imagecreatefrompng($orgfile);
-            $newWidth = 300;
-            $newHeight = 300;
+            /*echo alles van de afbeelding
+            echo 'Width : '.$width.'<br>';
+            echo 'Height : '.$height.'<br>';
+            echo 'type :'.$type.'<br>';
+            echo 'attribute :'.$attr;
+            */
+
+            switch ($file_ext) {
+                case 'png':
+                $newfile = imagecreatefrompng($orgfile);
+                break;
+
+                case 'jpg':
+                $newfile = imagecreatefromjpeg($orgfile);
+                break;
+
+                case 'gif':
+                    $newfile = imagecreatefromgif($orgfile);
+                break;
+
+                case 'jpeg':
+                $newfile = imagecreatefromjpeg($orgfile);
+                break;
+            }
+            //$newfile = imagecreatefrompng($orgfile);
+            $newWidth = $width / 2;
+            $newHeight = $height / 2;
             $thumb = 'images/thumb/'.$_FILES['image']['name'];
             $truecolor = imagecreatetruecolor($newWidth, $newHeight);
             imagecopyresampled($truecolor, $newfile, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-            echo '<br>File uploaded successfully and thumbnail created.';
-            imagepng($truecolor, $thumb);*/
+            //imagepng($truecolor, $thumb);
+
+            switch ($file_ext) {
+                case 'png':
+                imagepng($truecolor, $thumb);
+                break;
+
+                case 'jpg':
+                imagejpeg($truecolor, $thumb);
+                break;
+
+                case 'gif':
+                imagegif($truecolor, $thumb);
+                break;
+
+                case 'jpeg':
+                imagejpeg($truecolor, $thumb);
+                break;
+            }
+
             header('location:index.php');
         }
-    } /*else {
+    } else {
         print_r($errors);
-    }*/
+    }
 }
 
 ?><!DOCTYPE html>
