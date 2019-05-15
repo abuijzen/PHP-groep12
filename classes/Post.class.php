@@ -164,7 +164,9 @@
         {
             $conn = Db::getInstance();
             $innerhtml = $this->checkIfSearchIsEmpty();
-            $result = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
+            $result = $conn->prepare("SELECT * FROM posts JOIN users on users.id = posts.usersId WHERE posts.message LIKE '%$innerhtml%' ORDER BY posts.id DESC LIMIT 20");
+
+            //$result = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
             $result->execute();
 
             return $result;
