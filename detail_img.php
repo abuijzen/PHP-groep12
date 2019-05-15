@@ -30,46 +30,53 @@ $postsId = $_GET['id'];
 //altijd alle laatste activiteiten ophalen
 $comments = Comment::getAll($postsId);
 
-?><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>full view</title>
-  <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  
-  <?php include_once 'nav.php'; ?>
-  
-  <img src="images/<?php echo $selectId[0]['image']; ?>" alt="" height="auto" width="50%" style="object-fit: cover" class="<?php echo $selectId[0]['filter']; ?>"></a>
-  <p><?php echo $selectId[0]['message']; ?></p>
+?>
+  <!DOCTYPE html>
+  <html lang="en">
 
-  <input type="text" placeholder="Add a comment..." id="comment" name="comment" />
-  <input id="btnSubmit" type="submit" value="Add comment" data-id="<?php echo $id; ?>"/> 
+  <head>
+    <meta charset="UTF-8">
+    <title>full view</title>
+    <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"
+    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link href="css/material-kit.css?v=2.0.5" rel="stylesheet" />
+  </head>
 
-  <ul id="listupdates">
-    <?php foreach ($comments as $comment): ?>
-    <li><?php echo $comment['text']; ?></li>
-    <?php endforeach; ?>
-  </ul>
-  
+  <body>
 
-<style>
+    <?php include_once 'nav.php'; ?>
 
-p{
-  font-family:sans-serif;
-  font-weight:100;
-  margin-left:40px;
-}
-img{
-  margin:40px 0px 0px 40px;
-  
-}
-</style>
+    <div class="card mb-3">
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="js/comment.js"></script>
+      <img src="images/<?php echo $selectId[0]['image']; ?>" alt="" height="auto" class=" card-img-top <?php echo $selectId[0]['filter']; ?>">
+      </a>
+      <div class="card-body">
+        <div class="blockquote">
+      <p class="mb-0">
+        <?php echo $selectId[0]['message']; ?>
+      </p>
+      </div>
+      <input type="text" class="form-control" rows="2" placeholder="Add a comment..." id="comment" name="comment" />
+      <input id="btnSubmit" class="btn-primary btn" type="submit" value="Add comment" data-id="<?php echo $id; ?>" />
 
-</body>
-</html>
+      <ul id="listupdates">
+        <?php foreach ($comments as $comment): ?>
+        <li>
+          <?php echo $comment['text']; ?>
+        </li>
+        <?php endforeach; ?>
+      </ul>
+      </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script src="js/comment.js"></script>
+
+  </body>
+
+  </html>
