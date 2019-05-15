@@ -231,8 +231,17 @@ class Post
 
     public static function getImagesWithSameColors()
     {
+        $color = $_GET['color'];
         $conn = Db::getInstance();
-        $statement = $conn->prepare('SELECT * FROM posts WHERE color1 = color or color2 = color or color3 = color or color4 = color ORDER BY posts.id DESC LIMIT 20');
+        $statement = $conn->prepare("SELECT posts.*, users.firstname 
+        FROM posts 
+        INNER JOIN users on posts.usersId = users.id 
+        where posts.color1 like ' % ".$color." % ' 
+        or posts.color2 like ' % ".$color." % ' 
+        or posts.color3 like ' % ".$color." % ' 
+        or posts.color4 like ' % ".$color." % ' 
+        order by id 
+        desc LIMIT 20");
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
