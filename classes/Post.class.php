@@ -317,7 +317,7 @@ class Post
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     public static function getSelectedImage($id)
     {
         $conn = Db::getInstance();
@@ -346,5 +346,30 @@ class Post
         $countResults = $fromUser->rowCount();
 
         return $countResults;
+    }
+
+    //geef de postid van de post met de meeste likes
+    public static function countLikes()
+    {
+        $conn = Db::getInstance();
+        $mostLikes = $conn->prepare('SELECT likes.postsId, COUNT(*)FROM likes GROUP BY likes.postsId ORDER BY COUNT(*) DESC LIMIT 1');
+        $mostLikes->execute();
+        $mostLikes = $mostLikes->fetchAll(PDO::FETCH_COLUMN);
+        $mostLikes = $mostLikes[0];
+
+        return $mostLikes;
+    }
+
+    //zoekt post op basis van de gegeven id
+    public static function getNowTrending($mostLikes)
+    {
+        $conn = Db::getInstance();
+        $mostLikesPost = $conn->prepare("SELECT * FROM posts 
+        JOIN users on posts.usersId = users.id 
+        WHERE posts.id='$mostLikes'");
+        $mostLikesPost->execute();
+        $mostLikesPost = $mostLikesPost->fetchAll();
+
+        return $mostLikesPost;
     }
 }

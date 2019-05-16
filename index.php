@@ -43,12 +43,30 @@
             </form>
             <h1 class="text-center">
             <?php
+            //vraag post op met de meeste likes
+            $mostLikes = Post::countLikes();
+            $mostLikesPost = Post::getNowTrending($mostLikes);
+
             //tel de gevonden resultaten
             echo '<br>Found results: '.$post->countAll().'<br>';
             echo 'Viewable results: '.$post->countViewable();
-
             ?></h1>
+    
+            <div class="card col-fluid text-center">
+         
+                
+          <!--geeft de post met meeste likes-->
+            <h1>NOW TRENDING</h1>
+                <?php foreach ($mostLikesPost as $trend):?>
+                    <?php echo 'A post from: '.$trend['firstname']; ?> <?php echo $trend['lastname']; ?>
+                        <a href="detail_img.php?id=<?php echo $trend[0]; ?>">
+                            <img src="images/thumb/<?php echo $trend['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
+                        </a>
+                <?php endforeach; ?>
 
+
+</div>
+</div>
 <div class="post row">
             <!--indien er GEEN resultaten worden gevonden-->
             <?php echo $post->noResult(); ?>
@@ -57,6 +75,7 @@
             <?php if ($post->countAll() >= 1): ?>
                 <?php foreach ($results as $c): ?>
                 <div class="col-md-3-fluid text-center card " style="width:25%;">
+                
                     <div class="post"> 
                         <div class="inappropriate">
                             <a class="report" data-id="<?php echo $c['post_id']; ?>" href="#">
@@ -66,9 +85,9 @@
                         <p><strong><?php echo $c['firstname']; ?> <?php echo $c['lastname']; ?></strong></p>
                         <p><?php echo Time::getTime($c['timePost']); ?></p>
                         <div class="image">
-                        <a href="detail_img.php?id=<?php echo $c[0]; ?>">
+                            <a href="detail_img.php?id=<?php echo $c[0]; ?>">
                             <img src="images/thumb/<?php echo $c['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
-                        </a>
+                            </a>
                         </div>
 
 
