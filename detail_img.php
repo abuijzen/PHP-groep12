@@ -82,28 +82,21 @@ $comments = Comment::getAll($postsId);
 </div>
 </div>
 
-<?php if ($countResults > 2):?>
-      <h1 class="text-center">More posts from this user</h1>
+    <?php if ($countResults > 1):?>
       <div class="card-body">
+      <h1 class="text-center">More posts from this user</h1>
       <div class="post row">
       
-
-      
       <?php foreach ($fromUser as $posts):?>
-      <div class="col-md-3-fluid text-center card " style="width:25%;">
-      
-      
-      <a href="detail_img.php?id=<?php echo $posts['id']; ?>">
-        <img src="images/thumb/<?php echo $posts['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class=" <?php echo $posts['filter']; ?> card-img-top  ">
-      </a>
-      <?php echo $posts['message']; ?>
-      
-      </div>
+        <div class="col-md-3-fluid text-center card " style="width:25%;">
+          <a href="detail_img.php?id=<?php echo $posts['id']; ?>">
+            <img src="images/thumb/<?php echo $posts['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class=" <?php echo $posts['filter']; ?> card-img-top  ">
+          </a>
+          <?php echo $posts['message']; ?>
+        </div>
       <?php endforeach; ?>
-      
-      
       </div>
-      <?php endif; ?>
+    <?php endif; ?>
 
 </div>
     <style>
