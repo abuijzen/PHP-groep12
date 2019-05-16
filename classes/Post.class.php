@@ -317,4 +317,34 @@ class Post
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    public static function getSelectedImage($id)
+    {
+        $conn = Db::getInstance();
+        $selectId = $conn->prepare("SELECT * FROM posts JOIN users on users.id=posts.usersId WHERE posts.id='$id'");
+        $selectId->execute();
+        $selectId = $selectId->fetchAll();
+
+        return $selectId;
+    }
+
+    public static function getRelatedPosts($id)
+    {
+        $selectId = self::getSelectedImage($id);
+        $conn = Db::getInstance();
+        $usersId = $selectId[0]['usersId'];
+        $fromUser = $conn->prepare("SELECT * FROM users JOIN posts on posts.usersId=users.id WHERE posts.usersId='$usersId' AND posts.id != '$id' LIMIT 9");
+        $fromUser->execute();
+        $fromUser = $fromUser->fetchAll();
+
+        return $fromUser;
+    }
+
+    public static function countRelatedPosts()
+    {
+        $fromUser = self::getRelatedPosts();
+        $countResults = $fromUser->rowCount();
+
+        return $countResults;
+    }
 }
