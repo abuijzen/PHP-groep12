@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+require __DIR__.'/../'.'vendor/autoload.php';
 
 use League\ColorExtractor\Color;
 use League\ColorExtractor\ColorExtractor;
@@ -160,7 +160,7 @@ class Post
     {
         $conn = Db::getInstance();
         $innerhtml = $this->checkIfSearchIsEmpty();
-        $allResults = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC");
+        $allResults = $conn->prepare("SELECT*FROM posts WHERE visibility = 1 AND message LIKE '%$innerhtml%' ORDER BY id DESC");
         $allResults->execute();
         $countAll = $allResults->rowCount();
 
@@ -171,9 +171,8 @@ class Post
     {
         $conn = Db::getInstance();
         $innerhtml = $this->checkIfSearchIsEmpty();
-        $result = $conn->prepare("SELECT * FROM posts JOIN users on users.id = posts.usersId WHERE posts.message LIKE '%$innerhtml%' ORDER BY posts.id DESC LIMIT 20");
-
-        //$result = $conn->prepare("SELECT*FROM posts WHERE message LIKE '%$innerhtml%' ORDER BY id DESC  limit 20");
+        // $result = $conn->prepare("SELECT*FROM posts JOIN users on users.id = posts.usersId WHERE posts.visibility = 1 AND posts.message LIKE '%$innerhtml%' ORDER BY posts.id DESC  limit 20");
+        $result = $conn->prepare("SELECT posts.id as post_id, users.id as user_id, posts.visibility, posts.message, posts.image, posts.filter, posts.`color1`, posts.`color2`, posts.`color3`, posts.`color4`, users.`firstname`, users.`lastname`, users.`email`, posts.timePost FROM posts JOIN users on users.id = posts.usersId WHERE posts.visibility = 1 AND posts.message LIKE '%$innerhtml%' ORDER BY posts.id DESC  limit 20");
         $result->execute();
 
         return $result;
@@ -206,6 +205,82 @@ class Post
         }
     }
 
+    public function addReport()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare('INSERT into reports (post_Id, user_Id) values (:postsId, :usersId)');
+        $statement->bindParam(':postsId', $this->id);
+        $statement->bindParam(':usersId', $this->userId);
+        $result = $statement->execute();
+
+        return $result;
+    }
+
+    public function setInactive()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare('UPDATE posts SET visibility = 0 WHERE id = :postsId');
+        $statement->bindParam(':postsId', $this->id);
+        $result = $statement->execute();
+
+        return $result;
+    }
+
+    // public function checkReports()
+    // {
+    //     $conn = db::getInstance();
+    //     $statement = $conn->prepare('SELECT * from reports where postsId = :postsId');
+    //     $statement->bindParam(':postsId', $this->id);
+    //     $statement->execute();
+    //     $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+    //     $count = $statement->rowCount();
+    //     if ($this->alreadyReport()) {
+    //         // echo 'test van functie';
+    //         if ($count == 0) {
+    //             return true;
+    //             if ($count >= 2) {
+    //                 return false;
+    //             }
+    //         }
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    public function checkReports()
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare('SELECT count(*) as count from reports where post_Id = :postsId');
+        $statement->bindParam(':postsId', $this->id);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($result['count'] == 3) {
+            $this->setInactive();
+        }
+    }
+
+    public function alreadyReport()
+    {
+        try {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('SELECT count(*) as count from reports where user_Id = :usersId AND post_Id = :postsId');
+            $statement->bindParam(':postsId', $this->id);
+            $statement->bindParam(':usersId', $this->userId);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($result['count'] == 0) {
+                return true;
+            }
+
+            return false;
+        } catch (Throwable $t) {
+            echo $t;
+        }
+    }
+
     public static function detectColors($image)
     {
         $imageName = basename($image);
@@ -226,9 +301,8 @@ class Post
         $statement->execute();
     }
 
-    public static function getImagesWithSameColors()
+    public static function getImagesWithSameColors($color)
     {
-        $color = $_GET['color'];
         $conn = Db::getInstance();
         $statement = $conn->prepare("SELECT posts.*, users.firstname 
             FROM posts 

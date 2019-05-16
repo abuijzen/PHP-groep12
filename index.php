@@ -7,13 +7,18 @@
         header('location:login.php');
     }
 
+    $post = new Post();
+
     if (!empty($_GET['color'])) {
         $color = $_GET['color'];
-        $results = Post::getImagesWithSameColors();
+        $results = Post::getImagesWithSameColors($color);
+    } else {
+        $results = $post->showResults();
+        // var_dump($results);
     }
 
     //gebruik van klassen
-    $post = new Post();
+
 ?><!DOCTYPE html>
     <html lang="en">
         <head>
@@ -50,10 +55,14 @@
     
             <!--indien er WEL resultaten worden gevonden-->
             <?php if ($post->countAll() >= 1): ?>
-                <?php foreach ($post->showResults() as $c): ?>
+                <?php foreach ($results as $c): ?>
                 <div class="col-md-3-fluid text-center card " style="width:25%;">
                     <div class="post"> 
-
+                        <div class="inappropriate">
+                            <a class="report" data-id="<?php echo $c['post_id']; ?>" href="#">
+                                <img class="report_Icon" src="images/report.svg" alt="report icon">
+                            </a>    
+                        </div>
                         <div class="image">
                         <a href="detail_img.php?id=<?php echo $c[0]; ?>">
                             <img src="images/thumb/<?php echo $c['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
@@ -61,12 +70,13 @@
                         </div>
 
                         <p><?php echo $c['message']; ?></p>	  
-                        <p><?php echo $c['firstname']; ?></p>	                      
+                        <p><?php echo $c['firstname']; ?></p>
+                                             
                         <p><?php echo Time::getTime($c['timePost']); ?></p>
                         
                         <div class="likePlace">
-                            <a href="#" data-id="<?php echo $c['id']; ?>" class="likes btn btn-primary">thumb_u</a> 
-                            <span class='likesAmount'><?php echo Like::getLikes($c['id']); ?></span> people liked this 
+                            <a href="#" data-id="<?php echo $c['post_id']; ?>" class="likes btn btn-primary">thumb_u</a> 
+                            <span class='likesAmount'><?php echo Like::getLikes($c['post_id']); ?></span> people liked this 
                         </div>
 
                     </div>    
@@ -75,7 +85,10 @@
                 <?php endforeach; ?> 
             <?php endif; ?>  
             </div>
-            <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>   
-            <script src="js/like.js"></script>
+           
         </body>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>   
+            <script src="js/report.js"></script>
+            <script src="js/like.js"></script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </html>

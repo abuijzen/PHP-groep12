@@ -1,9 +1,51 @@
 <?php
     class User
     {
+        private $firstname;
+        private $lastname;
         private $email;
         private $password;
         private $passwordConfirmation;
+
+        /**
+         * Get the value of firstname.
+         */
+        public function getFirstname()
+        {
+            return $this->firstname;
+        }
+
+        /**
+         * Set the value of firstname.
+         *
+         * @return self
+         */
+        public function setFirstname($firstname)
+        {
+            $this->firstname = $firstname;
+
+            return $this;
+        }
+
+        /**
+         * Get the value of lastname.
+         */
+        public function getLastname()
+        {
+            return $this->lastname;
+        }
+
+        /**
+         * Set the value of lastname.
+         *
+         * @return self
+         */
+        public function setLastname($lastname)
+        {
+            $this->lastname = $lastname;
+
+            return $this;
+        }
 
         /**
          * Get the value of email.
@@ -77,7 +119,9 @@
                 //alles wat je wil proberen
                 //$conn = new PDO("mysql:host=localhost;dbname=netflix","root","root",null); indien hij een 4e vraagt
                 $conn = Db::getInstance();
-                $statement = $conn->prepare('INSERT into users(firstname,lastname,email,password) VALUES ("'.$_POST['firstname'].'", "'.$_POST['lastname'].'",:email,:password)');
+                $statement = $conn->prepare('INSERT into users(firstname,lastname,email,password) VALUES (:firstName, :lastName ,:email,:password)');
+                $statement->bindParam(':firstName', $this->firstname);
+                $statement->bindParam(':lastName', $this->lastname);
                 $statement->bindParam(':email', $this->email);
                 $statement->bindParam(':password', $password);
                 $result = $statement->execute();

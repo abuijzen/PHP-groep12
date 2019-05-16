@@ -10,6 +10,8 @@
 
             if ($security->passwordsAreSecure()) {
                 $user = new User();
+                $user->setFirstname($_POST['firstname']);
+                $user->setLastname($_POST['lastname']);
                 $user->setEmail($_POST['email']);
                 $user->setPassword($_POST['password']);
                 $user->setPasswordConfirmation($_POST['password_confirmation']);
@@ -72,7 +74,7 @@
                         </i>
                       </span>
                     </div>
-                    <input type="text" class="form-control" placeholder="First name...">
+                    <input type="text" name="firstname" id="firstname" class="form-control" placeholder="First name...">
                   </div>
 
 
@@ -84,7 +86,7 @@
                         </i>
                       </span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Last name...">
+                    <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Last name...">
                   </div>
 
                   <div class="input-group">
