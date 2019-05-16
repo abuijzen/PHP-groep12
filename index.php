@@ -73,7 +73,7 @@
 
 
 
-                        <p><?php echo $c['message']; ?></p><a href="profile.php?user=<?php echo $c['usersId']; ?>"> <p><?php echo $c['firstname'].' '.$c['lastname']; ?>
+                        <p><?php echo $c['message']; ?></p><a href="profile.php?user=<?php echo $c['usersId']; ?>">
                         </p></a>	  
 
                         
