@@ -7,12 +7,14 @@ if (isset($_SESSION['email'])) {
     header('location:login.php');
 }
 
+$post = new Post();
+
+//select image waarop je geklikt hebt
 if (!empty($_GET['id'])) {
     $id = ($_GET['id']);
-    $conn = Db::getInstance();
-    $selectId = $conn->prepare("SELECT * FROM posts where id='$id'");
-    $selectId->execute();
-    $selectId = $selectId->fetchAll(PDO::FETCH_ASSOC);
+    $selectId = Post::getSelectedImage($id);
+    $countResults = Post::getRelatedPosts($id);
+    $fromUser = Post::getRelatedPosts($id);
 }
 
 if (!empty($_POST)) {
@@ -27,11 +29,9 @@ if (!empty($_POST)) {
 
 $postsId = $_GET['id'];
 
-//altijd alle laatste activiteiten ophalen
 $comments = Comment::getAll($postsId);
 
-?>
-  <!DOCTYPE html>
+?><!DOCTYPE html>
   <html lang="en">
 
   <head>
@@ -51,9 +51,10 @@ $comments = Comment::getAll($postsId);
     <?php include_once 'nav.php'; ?>
 
     <div class="card mb-3">
-
+    
+    <p> <?php echo 'A post from: <strong>'.$selectId[0]['firstname']; ?> <?php echo $selectId[0]['lastname']; ?></strong></p>
       <img src="images/<?php echo $selectId[0]['image']; ?>" alt="" height="auto" class=" card-img-top <?php echo $selectId[0]['filter']; ?>">
-      </a>
+      
       <div class="card-body">
         <div class="blockquote">
       <p class="mb-0">
@@ -78,10 +79,33 @@ $comments = Comment::getAll($postsId);
         </li>
         <?php endforeach; ?>
       </ul>
+</div>
+</div>
+
+<?php if ($countResults > 2):?>
+      <h1 class="text-center">More posts from this user</h1>
+      <div class="card-body">
+      <div class="post row">
+      
+
+      
+      <?php foreach ($fromUser as $posts):?>
+      <div class="col-md-3-fluid text-center card " style="width:25%;">
+      
+      
+      <a href="detail_img.php?id=<?php echo $posts['id']; ?>">
+        <img src="images/thumb/<?php echo $posts['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class=" <?php echo $posts['filter']; ?> card-img-top  ">
+      </a>
+      <?php echo $posts['message']; ?>
+      
       </div>
+      <?php endforeach; ?>
+      
+      
+      </div>
+      <?php endif; ?>
 
-    </div>
-
+</div>
     <style>
     .color{
       width: 40px;

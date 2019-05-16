@@ -63,6 +63,8 @@
                                 <img class="report_Icon" src="images/report.svg" alt="report icon">
                             </a>    
                         </div>
+                        <p><strong><?php echo $c['firstname']; ?> <?php echo $c['lastname']; ?></strong></p>
+                        <p><?php echo Time::getTime($c['timePost']); ?></p>
                         <div class="image">
                         <a href="detail_img.php?id=<?php echo $c[0]; ?>">
                             <img src="images/thumb/<?php echo $c['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
@@ -71,10 +73,9 @@
 
 
 
-                        <p><?php echo $c['message']; ?></p><a href="profile.php?user=<?php echo $c['usersId']?>"> <p><?php echo $c['firstname'] .' '. $c['lastname']; ?>
+                        <p><?php echo $c['message']; ?></p><a href="profile.php?user=<?php echo $c['usersId']; ?>"> <p><?php echo $c['firstname'].' '.$c['lastname']; ?>
                         </p></a>	  
 
-                        <p><?php echo Time::getTime($c['timePost']); ?></p>
                         
                         <div class="likePlace">
                             <a href="#" data-id="<?php echo $c['post_id']; ?>" class="likes btn btn-primary">thumb_u</a> 
