@@ -104,7 +104,7 @@
             if (password_verify($password, $user['password'])) {
                 //ja -> naar index
                 //echo "joepie de poepie!!!!";
-                return true;
+                return $user;
             } else {
                 //nee -> error
                 //echo "jammer joh";
@@ -112,9 +112,10 @@
             }
         }
 
-        public static function doLogin($email)
+        public static function doLogin($user)
         {
-            $_SESSION['email'] = $email;
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['user_id'] = $user['id'];
             header('location: index.php');
         }
 
@@ -127,6 +128,47 @@
             $statement->execute();
             $user = $statement->fetch(PDO::FETCH_ASSOC);
 
+
             return $user['id'];
         }
+
+        public static function loadProfile($userId) {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT users.profilePic, users.firstname, users.profileText, users.email FROM users WHERE users.id = :id");
+            $statement->bindValue(':id', $userId, PDO::PARAM_INT);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_ASSOC);
     }
+
+    public static function updateProfileText($userId, $profileText) {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("UPDATE users SET profileText=:profileText WHERE id = :id");
+        $statement->bindValue(':id', $userId, PDO::PARAM_INT);
+        $statement->bindValue(':profileText', $profileText, PDO::PARAM_STR);
+        $statement->execute();
+} 
+
+
+    public static function updateEmail($userId, $email) {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare("UPDATE users SET email=:email WHERE id = :id");
+        $statement->bindValue(':id', $userId, PDO::PARAM_INT);
+        $statement->bindValue(':email', $email, PDO::PARAM_STR);
+        $statement->execute();
+} 
+
+
+
+public static function updatePassword($userId, $newpw) {
+    $conn = Db::getInstance();
+    $options = [
+        'cost' => 12,
+    ];
+    $hash = password_hash($newpw, PASSWORD_DEFAULT, $options);
+    $statement = $conn->prepare("UPDATE users SET password=:pw WHERE id = :id");
+    $statement->bindValue(':id', $userId, PDO::PARAM_INT);
+    $statement->bindValue(':pw', $hash, PDO::PARAM_STR);
+    $statement->execute();
+} 
+    }
+    

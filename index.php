@@ -60,8 +60,9 @@
                         </a>
                         </div>
 
-                        <p><?php echo $c['message']; ?></p>	  
-                        <p><?php echo $c['firstname']; ?></p>	                      
+                        <p><?php echo $c['message']; ?></p><a href="profile.php?user=<?php echo $c['usersId']?>"> <p><?php echo $c['firstname'] .' '. $c['lastname']; ?>
+                        </p></a>	  
+                       	                      
                         <p><?php echo Time::getTime($c['timePost']); ?></p>
                         
                         <div class="likePlace">

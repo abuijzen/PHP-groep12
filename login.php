@@ -4,10 +4,11 @@ if (!empty($_POST)) {
     //email en password opvragen
     $email = $_POST['email'];
     $password = $_POST['password'];
-
-    if (User::canLogin($email, $password)) {
-        $_SESSION['email'] = $email;
-        User::doLogin($email);
+    $user = User::canLogin($email, $password);
+    if ($user){
+        
+        
+        User::doLogin($user);
     } else {
         $error = true;
     }

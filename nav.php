@@ -56,8 +56,8 @@
 
                       <h6 class="dropdown-header">Name</h6>
                      
-                      <a href="profile.php" class="dropdown-item">Profile</a>
-                      <a href="#pablo" class="dropdown-item">Edit Profile</a>
+                      <a href="profile.php?user=<?php echo $_SESSION['user_id']?>" class="dropdown-item">Profile</a>
+                      <a href="editProfile.php?user=<?php echo $_SESSION['user_id']?>" class="dropdown-item">Edit Profile</a>
                       <a href="logout.php" class="dropdown-item">Log Out</a>
                     </div>
                   </li>
