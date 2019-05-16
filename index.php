@@ -7,13 +7,22 @@
         header('location:login.php');
     }
 
-    if (!empty($_GET['color'])) {
-        $color = $_GET['color'];
-        $results = Post::getImagesWithSameColors();
-    }
-
     //gebruik van klassen
     $post = new Post();
+    $countResults = $post->countAll();
+    $viewResults = $post->countViewable();
+    $noResult = $post->noResult();
+
+    if (!empty($_GET['color'])) {
+        $color = $_GET['color'];
+        $results = Post::getImagesWithSameColors($color);
+
+    // var_dump($results);
+        // die();
+    } else {
+        $results = $post->showResults();
+    }
+
 ?><!DOCTYPE html>
     <html lang="en">
         <head>
@@ -39,18 +48,18 @@
             <h1 class="text-center">
             <?php
             //tel de gevonden resultaten
-            echo '<br>Found results: '.$post->countAll().'<br>';
-            echo 'Viewable results: '.$post->countViewable();
+            echo '<br>Found results: '.$countResults.'<br>';
+            echo 'Viewable results: '.$viewResults;
 
             ?></h1>
 
 <div class="post row">
             <!--indien er GEEN resultaten worden gevonden-->
-            <?php echo $post->noResult(); ?>
+            <?php echo $noResult; ?>
     
             <!--indien er WEL resultaten worden gevonden-->
-            <?php if ($post->countAll() >= 1): ?>
-                <?php foreach ($post->showResults() as $c): ?>
+            <?php if ($countResults >= 1): ?>
+                <?php foreach ($results as $c): ?>
                 <div class="col-md-3-fluid text-center card " style="width:25%;">
                     <div class="post"> 
 

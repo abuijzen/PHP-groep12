@@ -29,6 +29,12 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+.color{
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+}
+
 @-ms-viewport {
   width: device-width;
 }

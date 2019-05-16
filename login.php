@@ -87,9 +87,9 @@ if (!empty($_POST)) {
 
 
               </form>
-
+              <a href="register.php">Not an account yet? Sign up here!</a>
             </div>
-            <a href="register.php">Not an account yet? Sign up here!</a>
+           
           </div>
         </div>
       </div>
