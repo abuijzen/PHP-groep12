@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: May 12, 2019 at 02:07 PM
--- Server version: 5.7.23
--- PHP Version: 7.2.10
+-- Generation Time: May 15, 2019 at 08:38 PM
+-- Server version: 5.7.25
+-- PHP Version: 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -46,7 +46,9 @@ INSERT INTO `comments` (`id`, `text`, `date`, `usersId`, `postsId`) VALUES
 (17, 'Sehr schön', '2019-05-06 17:27:01', 8, 7),
 (18, 'Graaf', '2019-05-06 17:28:45', 8, 6),
 (19, 'school', '2019-05-08 11:38:08', 9, 8),
-(20, 'schoon', '2019-05-08 11:38:15', 9, 8);
+(20, 'schoon', '2019-05-08 11:38:15', 9, 8),
+(26, 'Leuk', '2019-05-15 16:59:27', 8, 8),
+(27, 'Leuke Dora!', '2019-05-15 21:15:28', 8, 51);
 
 -- --------------------------------------------------------
 
@@ -99,20 +101,41 @@ CREATE TABLE `posts` (
   `visibility` tinyint(1) NOT NULL DEFAULT '1',
   `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(266) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `filter` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL
+  `filter` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color3` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color4` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `usersId`, `timePost`, `visibility`, `message`, `image`, `filter`) VALUES
-(5, 1, '2019-05-03 00:03:34', 1, 'Pink Woman', 'pinkWoman.jpg', ''),
-(6, 1, '2019-05-03 00:03:47', 1, 'Den John\r\n', 'lennon.jpg', ''),
-(7, 1, '2019-05-03 00:04:00', 1, 'Blauwe madam\r\n', 'blueWoman.jpg', ''),
-(8, 1, '2019-05-03 00:04:10', 1, 'Samen \r\n', 'together.jpg', ''),
-(9, 9, '2019-05-08 12:58:00', 1, 'qerty', 'wp1835235.jpg', ''),
-(38, 10, '2019-05-12 16:07:25', 1, 'Moss paint', 'moss-grow-anna-garforth-300x220_1400x.progressive.jpg', '_1977');
+INSERT INTO `posts` (`id`, `usersId`, `timePost`, `visibility`, `message`, `image`, `filter`, `color1`, `color2`, `color3`, `color4`) VALUES
+(5, 1, '2019-05-03 00:03:34', 1, 'Pink Woman', 'pinkWoman.jpg', '', '', '', '', ''),
+(6, 1, '2019-05-03 00:03:47', 1, 'Den John\r\n', 'lennon.jpg', '', '', '', '', ''),
+(7, 1, '2019-05-03 00:04:00', 1, 'Blauwe madam\r\n', 'blueWoman.jpg', '', '', '', '', ''),
+(8, 1, '2019-05-03 00:04:10', 1, 'Samen \r\n', 'together.jpg', '', 'DD913B', '833A17', '1D1C24', 'FFF4D4'),
+(9, 9, '2019-05-08 12:58:00', 1, 'qerty', 'wp1835235.jpg', '', '', '', '', ''),
+(38, 10, '2019-05-12 16:07:25', 1, 'Moss paint', 'moss-grow-anna-garforth-300x220_1400x.progressive.jpg', '_1977', '', '', '', ''),
+(39, 8, '2019-05-14 22:14:56', 1, 'Gekke Dora', 'dora.jpg', 'rise', 'FF0080', '804000', 'E8C375', '7F00FF'),
+(40, 8, '2019-05-14 22:19:26', 1, '', 'dora.jpg', 'rise', 'FF0080', '804000', 'E8C375', '7F00FF'),
+(41, 8, '2019-05-15 16:08:15', 1, '', 'dora.jpg', 'rise', 'FF0080', '804000', 'E8C375', '7F00FF'),
+(42, 8, '2019-05-15 16:10:45', 1, '', '52651784_250088162566862_43683468122521600_n.jpg', 'rise', 'DD913B', '833A17', '1D1C24', 'FFF4D4'),
+(43, 8, '2019-05-15 16:12:45', 1, '', 'dora.jpg', 'rise', 'FF0080', '804000', 'E8C375', '7F00FF'),
+(44, 8, '2019-05-15 16:17:33', 1, '', 'dora.jpg', 'rise', 'FF0080', '804000', 'E8C375', '7F00FF'),
+(45, 8, '2019-05-15 16:18:59', 1, '', 'dora.jpg', 'rise', 'FF0080', '804000', 'E8C375', '7F00FF'),
+(46, 8, '2019-05-15 16:19:05', 1, '', '52651784_250088162566862_43683468122521600_n.jpg', 'rise', 'DD913B', '833A17', '1D1C24', 'FFF4D4'),
+(47, 8, '2019-05-15 16:21:11', 1, '', 'dora.jpg', 'rise', 'FF0080', '804000', 'E8C375', '7F00FF'),
+(48, 8, '2019-05-15 16:21:30', 1, '', 'dora.jpg', 'rise', 'FF0080', '804000', 'E8C375', '7F00FF'),
+(49, 8, '2019-05-15 16:22:05', 1, '', '52651784_250088162566862_43683468122521600_n.jpg', 'rise', 'DD913B', '833A17', '1D1C24', 'FFF4D4'),
+(50, 8, '2019-05-15 16:55:05', 1, '', 'dora.jpg', 'rise', 'FF0080', '804000', 'E8C375', '7F00FF'),
+(51, 8, '2019-05-15 21:15:08', 1, 'dez', 'dora.jpg', 'rise', 'FF0080', '804000', 'E8C375', '7F00FF'),
+(52, 8, '2019-05-15 21:15:48', 1, 'esrdxtcfgv', '52651784_250088162566862_43683468122521600_n.jpg', 'rise', 'DD913B', '833A17', '1D1C24', 'FFF4D4'),
+(53, 8, '2019-05-15 21:18:52', 1, 'Lekkere Bicky Burgers ', 'Bicky_IMG26.png', 'willow', '005029', 'E30514', 'F59F13', '004996'),
+(54, 8, '2019-05-15 21:30:07', 1, '', 'Bicky_IMG26.png', 'rise', '005029', 'E30514', 'F59F13', '004996'),
+(55, 8, '2019-05-15 21:44:41', 1, '', 'dora.jpg', '', 'FF0080', '804000', 'E8C375', '7F00FF');
 
 -- --------------------------------------------------------
 
@@ -200,7 +223,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `friendships`
@@ -212,7 +235,7 @@ ALTER TABLE `friendships`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `pictures`
@@ -224,7 +247,7 @@ ALTER TABLE `pictures`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `users`
