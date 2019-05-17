@@ -18,7 +18,8 @@ if ($_GET["user"] == $_SESSION['user_id']) {
 }
 else {
   $profile = User::loadProfile($_GET["user"]);
-}if(!empty($_POST['email'])) {
+}
+if(!empty($_POST['email'])) {
   User::updateEmail($_SESSION['user_id'], $_POST['email']);
 }
 
@@ -30,15 +31,15 @@ if(!empty($_POST['oldpass']) && !empty($_POST['newpass']) && !empty($_POST['conf
                 try {
                     $security = new Security();
                     $security->password = $_POST['newpass'];
-                    $security->passwordRepeat = $_POST['confpass'];
+                    $security->passwordConfirmation = $_POST['confpass'];
+                   
+                  
                
                     if ($security->passwordsAreSecure()) {
-
-                      updatePassword($_SESSION['user_id'], $_POST['newpass']);
-
-                      
-                        
-                    }
+                      if (User::passwordCheck($_POST['oldpass'], $_SESSION['user_id'])) {
+                          User::updatePassword($_SESSION['user_id'], $_POST['newpass']);
+                      }
+                  }
                 }
                 catch (Exception $e){
                               

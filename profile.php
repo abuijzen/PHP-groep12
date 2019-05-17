@@ -73,12 +73,12 @@ else {
               <?php if($profile['profileText']){echo $profile['profileText'];} else{ echo "Nog geen beschrijving toegevoegd...";}                ?>
             </p>
             <?php if (isset($edit)): ?>
-                    <div class="profile__user--btns">
+                    
                         <a class="btn btn-warning" href="editProfile.php?user=<?php echo $_SESSION['user_id']?>">Edit Profile</a>
                         <a class="btn btn-danger" href="logout.php">Log out</a>
-                    </div>
+                    
                 <?php else: ?>
-                    <div class="btn <?php echo $btnClass; ?>" data-post="<?php echo  htmlspecialchars($_GET["user"]); ?>"><?php echo $btnText; ?></div>
+                   
                 <?php endif; ?>
 
 

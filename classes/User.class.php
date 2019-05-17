@@ -6,6 +6,7 @@
         private $email;
         private $password;
         private $passwordConfirmation;
+        private $avatar;
 
         /**
          * Get the value of firstname.
@@ -214,5 +215,47 @@ public static function updatePassword($userId, $newpw) {
     $statement->bindValue(':pw', $hash, PDO::PARAM_STR);
     $statement->execute();
 } 
+public function passwordCheck ($oldpw, $userId) {
+    $conn = Db::getInstance();
+    $query = "select password from users where id = :id";
+    $statement = $conn->prepare($query);
+    $statement->bindParam(":id", $userId);
+    $statement->execute();
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    if(password_verify ($oldpw , $result["password"] )){
+                    return true;
+            }
+            else {
+                    throw new Exception ("Wrong password");
+            }
+}
+
+public static function getAvatar($userId) {
+    $conn = Db::getInstance();
+    $statement = $conn->prepare("SELECT users.avatar_url FROM users WHERE users.id = :id");
+    $statement->bindValue(':id', $userId, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function setAvatar($image)
+{
+        if (empty($image)){
+                throw new Exception ("An error uploading image");
+            }
+            $this->image = $image;
+    
+            return $this;
+}
+
+
+
+
+
+
+
+
+
+
     }
     
