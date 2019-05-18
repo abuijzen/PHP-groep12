@@ -117,7 +117,6 @@
             $password = password_hash($this->password, PASSWORD_DEFAULT, $options);
 
             try {
-                //alles wat je wil proberen
                 //$conn = new PDO("mysql:host=localhost;dbname=netflix","root","root",null); indien hij een 4e vraagt
                 $conn = Db::getInstance();
                 $statement = $conn->prepare('INSERT into users(firstname,lastname,email,password) VALUES (:firstName, :lastName ,:email,:password)');
@@ -127,7 +126,7 @@
                 $statement->bindParam(':password', $password);
                 $result = $statement->execute();
 
-                return $result;
+                header('Location:index.php');
             } catch (Throwable $t) {
                 return false;
                 echo 'het is niet gelukt';
@@ -173,89 +172,82 @@
             $statement->execute();
             $user = $statement->fetch(PDO::FETCH_ASSOC);
 
-
             return $user['id'];
         }
 
-        public static function loadProfile($userId) {
+        public static function loadProfile($userId)
+        {
             $conn = Db::getInstance();
-            $statement = $conn->prepare("SELECT users.profilePic, users.firstname, users.profileText, users.email FROM users WHERE users.id = :id");
+            $statement = $conn->prepare('SELECT users.profilePic, users.firstname, users.profileText, users.email FROM users WHERE users.id = :id');
             $statement->bindValue(':id', $userId, PDO::PARAM_INT);
             $statement->execute();
+
             return $statement->fetch(PDO::FETCH_ASSOC);
-    }
+        }
 
-    public static function updateProfileText($userId, $profileText) {
-        $conn = Db::getInstance();
-        $statement = $conn->prepare("UPDATE users SET profileText=:profileText WHERE id = :id");
-        $statement->bindValue(':id', $userId, PDO::PARAM_INT);
-        $statement->bindValue(':profileText', $profileText, PDO::PARAM_STR);
-        $statement->execute();
-} 
+        public static function updateProfileText($userId, $profileText)
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('UPDATE users SET profileText=:profileText WHERE id = :id');
+            $statement->bindValue(':id', $userId, PDO::PARAM_INT);
+            $statement->bindValue(':profileText', $profileText, PDO::PARAM_STR);
+            $statement->execute();
+        }
 
+        public static function updateEmail($userId, $email)
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('UPDATE users SET email=:email WHERE id = :id');
+            $statement->bindValue(':id', $userId, PDO::PARAM_INT);
+            $statement->bindValue(':email', $email, PDO::PARAM_STR);
+            $statement->execute();
+        }
 
-    public static function updateEmail($userId, $email) {
-        $conn = Db::getInstance();
-        $statement = $conn->prepare("UPDATE users SET email=:email WHERE id = :id");
-        $statement->bindValue(':id', $userId, PDO::PARAM_INT);
-        $statement->bindValue(':email', $email, PDO::PARAM_STR);
-        $statement->execute();
-} 
-
-
-
-public static function updatePassword($userId, $newpw) {
-    $conn = Db::getInstance();
-    $options = [
+        public static function updatePassword($userId, $newpw)
+        {
+            $conn = Db::getInstance();
+            $options = [
         'cost' => 12,
     ];
-    $hash = password_hash($newpw, PASSWORD_DEFAULT, $options);
-    $statement = $conn->prepare("UPDATE users SET password=:pw WHERE id = :id");
-    $statement->bindValue(':id', $userId, PDO::PARAM_INT);
-    $statement->bindValue(':pw', $hash, PDO::PARAM_STR);
-    $statement->execute();
-} 
-public function passwordCheck ($oldpw, $userId) {
-    $conn = Db::getInstance();
-    $query = "select password from users where id = :id";
-    $statement = $conn->prepare($query);
-    $statement->bindParam(":id", $userId);
-    $statement->execute();
-    $result = $statement->fetch(PDO::FETCH_ASSOC);
-    if(password_verify ($oldpw , $result["password"] )){
-                    return true;
-            }
-            else {
-                    throw new Exception ("Wrong password");
-            }
-}
+            $hash = password_hash($newpw, PASSWORD_DEFAULT, $options);
+            $statement = $conn->prepare('UPDATE users SET password=:pw WHERE id = :id');
+            $statement->bindValue(':id', $userId, PDO::PARAM_INT);
+            $statement->bindValue(':pw', $hash, PDO::PARAM_STR);
+            $statement->execute();
+        }
 
-public static function getAvatar($userId) {
-    $conn = Db::getInstance();
-    $statement = $conn->prepare("SELECT users.avatar_url FROM users WHERE users.id = :id");
-    $statement->bindValue(':id', $userId, PDO::PARAM_INT);
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
-}
+        public function passwordCheck($oldpw, $userId)
+        {
+            $conn = Db::getInstance();
+            $query = 'select password from users where id = :id';
+            $statement = $conn->prepare($query);
+            $statement->bindParam(':id', $userId);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            if (password_verify($oldpw, $result['password'])) {
+                return true;
+            } else {
+                throw new Exception('Wrong password');
+            }
+        }
 
-public function setAvatar($image)
-{
-        if (empty($image)){
-                throw new Exception ("An error uploading image");
+        public static function getAvatar($userId)
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('SELECT users.avatar_url FROM users WHERE users.id = :id');
+            $statement->bindValue(':id', $userId, PDO::PARAM_INT);
+            $statement->execute();
+
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function setAvatar($image)
+        {
+            if (empty($image)) {
+                throw new Exception('An error uploading image');
             }
             $this->image = $image;
-    
+
             return $this;
-}
-
-
-
-
-
-
-
-
-
-
+        }
     }
-    

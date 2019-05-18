@@ -16,7 +16,6 @@
                 $user->setPassword($_POST['password']);
                 $user->setPasswordConfirmation($_POST['password_confirmation']);
                 $result = $user->register();
-                header('Location:index.php');
             } else {
                 $error = 'Your passwords are not secure or do not match.';
             }
