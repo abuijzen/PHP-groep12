@@ -9,9 +9,6 @@
 
     //gebruik van klassen
     $post = new Post();
-    $countResults = $post->countAll();
-    $viewResults = $post->countViewable();
-    $noResult = $post->noResult();
 
     if (!empty($_GET['color'])) {
         $color = $_GET['color'];
@@ -22,6 +19,10 @@
     } else {
         $results = $post->showResults();
     }
+
+    $countResults = $post->countAll();
+    $viewResults = $post->countViewable();
+    $noResult = $post->noResult();
 
 ?><!DOCTYPE html>
     <html lang="en">
