@@ -8,6 +8,9 @@
     }
 
     $post = new Post();
+    $countResults = $post->countAll();
+    $viewResults = $post->countViewable();
+    $noResult = $post->noResult();
 
     if (!empty($_GET['color'])) {
         $color = $_GET['color'];
@@ -16,8 +19,6 @@
         $results = $post->showResults();
         // var_dump($results);
     }
-
-    //gebruik van klassen
 
 ?><!DOCTYPE html>
     <html lang="en">
@@ -48,8 +49,8 @@
             $mostLikesPost = Post::getNowTrending($mostLikes);
 
             //tel de gevonden resultaten
-            echo '<br>Found results: '.$post->countAll().'<br>';
-            echo 'Viewable results: '.$post->countViewable();
+            echo '<br>Found results: '.$countResults.'<br>';
+            echo 'Viewable results: '.$viewResults;
             ?></h1>
     
             <div class="card col-fluid text-center">
@@ -69,10 +70,10 @@
 </div>
 <div class="post row">
             <!--indien er GEEN resultaten worden gevonden-->
-            <?php echo $post->noResult(); ?>
+            <?php echo $noResult; ?>
     
             <!--indien er WEL resultaten worden gevonden-->
-            <?php if ($post->countAll() >= 1): ?>
+            <?php if ($countResults >= 1): ?>
                 <?php foreach ($results as $c): ?>
                 <div class="col-md-3-fluid text-center card " style="width:25%;">
                 

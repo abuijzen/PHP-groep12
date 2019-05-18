@@ -5,9 +5,7 @@ if (!empty($_POST)) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $user = User::canLogin($email, $password);
-    if ($user){
-        
-        
+    if ($user) {
         User::doLogin($user);
     } else {
         $error = true;
@@ -89,8 +87,10 @@ if (!empty($_POST)) {
 
               </form>
 
+              <a href="register.php">Not an account yet? Sign up here!</a>
+
             </div>
-            <a href="register.php">Not an account yet? Sign up here!</a>
+            
           </div>
         </div>
       </div>
