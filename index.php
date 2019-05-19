@@ -29,11 +29,10 @@
             <title>Inspiration Hunter</title>
          
              <!--     Fonts and icons     -->
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"
-        />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
         <!-- CSS Files -->
-        <link href="css/material-kit.css?v=2.0.5" rel="stylesheet" />
+        <link href="css/material-kit.css?v=2.0.5" rel="stylesheet">
         </head>
         <body>
             <?php include_once 'nav.php'; ?>
@@ -42,33 +41,29 @@
             <form name='form-search' method='get' action="index.php" id="form-search">
                 <input type="text" id="search" name="search" value="" placeholder="zoeken">
             </form>
-            <h1 class="text-center">
-            <?php
-            //vraag post op met de meeste likes
-            $mostLikes = Post::countLikes();
-            $mostLikesPost = Post::getNowTrending($mostLikes);
+            <h3 class="text-center">
+                <?php
+                //vraag post op met de meeste likes
+                $mostLikes = Post::countLikes();
+                $mostLikesPost = Post::getNowTrending($mostLikes);
 
-            //tel de gevonden resultaten
-            echo '<br>Found results: '.$countResults.'<br>';
-            echo 'Viewable results: '.$viewResults;
-            ?></h1>
+                //tel de gevonden resultaten
+                echo '<br>Found results: '.$countResults.'<br>';
+                echo 'Viewable results: '.$viewResults;
+                ?>
+            </h3>
     
             <div class="card col-fluid text-center">
-         
-                
-          <!--geeft de post met meeste likes-->
-            <h1>NOW TRENDING</h1>
-                <?php foreach ($mostLikesPost as $trend):?>
-                    <?php echo 'A post from: '.$trend['firstname']; ?> <?php echo $trend['lastname']; ?>
-                        <a href="detail_img.php?id=<?php echo $trend[0]; ?>">
-                            <img src="images/thumb/<?php echo $trend['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
-                        </a>
-                <?php endforeach; ?>
-
-
-</div>
-</div>
-<div class="post row">
+                <!--geeft de post met meeste likes-->
+                <h2>NOW TRENDING</h2>
+                    <?php foreach ($mostLikesPost as $trend):?>
+                        <?php echo 'A post from: '.$trend['firstname']; ?> <?php echo $trend['lastname']; ?>
+                            <a href="detail_img.php?id=<?php echo $trend[0]; ?>">
+                                <img src="images/thumb/<?php echo $trend['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
+                            </a>
+                    <?php endforeach; ?>
+            </div>
+        <div class="post row">
             <!--indien er GEEN resultaten worden gevonden-->
             <?php echo $noResult; ?>
     
@@ -83,7 +78,9 @@
                                 <img class="report_Icon" src="images/report.svg" alt="report icon">
                             </a>    
                         </div>
-                        <p><strong><?php echo $c['firstname']; ?> <?php echo $c['lastname']; ?></strong></p>
+                        <a href="followProfile.php?id=<?php echo $c[0]; ?>">
+                            <p><strong><?php echo $c['firstname']; ?> <?php echo $c['lastname']; ?></strong></p>
+                        </a>
                         <p><?php echo Time::getTime($c['timePost']); ?></p>
                         <div class="image">
                             <a href="detail_img.php?id=<?php echo $c[0]; ?>">

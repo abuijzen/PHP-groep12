@@ -4,54 +4,41 @@ require_once 'bootstrap.php';
 
 //zonder sessie niet naar index gaan.
 
-if ($_GET["user"] == $_SESSION['user_id']) {
-  $profile = User::loadProfile($_SESSION['user_id']);
-  $edit = 1;
-}
-else {
-  $profile = User::loadProfile($_GET["user"]);
-}
-
-if ($_GET["user"] == $_SESSION['user_id']) {
-  $profile = User::loadProfile($_SESSION['user_id']);
-  $edit = 1;
-}
-else {
-  $profile = User::loadProfile($_GET["user"]);
-}
-if(!empty($_POST['email'])) {
-  User::updateEmail($_SESSION['user_id'], $_POST['email']);
+if ($_GET['user'] == $_SESSION['user_id']) {
+    $profile = User::loadProfile($_SESSION['user_id']);
+    $edit = 1;
+} else {
+    $profile = User::loadProfile($_GET['user']);
 }
 
-if(!empty($_POST['profileText'])) {
-  User::updateProfileText($_SESSION['user_id'], $_POST['profileText']);
+if ($_GET['user'] == $_SESSION['user_id']) {
+    $profile = User::loadProfile($_SESSION['user_id']);
+    $edit = 1;
+} else {
+    $profile = User::loadProfile($_GET['user']);
+}
+if (!empty($_POST['email'])) {
+    User::updateEmail($_SESSION['user_id'], $_POST['email']);
 }
 
-if(!empty($_POST['oldpass']) && !empty($_POST['newpass']) && !empty($_POST['confpass'])) {
-                try {
-                    $security = new Security();
-                    $security->password = $_POST['newpass'];
-                    $security->passwordConfirmation = $_POST['confpass'];
-                   
-                  
-               
-                    if ($security->passwordsAreSecure()) {
-                      if (User::passwordCheck($_POST['oldpass'], $_SESSION['user_id'])) {
-                          User::updatePassword($_SESSION['user_id'], $_POST['newpass']);
-                      }
-                  }
-                }
-                catch (Exception $e){
-                              
-                }
-                
+if (!empty($_POST['profileText'])) {
+    User::updateProfileText($_SESSION['user_id'], $_POST['profileText']);
+}
+
+if (!empty($_POST['oldpass']) && !empty($_POST['newpass']) && !empty($_POST['confpass'])) {
+    try {
+        $security = new Security();
+        $security->password = $_POST['newpass'];
+        $security->passwordConfirmation = $_POST['confpass'];
+
+        if ($security->passwordsAreSecure()) {
+            if (User::passwordCheck($_POST['oldpass'], $_SESSION['user_id'])) {
+                User::updatePassword($_SESSION['user_id'], $_POST['newpass']);
             }
-
-
-
-
-
-
+        }
+    } catch (Exception $e) {
+    }
+}
 
 ?>
 
@@ -104,7 +91,7 @@ if(!empty($_POST['oldpass']) && !empty($_POST['newpass']) && !empty($_POST['conf
 
             </div>
             <?php else: ?>
-            <div class="btn <?php echo $btnClass; ?>" data-post="<?php echo  htmlspecialchars($_GET[" user "]); ?>">
+            <div class="btn <?php echo $btnClass; ?>" data-post="<?php echo  htmlspecialchars($_GET[' user ']); ?>">
               <?php echo $btnText; ?>
             </div>
             <?php endif; ?>
