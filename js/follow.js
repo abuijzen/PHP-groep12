@@ -1,5 +1,6 @@
 $("a.followBtn").on("click", function (e) {
-	var follow_id = ($(this).data('id'));
+    var follow_id = ($(this).data('id'));
+    var button = $(this);
 
     $.ajax({
 		method: "POST",
@@ -7,7 +8,12 @@ $("a.followBtn").on("click", function (e) {
 		data: { follow_id: follow_id },
 		dataType: "json"
 	}).done(function (res) {
-		console.log(res);
+        if (res.status == "success") {
+			button.text("Following");
+		} else if (res.status == "fail") {
+			button.text("Follow");
+		}
+        
     });
     
 	e.preventDefault();

@@ -48,7 +48,7 @@
         public function checkFollowing()
         {
             $conn = Db::getInstance();
-            $statement = $conn->prepare('SELECT count(*) as count FROM followers WHERE users_id = :users_id AND $follow_id = :follow_id');
+            $statement = $conn->prepare('SELECT count(*) as count FROM followers WHERE user_id = :users_id AND follow_id = :follow_id');
             $statement->bindParam(':follow_id', $this->follow_id);
             $statement->bindParam(':users_id', $this->users_id);
             $statement->execute();
@@ -75,7 +75,7 @@
         public function DeleteFollow()
         {
             $conn = Db::getInstance();
-            $statement = $conn->prepare('DELETE FROM followers WHERE user_id = :user_id AND follow_id = :follow_id');
+            $statement = $conn->prepare('DELETE FROM followers WHERE user_id = :users_id AND follow_id = :follow_id');
             $statement->bindParam(':follow_id', $this->follow_id);
             $statement->bindParam(':users_id', $this->users_id);
             $result = $statement->execute();
