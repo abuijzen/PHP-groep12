@@ -42,33 +42,29 @@
             <form name='form-search' method='get' action="index.php" id="form-search">
                 <input type="text" id="search" name="search" value="" placeholder="zoeken">
             </form>
-            <h1 class="text-center">
-            <?php
-            //vraag post op met de meeste likes
-            $mostLikes = Post::countLikes();
-            $mostLikesPost = Post::getNowTrending($mostLikes);
+            <h3 class="text-center">
+                <?php
+                //vraag post op met de meeste likes
+                $mostLikes = Post::countLikes();
+                $mostLikesPost = Post::getNowTrending($mostLikes);
 
-            //tel de gevonden resultaten
-            echo '<br>Found results: '.$countResults.'<br>';
-            echo 'Viewable results: '.$viewResults;
-            ?></h1>
+                //tel de gevonden resultaten
+                echo '<br>Found results: '.$countResults.'<br>';
+                echo 'Viewable results: '.$viewResults;
+                ?>
+            </h3>
     
             <div class="card col-fluid text-center">
-         
-                
-          <!--geeft de post met meeste likes-->
-            <h1>NOW TRENDING</h1>
-                <?php foreach ($mostLikesPost as $trend):?>
-                    <?php echo 'A post from: '.$trend['firstname']; ?> <?php echo $trend['lastname']; ?>
-                        <a href="detail_img.php?id=<?php echo $trend[0]; ?>">
-                            <img src="images/thumb/<?php echo $trend['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
-                        </a>
-                <?php endforeach; ?>
-
-
-</div>
-</div>
-<div class="post row">
+                <!--geeft de post met meeste likes-->
+                <h2>NOW TRENDING</h2>
+                    <?php foreach ($mostLikesPost as $trend):?>
+                        <?php echo 'A post from: '.$trend['firstname']; ?> <?php echo $trend['lastname']; ?>
+                            <a href="detail_img.php?id=<?php echo $trend[0]; ?>">
+                                <img src="images/thumb/<?php echo $trend['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
+                            </a>
+                    <?php endforeach; ?>
+            </div>
+        <div class="post row">
             <!--indien er GEEN resultaten worden gevonden-->
             <?php echo $noResult; ?>
     
