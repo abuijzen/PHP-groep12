@@ -1,10 +1,10 @@
 $("a.followBtn").on("click", function (e) {
-	var user_id = ($(this).data('id'));
+	var follow_id = ($(this).data('id'));
 
     $.ajax({
 		method: "POST",
 		url: "ajax/follow.php",
-		data: { user_id: user_id },
+		data: { follow_id: follow_id },
 		dataType: "json"
 	}).done(function (res) {
 		console.log(res);

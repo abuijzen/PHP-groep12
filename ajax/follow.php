@@ -5,36 +5,29 @@
     // POST?
     if (!empty($_POST)) {
         // welke post
-        $postsId = $_POST['postsId'];
+        $follow_id = $_POST['follow_id'];
 
         // welke user Id
-        $usersId = User::getUserId();
+        $users_id = User::getUserId();
 
         $l = new Follow();
-        $l->setPostsId($postsId);
-        $l->setUsersId($usersId);
-        if ($l->CheckLike()) {
-            $l->Addlike();
+        $l->setUsers_id($users_id);
+        $l->setFollow_id($follow_id);
+        if ($l->checkFollowing()) {
+            $l->AddFollow();
 
             $result = [
                 'status' => 'success',
-                'message' => 'Like has been saved.',
+                'message' => 'You are following someone new.',
             ];
         } else {
-            $l->Deletelike();
+            $l->DeleteFollow();
 
             $result = [
                 'status' => 'fail',
-                'message' => 'Already liked.',
+                'message' => 'Unfollow.',
             ];
         }
-
-        // JSON
-    } else {
-        $result = [
-            'status' => 'nope',
-            'message' => 'Like has not  been saved.',
-        ];
     }
     header('Content-Type: application/json');
     echo json_encode($result);

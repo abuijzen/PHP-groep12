@@ -2,25 +2,25 @@
 
     class Follow
     {
-        private $user_id;
+        private $users_id;
         private $follow_id;
 
         /**
-         * Get the value of user_id.
+         * Get the value of users_id.
          */
-        public function getUser_id()
+        public function getUsers_id()
         {
-            return $this->user_id;
+            return $this->users_id;
         }
 
         /**
-         * Set the value of user_id.
+         * Set the value of users_id.
          *
          * @return self
          */
-        public function setUser_id($user_id)
+        public function setUsers_id($users_id)
         {
-            $this->user_id = $user_id;
+            $this->users_id = $users_id;
 
             return $this;
         }
@@ -48,9 +48,9 @@
         public function checkFollowing()
         {
             $conn = Db::getInstance();
-            $statement = $conn->prepare('SELECT count(*) as count FROM followers WHERE user_id = :user_id AND $follow_id = :follow_id');
-            $statement->bindParam(':postsId', $this->user_id);
-            $statement->bindParam(':userId', $this->follow_id);
+            $statement = $conn->prepare('SELECT count(*) as count FROM followers WHERE users_id = :users_id AND $follow_id = :follow_id');
+            $statement->bindParam(':follow_id', $this->follow_id);
+            $statement->bindParam(':users_id', $this->users_id);
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -59,5 +59,27 @@
             }
 
             return false;
+        }
+
+        public function AddFollow()
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('INSERT into followers (user_id, follow_id) values (:users_id, :follow_id)');
+            $statement->bindParam(':follow_id', $this->follow_id);
+            $statement->bindParam(':users_id', $this->users_id);
+            $result = $statement->execute();
+
+            return $result;
+        }
+
+        public function DeleteFollow()
+        {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare('DELETE FROM followers WHERE user_id = :user_id AND follow_id = :follow_id');
+            $statement->bindParam(':follow_id', $this->follow_id);
+            $statement->bindParam(':users_id', $this->users_id);
+            $result = $statement->execute();
+
+            return $result;
         }
     }
