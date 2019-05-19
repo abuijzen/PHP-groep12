@@ -45,11 +45,13 @@ if (!empty($_GET['id'])) {
                         </div>
                         <div class="description text-center">
                             <div class="profile__user--btns"></div>
-                            <a href="index.php"><div class="btn btn-primary" data-post="">FOLLOW</div></a>
+                            <a href="#" class="btn btn-primary followBtn" data-id="<?php echo $selectId[0]['id']; ?>">FOLLOW</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="js/follow.js"></script>
     </body>
 </html>
