@@ -29,11 +29,10 @@
             <title>Inspiration Hunter</title>
          
              <!--     Fonts and icons     -->
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"
-        />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
         <!-- CSS Files -->
-        <link href="css/material-kit.css?v=2.0.5" rel="stylesheet" />
+        <link href="css/material-kit.css?v=2.0.5" rel="stylesheet">
         </head>
         <body>
             <?php include_once 'nav.php'; ?>
@@ -79,7 +78,9 @@
                                 <img class="report_Icon" src="images/report.svg" alt="report icon">
                             </a>    
                         </div>
-                        <p><strong><?php echo $c['firstname']; ?> <?php echo $c['lastname']; ?></strong></p>
+                        <a href="followProfile.php?id=<?php echo $c[0]; ?>">
+                            <p><strong><?php echo $c['firstname']; ?> <?php echo $c['lastname']; ?></strong></p>
+                        </a>
                         <p><?php echo Time::getTime($c['timePost']); ?></p>
                         <div class="image">
                             <a href="detail_img.php?id=<?php echo $c[0]; ?>">
