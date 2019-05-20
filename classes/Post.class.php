@@ -172,7 +172,8 @@ class Post
         $conn = Db::getInstance();
         $innerhtml = $this->checkIfSearchIsEmpty();
         // $result = $conn->prepare("SELECT*FROM posts JOIN users on users.id = posts.usersId WHERE posts.visibility = 1 AND posts.message LIKE '%$innerhtml%' ORDER BY posts.id DESC  limit 20");
-        $result = $conn->prepare("SELECT posts.id as post_id, users.id as user_id, posts.visibility, posts.message, posts.image, posts.filter, posts.`color1`, posts.`color2`, posts.`color3`, posts.`color4`, users.`firstname`, users.`lastname`, users.`email`, posts.timePost FROM posts JOIN users on users.id = posts.usersId WHERE posts.visibility = 1 AND posts.message LIKE '%$innerhtml%' ORDER BY posts.id DESC  limit 20");
+        $result = $conn->prepare('SELECT posts.id as post_id, users.id as user_id, posts.visibility, posts.message, posts.image, posts.filter, posts.`color1`, posts.`color2`, posts.`color3`, posts.`color4`, users.`firstname`, users.`lastname`, users.`email`, posts.timePost FROM posts JOIN users on users.id = posts.usersId WHERE posts.visibility = 1 AND posts.message LIKE :innerhtml ORDER BY posts.id DESC  limit 20');
+        $result->bindValue(':innerhtml', '%'.$innerhtml.'%');
         $result->execute();
 
         return $result;
