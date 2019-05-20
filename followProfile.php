@@ -39,7 +39,7 @@ if (!empty($_GET['id'])) {
                         <div class="row">
                             <div class="col-md-6 ml-auto mr-auto">
                                 <div class="profile">
-                                    <?php echo 'Profile from: <strong>'.$selectId[0]['firstname']; ?> <?php echo $selectId[0]['lastname']; ?>
+                                    <?php echo htmlspecialchars('Profile from: <strong>'.$selectId[0]['firstname']); ?> <?php echo htmlspecialchars($selectId[0]['lastname']); ?>
                                 </div>
                             </div>
                         </div>
