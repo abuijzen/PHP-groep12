@@ -21,28 +21,7 @@
                   <a href="upload.php" class="nav-link btn btn-secondary">Upload Image</a>
                 
                   </li>
-                 
-                  
-                  
-                  
-
-                <form class="form-inline ml-auto">
-                
-                <button type="submit" class="btn btn-white btn-just-icon btn-round">
-                    <i class="material-icons">search</i>
-                </button>
-              
-
-            </form>
-
-
-
-
-
-
-
-
-
+     
                   <li class="dropdown nav-item">
                     <a href="profile.php" class="profile-photo dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
                       <div class="profile-photo-small">
