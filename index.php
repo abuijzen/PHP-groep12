@@ -43,10 +43,6 @@
         <body>
             <?php include_once 'navIndex.php'; ?>
            
-            <!--Formulier om te zoeken op input van gebruiker-->
-            <form name='form-search' method='get' action="index.php" id="form-search">
-                <input type="text" id="search" name="search" value="" placeholder="zoeken">
-            </form>
             <h3 class="text-center">
                 <?php
                 //vraag post op met de meeste likes
