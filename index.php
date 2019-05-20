@@ -41,7 +41,7 @@
          
         </head>
         <body>
-            <?php include_once 'nav.php'; ?>
+            <?php include_once 'navIndex.php'; ?>
            
             <!--Formulier om te zoeken op input van gebruiker-->
             <form name='form-search' method='get' action="index.php" id="form-search">
