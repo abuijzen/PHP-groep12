@@ -370,4 +370,15 @@ class Post
 
         return $mostLikesPost;
     }
+
+    public static function getUserFromPost($id)
+    {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare('select users.id from users JOIN posts on posts.usersId=users.id WHERE posts.id = :id');
+        $statement->bindParam(':id', $id);
+        $statement->execute();
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $user['id'];
+    }
 }

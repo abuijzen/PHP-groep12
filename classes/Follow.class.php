@@ -83,19 +83,19 @@
             return $result;
         }
 
-        public static function getFollowers($follow_id)
+        public static function getFollowers($follow_id, $users_id)
         {
             $conn = Db::getInstance();
             $statement = $conn->prepare('SELECT count(*) as count FROM followers WHERE user_id = :users_id AND follow_id = :follow_id');
-            $statement->bindParam(':follow_id', follow_id);
-            $statement->bindParam(':users_id', users_id);
+            $statement->bindParam(':follow_id', $follow_id);
+            $statement->bindParam(':users_id', $users_id);
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
 
             if ($result['count'] == 0) {
-                return 'Follow';
+                return false;
             }
 
-            return 'Following';
+            return true;
         }
     }

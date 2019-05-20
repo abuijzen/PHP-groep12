@@ -13,6 +13,10 @@ $post = new Post();
 if (!empty($_GET['id'])) {
     $id = ($_GET['id']);
     $selectId = Post::getSelectedImage($id);
+    $user_id = User::getUserId();
+    $follow_id = Post::getUserFromPost($id);
+
+    $following = Follow::getFollowers($follow_id, $user_id);
 }
 
 ?>
@@ -45,7 +49,7 @@ if (!empty($_GET['id'])) {
                         </div>
                         <div class="description text-center">
                             <div class="profile__user--btns"></div>
-                            <a href="#" class="btn btn-primary followBtn" data-id="<?php echo $selectId[0]['id']; ?>"><?php echo 'test'; ?></a>
+                            <a href="#" class="btn btn-primary followBtn" data-id="<?php echo $selectId[0]['id']; ?>"><?php echo $following === true ? 'Unfollow' : 'Follow'; ?></a>
                         </div>
                     </div>
                 </div>

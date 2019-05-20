@@ -9,7 +9,7 @@ $("a.followBtn").on("click", function (e) {
             dataType: "json"
         }).done(function (res) {
             if (res.status == "success") {
-                button.text("Following");
+                button.text("Unfollow");
             } else if (res.status == "fail") {
                 button.text("Follow");
             }
