@@ -52,13 +52,13 @@ $comments = Comment::getAll($postsId);
 
     <div class="card mb-3">
     
-    <p> <?php echo 'A post from: <strong>'.$selectId[0]['firstname']; ?> <?php echo $selectId[0]['lastname']; ?></strong></p>
+    <p> <?php echo htmlspecialchars('A post from: <strong>'.$selectId[0]['firstname']); ?> <?php echo htmlspecialchars($selectId[0]['lastname']); ?></strong></p>
       <img src="images/<?php echo $selectId[0]['image']; ?>" alt="" height="auto" class=" card-img-top <?php echo $selectId[0]['filter']; ?>">
       
       <div class="card-body">
         <div class="blockquote">
       <p class="mb-0">
-        <?php echo $selectId[0]['message']; ?>
+        <?php echo htmlspecialchars($selectId[0]['message']); ?>
       </p>
       </div>
 

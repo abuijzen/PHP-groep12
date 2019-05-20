@@ -57,7 +57,7 @@
                 <!--geeft de post met meeste likes-->
                 <h2>NOW TRENDING</h2>
                     <?php foreach ($mostLikesPost as $trend):?>
-                        <?php echo 'A post from: '.$trend['firstname']; ?> <?php echo $trend['lastname']; ?>
+                        <?php echo htmlspecialchars('A post from: '.$trend['firstname']); ?> <?php echo htmlspecialchars($trend['lastname']); ?>
                             <a href="detail_img.php?id=<?php echo $trend[0]; ?>">
                                 <img src="images/thumb/<?php echo $trend['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
                             </a>
@@ -79,7 +79,7 @@
                             </a>    
                         </div>
                         <a href="followProfile.php?id=<?php echo $c[0]; ?>">
-                            <p><strong><?php echo $c['firstname']; ?> <?php echo $c['lastname']; ?></strong></p>
+                            <p><strong><?php echo htmlspecialchars($c['firstname']); ?> <?php echo htmlspecialchars($c['lastname']); ?></strong></p>
                         </a>
                         <p><?php echo Time::getTime($c['timePost']); ?></p>
                         <div class="image">
@@ -90,7 +90,7 @@
 
 
 
-                        <p><?php echo $c['message']; ?></p><a href="profile.php?user=<?php echo $c['usersId']; ?>">
+                        <p><?php echo htmlspecialchars($c['message']); ?></p><a href="profile.php?user=<?php echo $c['usersId']; ?>">
                         </p></a>	  
 
                         
