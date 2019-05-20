@@ -26,10 +26,8 @@
                   
                   
 
-                    <form class="form-inline ml-auto">
-                <div class="form-group no-border">
-                  <input type="text" class="form-control" method='get' action="index.php" id="form-search" placeholder="Search">
-                </div>
+                <form class="form-inline ml-auto">
+                
                 <button type="submit" class="btn btn-white btn-just-icon btn-round">
                     <i class="material-icons">search</i>
                 </button>
@@ -56,8 +54,8 @@
 
                       <h6 class="dropdown-header">Name</h6>
                      
-                      <a href="profile.php?user=<?php echo $_SESSION['user_id']?>" class="dropdown-item">Profile</a>
-                      <a href="editProfile.php?user=<?php echo $_SESSION['user_id']?>" class="dropdown-item">Edit Profile</a>
+                      <a href="profile.php?user=<?php echo $_SESSION['user_id']; ?>" class="dropdown-item">Profile</a>
+                      <a href="editProfile.php?user=<?php echo $_SESSION['user_id']; ?>" class="dropdown-item">Edit Profile</a>
                       <a href="logout.php" class="dropdown-item">Log Out</a>
                     </div>
                   </li>
