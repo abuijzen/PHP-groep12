@@ -27,14 +27,18 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>Inspiration Hunter</title>
+
         <!--filters-->
         <link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
-         
+        
              <!--     Fonts and icons     -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
         <!-- CSS Files -->
         <link href="css/material-kit.css?v=2.0.5" rel="stylesheet">
+
+        
+         
         </head>
         <body>
             <?php include_once 'nav.php'; ?>
@@ -61,7 +65,7 @@
                     <?php foreach ($mostLikesPost as $trend):?>
                         <?php echo htmlspecialchars('A post from: '.$trend['firstname']); ?> <?php echo htmlspecialchars($trend['lastname']); ?>
                             <a href="detail_img.php?id=<?php echo $trend[0]; ?>">
-                                <img src="images/thumb/<?php echo $trend['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
+                                <img src="images/thumb/<?php echo $trend['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $trend['filter']; ?> card-img-top">
                             </a>
                     <?php endforeach; ?>
             </div>
@@ -86,7 +90,7 @@
                         <p><?php echo Time::getTime($c['timePost']); ?></p>
                         <div class="image">
                             <a href="detail_img.php?id=<?php echo $c[0]; ?>">
-                            <img src="images/thumb/<?php echo $c['image']; ?>" class="card-img-top " alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?>">
+                            <img src="images/thumb/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?> card-img-top">
                             </a>
                         </div>
 
