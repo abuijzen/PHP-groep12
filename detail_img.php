@@ -81,8 +81,8 @@ $comments = Comment::getAll($postsId);
       </ul>
 </div>
 </div>
-
-    <?php if ($countResults > 1):?>
+<?php $countRelated = Post::countRelatedPosts($id); ?>
+    <?php if ($countRelated > 1):?>
       <div class="card-body">
       <h1 class="text-center">More posts from this user</h1>
       <div class="post row">

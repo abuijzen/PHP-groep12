@@ -336,10 +336,14 @@ class Post
 
     public static function countRelatedPosts($id)
     {
-        $fromUser = self::getRelatedPosts($id);
-        $countResults = $fromUser->rowCount();
+        $selectId = self::getSelectedImage($id);
+        $conn = Db::getInstance();
+        $usersId = $selectId[0]['usersId'];
+        $fromUser = $conn->prepare("SELECT * FROM users JOIN posts on posts.usersId=users.id WHERE posts.usersId='$usersId' AND posts.id != '$id' LIMIT 9");
+        $fromUser->execute();
+        $countRelated = $fromUser->rowCount();
 
-        return $countResults;
+        return $countRelated;
     }
 
     //geef de postid van de post met de meeste likes
@@ -354,13 +358,13 @@ class Post
         return $mostLikes;
     }
 
-    //zoekt post op basis van de gegeven id
+    //geeft de post terug met meeste likes
     public static function getNowTrending($mostLikes)
     {
         $conn = Db::getInstance();
         $mostLikesPost = $conn->prepare("SELECT * FROM posts 
-        JOIN users on posts.usersId = users.id 
-        WHERE posts.id='$mostLikes'");
+         JOIN users on posts.usersId = users.id 
+         WHERE posts.id='$mostLikes'");
         $mostLikesPost->execute();
         $mostLikesPost = $mostLikesPost->fetchAll();
 
