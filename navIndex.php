@@ -25,12 +25,10 @@
                     
                 <div class="form-group no-border">
                 <form name='form-search' method='get' action="index.php" id="form-search">
-                <input type="text" id="search" name="search" value="" placeholder="zoeken">
-            </form>
+                    <input type="text" id="search" name="search" value="" placeholder="zoeken">
+                </form>
                 </div>
-                <button type="submit" class="btn btn-white btn-just-icon btn-round">
-                    <i class="material-icons">search</i>
-                </button>
+               
               
 
             </form>
