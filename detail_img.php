@@ -70,12 +70,12 @@ $comments = Comment::getAll($postsId);
       </div>
 
       <input type="text" class="form-control" rows="2" placeholder="Add a comment..." id="comment" name="comment" />
-      <input id="btnSubmit" class="btn-primary btn" type="submit" value="Add comment" data-id="<?php echo $id; ?>" />
+      <input id="btnSubmit" class="btn-primary btn" type="submit" value="Add comment" data-id="<?php echo htmlspecialchars($id); ?>" />
 
       <ul id="listupdates">
         <?php foreach ($comments as $comment): ?>
         <li>
-          <?php echo $comment['text']; ?>
+          <?php echo htmlspecialchars($comment['text']); ?>
         </li>
         <?php endforeach; ?>
       </ul>

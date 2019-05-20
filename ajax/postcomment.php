@@ -12,29 +12,26 @@
         //welke post
         $postsId = $_POST['postsId'];
 
-
         $result = [];
         // comment opslaan in databank
         try {
             $c = new Comment();
             $c->setText($text);
-            $c->Save($postsId, $usersId);
+            $c->Save($postsId, $usersId, $text);
 
-            $result = [
-            'status' => 'Success',
-            'message' => 'Comment saved',
-        ];
+            $result = ['status' => 'Success',
+                        'message' => 'Comment saved'
+                    ];
         } catch (Throwable $t) {
             $result = [
                 'status' => 'Error',
-                'message' => 'Something went wrong.',
+                'message' => 'Something went wrong.'
             ];
         }
-
-    } else{
+    } else {
         $result = [
             'status' => 'Error',
-            'message' => 'Something went wrong.',
+            'message' => 'Something went wrong.'
         ];
     }
 
