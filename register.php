@@ -10,8 +10,8 @@
 
             if ($security->passwordsAreSecure()) {
                 $user = new User();
-                $user->setFirstname($_POST['firstname']);
-                $user->setLastname($_POST['lastname']);
+                $user->setFirstname(htmlspecialchars($_POST['firstname']));
+                $user->setLastname(htmlspecialchars($_POST['lastname']));
                 $user->setEmail($_POST['email']);
                 $user->setPassword($_POST['password']);
                 $user->setPasswordConfirmation($_POST['password_confirmation']);
