@@ -227,28 +227,6 @@ class Post
         return $result;
     }
 
-    // public function checkReports()
-    // {
-    //     $conn = db::getInstance();
-    //     $statement = $conn->prepare('SELECT * from reports where postsId = :postsId');
-    //     $statement->bindParam(':postsId', $this->id);
-    //     $statement->execute();
-    //     $result = $statement->fetch(PDO::FETCH_ASSOC);
-
-    //     $count = $statement->rowCount();
-    //     if ($this->alreadyReport()) {
-    //         // echo 'test van functie';
-    //         if ($count == 0) {
-    //             return true;
-    //             if ($count >= 2) {
-    //                 return false;
-    //             }
-    //         }
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
     public function checkReports()
     {
         $conn = Db::getInstance();
