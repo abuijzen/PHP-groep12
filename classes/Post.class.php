@@ -160,7 +160,8 @@ class Post
     {
         $conn = Db::getInstance();
         $innerhtml = $this->checkIfSearchIsEmpty();
-        $allResults = $conn->prepare("SELECT*FROM posts WHERE visibility = 1 AND message LIKE '%$innerhtml%' ORDER BY id DESC");
+        $allResults = $conn->prepare('SELECT*FROM posts WHERE visibility = 1 AND message LIKE :innerhtml ORDER BY id DESC');
+        $allResults->bindValue(':innerhtml', '%'.$innerhtml.'%');
         $allResults->execute();
         $countAll = $allResults->rowCount();
 
