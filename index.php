@@ -106,8 +106,12 @@
                     </div>
                 <?php endforeach; ?> 
             <?php endif; ?>  
+
+            
             </div>
-           
+            
+            <button class="btn btn-primary" id="loadmorebtn">Load more images</button>
+            <span class="loding" style="display: none;"><span class="loding_txt">Loading...</span></span>
         </body>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>   
             <script src="js/report.js"></script>
