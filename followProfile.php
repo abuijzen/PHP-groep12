@@ -45,7 +45,7 @@ if (!empty($_GET['id'])) {
                         </div>
                         <div class="description text-center">
                             <div class="profile__user--btns"></div>
-                            <a href="#" class="btn btn-primary followBtn" data-id="<?php echo $selectId[0]['id']; ?>">FOLLOW</a>
+                            <a href="#" class="btn btn-primary followBtn" data-id="<?php echo $selectId[0]['id']; ?>"><?php echo 'test'; ?></a>
                         </div>
                     </div>
                 </div>
