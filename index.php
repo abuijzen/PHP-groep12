@@ -54,6 +54,12 @@
                 echo 'Viewable results: '.$viewResults;
                 ?>
             </h3>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">Search</span>
+                        <input type="text" name="search_text" id="search_text" placeholder="Search by Customer Details" class="form-control" />
+                    </div>
+                </div>
     
             <div class="card col-fluid text-center">
                 <!--geeft de post met meeste likes-->
@@ -65,7 +71,7 @@
                             </a>
                     <?php endforeach; ?>
             </div>
-        <div class="post row">
+        <div class="post row" id="result">
             <!--indien er GEEN resultaten worden gevonden-->
             <?php echo $noResult; ?>
     
@@ -109,12 +115,18 @@
 
             
             </div>
-            
-            <button class="btn btn-primary" id="loadmorebtn">Load more images</button>
-            <span class="loding" style="display: none;"><span class="loding_txt">Loading...</span></span>
+
+
+            <!-------LOADMORE ------>
+            <button class="loadmore btn btn-primary" id="loadMoreButton" data-loadmore="20">Load more images</button>
+            <!-------LOADMORE ------>
         </body>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>   
+            
+            <script src="js/loadMore.js"></script>
+            <script src="js/search.js"></script>
             <script src="js/report.js"></script>
             <script src="js/like.js"></script>
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+           
     </html>
