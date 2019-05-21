@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.23)
 # Database: eurben
-# Generation Time: 2019-05-19 04:04:55 +0000
+# Generation Time: 2019-05-21 12:08:05 +0000
 # ************************************************************
 
 
@@ -44,7 +44,8 @@ LOCK TABLES `comments` WRITE;
 INSERT INTO `comments` (`id`, `text`, `date`, `usersId`, `postsId`)
 VALUES
 	(33,'Wooow dit is vet','2019-05-19 00:36:32',21,76),
-	(34,'Eww','2019-05-19 00:36:42',21,70);
+	(34,'Eww','2019-05-19 00:36:42',21,70),
+	(35,'test','2019-05-20 13:39:02',22,76);
 
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -66,6 +67,15 @@ CREATE TABLE `followers` (
   CONSTRAINT `user_link_follower` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+LOCK TABLES `followers` WRITE;
+/*!40000 ALTER TABLE `followers` DISABLE KEYS */;
+
+INSERT INTO `followers` (`id`, `user_id`, `follow_id`)
+VALUES
+	(31,24,22);
+
+/*!40000 ALTER TABLE `followers` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table likes
@@ -94,7 +104,8 @@ VALUES
 	(218,21,75,'2019-05-19 00:30:06'),
 	(219,21,74,'2019-05-19 00:30:07'),
 	(220,21,76,'2019-05-19 00:31:48'),
-	(222,22,76,'2019-05-19 03:45:37');
+	(239,24,76,'2019-05-20 18:34:08'),
+	(240,24,78,'2019-05-20 18:49:34');
 
 /*!40000 ALTER TABLE `likes` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -181,7 +192,10 @@ INSERT INTO `reports` (`id`, `post_Id`, `user_Id`, `date`)
 VALUES
 	(138,76,21,'2019-05-19 00:31:30'),
 	(139,74,21,'2019-05-19 02:15:17'),
-	(140,78,22,'2019-05-19 06:00:48');
+	(142,78,24,'2019-05-20 18:33:54'),
+	(143,76,24,'2019-05-20 18:33:58'),
+	(144,75,24,'2019-05-20 18:49:07'),
+	(145,73,24,'2019-05-20 21:38:55');
 
 /*!40000 ALTER TABLE `reports` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -199,19 +213,23 @@ CREATE TABLE `users` (
   `DoB` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profileText` text COLLATE utf8mb4_unicode_ci,
+  `avatar_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `firstname`, `lastname`, `DoB`, `email`, `password`)
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `DoB`, `email`, `password`, `profileText`, `avatar_url`)
 VALUES
-	(4,'Ruben','Annaert','2019-05-03 00:37:55','Ruben@gmail.com','$2y$14$RhJKz.wO5bEIQJYTb4Z2T.jR1N2ses9AJ5Yn2sTR4wXn2FAuoHfpi'),
-	(8,'Amelie','Mathijs','2019-05-03 13:18:01','ik@ben.amelie','$2y$12$Wosrs9qA6IYzceSH.wlRIupcLghcAJDOoG7kcUsV/tZDODGLRvtV6'),
-	(9,'Angelique','Buijzen','2019-05-08 11:37:53','angeliquebuijzen@hotmail.com','$2y$12$bBL3r6m6SgBxBn10eiudvOMxpQ8WyHRSBi5ShYPG4gu79/0ETsq7W'),
-	(21,'Steve','Jobs','2019-05-18 23:33:03','R@A.com','$2y$12$V6UB8CLlYgdi1xugva07buZPHhrZJpukD3NtiYImBzDi7y4MYJqOi'),
-	(22,'Ruben','Annaert','2019-05-19 03:45:07','Ruben@gmail.be','$2y$12$L32KhotHAKz4MFRJsZQNg.5Swt7HIO/RCnNzFhqDg2V1NtUoQ/nJK');
+	(4,'Ruben','Annaert','2019-05-03 00:37:55','Ruben@gmail.com','$2y$14$RhJKz.wO5bEIQJYTb4Z2T.jR1N2ses9AJ5Yn2sTR4wXn2FAuoHfpi',NULL,NULL),
+	(8,'Amelie','Mathijs','2019-05-03 13:18:01','ik@ben.amelie','$2y$12$Wosrs9qA6IYzceSH.wlRIupcLghcAJDOoG7kcUsV/tZDODGLRvtV6',NULL,NULL),
+	(9,'Angelique','Buijzen','2019-05-08 11:37:53','angeliquebuijzen@hotmail.com','$2y$12$bBL3r6m6SgBxBn10eiudvOMxpQ8WyHRSBi5ShYPG4gu79/0ETsq7W',NULL,NULL),
+	(21,'Steve','Jobs','2019-05-18 23:33:03','R@A.com','$2y$12$V6UB8CLlYgdi1xugva07buZPHhrZJpukD3NtiYImBzDi7y4MYJqOi',NULL,NULL),
+	(22,'Ruben','Annaert','2019-05-19 03:45:07','Ruben@gmail.be','$2y$12$L32KhotHAKz4MFRJsZQNg.5Swt7HIO/RCnNzFhqDg2V1NtUoQ/nJK',NULL,NULL),
+	(24,'Ruben','A.','2019-05-20 18:33:45','R@test.be','$2y$12$qynUkDT9C4kbo5Y2tbU1w.vqbF3GQIZ7GqyH7LQmhg/CTBs7zxVqW',NULL,NULL),
+	(25,'Test','Werk','2019-05-21 13:19:45','Ruben@test.net','$2y$12$1LG8U6kW/BCwfZCea2lRseqy7yI334CinSsLClr/dIMkAnafihjjm',NULL,NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
