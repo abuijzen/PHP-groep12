@@ -89,7 +89,7 @@ $comments = Comment::getAll($postsId);
       
       <?php foreach ($fromUser as $posts):?>
         <div class="col-md-3-fluid text-center card " style="width:25%;">
-          <a href="detail_img.php?id=<?php echo $posts['id']; ?>">
+          <a href="detailImg.php?id=<?php echo $posts['id']; ?>">
             <img src="images/thumb/<?php echo $posts['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class=" <?php echo $posts['filter']; ?> card-img-top  ">
           </a>
           <?php echo $posts['message']; ?>

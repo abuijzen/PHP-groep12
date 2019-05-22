@@ -4,22 +4,19 @@ require_once 'bootstrap.php';
 
 //zonder sessie niet naar index gaan.
 
-if ($_GET["user"] == $_SESSION['user_id']) {
-  $profile = User::loadProfile($_SESSION['user_id']);
-  $edit = 1;
-}
-else {
-  $profile = User::loadProfile($_GET["user"]);
-}
-
-if ($_GET["user"] == $_SESSION['user_id']) {
-  $profile = User::loadProfile($_SESSION['user_id']);
-  $edit = 1;
-}
-else {
-  $profile = User::loadProfile($_GET["user"]);
+if ($_GET['user'] == $_SESSION['user_id']) {
+    $profile = User::loadProfile($_SESSION['user_id']);
+    $edit = 1;
+} else {
+    $profile = User::loadProfile($_GET['user']);
 }
 
+if ($_GET['user'] == $_SESSION['user_id']) {
+    $profile = User::loadProfile($_SESSION['user_id']);
+    $edit = 1;
+} else {
+    $profile = User::loadProfile($_GET['user']);
+}
 
 ?>
 
@@ -54,14 +51,12 @@ else {
               <div class="profile">
                 <div class="avatar">
                   <img src="<?php
-                  
-                  if($profile['avatar_url']){
+
+                  if ($profile['avatar_url']) {
                       $avatar = $profile['avatar_url'];
-                    echo "$avatar";}
-                    
-                    else{
-                      echo " ./avatars/avatar.jpg ";
-                    
+                      echo "$avatar";
+                  } else {
+                        echo ' ./avatars/avatar.jpg ';
                     }  ?>" alt="Circle Image"
                     class="img-raised rounded-circle img-fluid">
                 </div>
@@ -79,11 +74,15 @@ else {
           </div>
           <div class="description text-center">
             <p>
-              <?php if($profile['profileText']){echo htmlspecialchars( $profile['profileText']);} else{ echo "Nog geen beschrijving toegevoegd...";}                ?>
+              <?php if ($profile['profileText']) {
+                        echo htmlspecialchars($profile['profileText']);
+                    } else {
+                        echo 'Nog geen beschrijving toegevoegd...';
+                    }                ?>
             </p>
             <?php if (isset($edit)): ?>
                     
-                        <a class="btn btn-warning" href="editProfile.php?user=<?php echo $_SESSION['user_id']?>">Edit Profile</a>
+                        <a class="btn btn-warning" href="editProfile.php?user=<?php echo $_SESSION['user_id']; ?>">Edit Profile</a>
                         <a class="btn btn-danger" href="logout.php">Log out</a>
                     
                 <?php else: ?>
@@ -108,46 +107,6 @@ else {
 
 
 
-          <div class="tab-content tab-space">
-            <div class="tab-pane active text-center gallery" id="studio">
-              <div class="row">
-                <div class="col-md-3 ml-auto">
-                  <img src="../assets/img/examples/studio-1.jpg" class="rounded">
-                  <img src="../assets/img/examples/studio-2.jpg" class="rounded">
-                </div>
-                <div class="col-md-3 mr-auto">
-                  <img src="../assets/img/examples/studio-5.jpg" class="rounded">
-                  <img src="../assets/img/examples/studio-4.jpg" class="rounded">
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane text-center gallery" id="works">
-              <div class="row">
-                <div class="col-md-3 ml-auto">
-                  <img src="../assets/img/examples/olu-eletu.jpg" class="rounded">
-                  <img src="../assets/img/examples/clem-onojeghuo.jpg" class="rounded">
-                  <img src="../assets/img/examples/cynthia-del-rio.jpg" class="rounded">
-                </div>
-                <div class="col-md-3 mr-auto">
-                  <img src="../assets/img/examples/mariya-georgieva.jpg" class="rounded">
-                  <img src="../assets/img/examples/clem-onojegaw.jpg" class="rounded">
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane text-center gallery" id="favorite">
-              <div class="row">
-                <div class="col-md-3 ml-auto">
-                  <img src="../assets/img/examples/mariya-georgieva.jpg" class="rounded">
-                  <img src="../assets/img/examples/studio-3.jpg" class="rounded">
-                </div>
-                <div class="col-md-3 mr-auto">
-                  <img src="../assets/img/examples/clem-onojeghuo.jpg" class="rounded">
-                  <img src="../assets/img/examples/olu-eletu.jpg" class="rounded">
-                  <img src="../assets/img/examples/studio-1.jpg" class="rounded">
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

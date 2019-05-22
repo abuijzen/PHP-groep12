@@ -7,8 +7,6 @@ require_once 'bootstrap.php';
 if ($_GET['user'] == $_SESSION['user_id']) {
     $profile = User::loadProfile($_SESSION['user_id']);
     $edit = 1;
-    
-    
 } else {
     $profile = User::loadProfile($_GET['user']);
 }
@@ -42,22 +40,15 @@ if (!empty($_POST['oldpass']) && !empty($_POST['newpass']) && !empty($_POST['con
     }
 }
 
-
-if(!empty($_FILES["avatarFile"])){
-  try {
-
-      $user = new User();
-      $user->setAvatar($_FILES["avatarFile"]);     
-      $user->saveAvatar($_POST["submit"]);
-      $user->postAvatar($_SESSION['user_id']);
-      
-  }
-
-  catch (Exception $e){
-
-  }
+if (!empty($_FILES['avatarFile'])) {
+    try {
+        $user = new User();
+        $user->setAvatar($_FILES['avatarFile']);
+        $user->saveAvatar($_POST['submit']);
+        $user->postAvatar($_SESSION['user_id']);
+    } catch (Exception $e) {
+    }
 }
-
 
 ?>
 
@@ -92,11 +83,15 @@ if(!empty($_FILES["avatarFile"])){
 
               <div class="profile">
               <div class="avatar">
-                  <img src="<?php if($profile['avatar_url']){  $avatar = $profile['avatar_url'];
-                    echo "$avatar";} else{echo " ./avatars/avatar.jpg ";}  ?>" alt="Circle Image"
+                  <img src="<?php if ($profile['avatar_url']) {
+    $avatar = $profile['avatar_url'];
+    echo "$avatar";
+} else {
+    echo ' ./avatars/avatar.jpg ';
+}  ?>" alt="Circle Image"
                     class="img-raised rounded-circle img-fluid">
                 </div>
-                <form method="post" enctype="multipart/form-data"  action="editProfile.php?user=<?php echo $_SESSION['user_id']?>">
+                <form method="post" enctype="multipart/form-data"  action="editProfile.php?user=<?php echo $_SESSION['user_id']; ?>">
                 <input type="file" name="avatarFile" id="avatarFile" accept="avatarFile/*" capture="camera" />
               <input type="submit"  class="btn btn-primary" name="submit" value="Upload Avatar" >
 
@@ -144,7 +139,7 @@ if(!empty($_FILES["avatarFile"])){
                 <input type="password" class="form-control" id="confpass" name="confpass" placeholder="Confirm password">
               </div>
 
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" name="submit" class="btn btn-primary">Submit</button>
             </form>
 
 

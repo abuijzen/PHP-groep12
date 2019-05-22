@@ -25,13 +25,20 @@
                   <li class="dropdown nav-item">
                     <a href="profile.php" class="profile-photo dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
                       <div class="profile-photo-small">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-pwYeeDYQynA0QJPSb7AUsAigb5bAw0zM1PF-x6SZI4xq4h9V" alt="Circle Image" class="rounded-circle img-fluid">
+                        <img src="<?php
+
+                  if ($profile['avatar_url']) {
+                      $avatar = $profile['avatar_url'];
+                      echo "$avatar";
+                  } else {
+                        echo ' ./avatars/avatar.jpg ';
+                    }  ?>" alt="Circle Image" class="rounded-circle img-fluid">
                       </div>
                     <div class="ripple-container"></div></a>
                     <div class="dropdown-menu dropdown-menu-right">
                 
 
-                      <h6 class="dropdown-header">Name</h6>
+                      <h6 class="dropdown-header">  <?php echo htmlspecialchars($profile['firstname']); ?></h6>
                      
                       <a href="profile.php?user=<?php echo $_SESSION['user_id']; ?>" class="dropdown-item">Profile</a>
                       <a href="editProfile.php?user=<?php echo $_SESSION['user_id']; ?>" class="dropdown-item">Edit Profile</a>

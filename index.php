@@ -62,7 +62,7 @@
                 <h2>NOW TRENDING</h2>
                     <?php foreach ($mostLikesPost as $trend):?>
                         <?php echo htmlspecialchars('A post from: '.$trend['firstname']); ?> <?php echo htmlspecialchars($trend['lastname']); ?>
-                            <a href="detail_img.php?id=<?php echo $trend[0]; ?>">
+                            <a href="detailImg.php?id=<?php echo $trend[0]; ?>">
                                 <img src="images/thumb/<?php echo $trend['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $trend['filter']; ?> card-img-top">
                             </a>
                     <?php endforeach; ?>
@@ -87,7 +87,7 @@
                         </a>
                         <p><?php echo Time::getTime($c['timePost']); ?></p>
                         <div class="image">
-                            <a href="detail_img.php?id=<?php echo $c[0]; ?>">
+                            <a href="detailImg.php?id=<?php echo $c[0]; ?>">
                             <img src="images/thumb/<?php echo $c['image']; ?>" alt="" height="200" width="200" style="object-fit: cover" class="<?php echo $c['filter']; ?> card-img-top">
                             </a>
                         </div>
@@ -99,7 +99,7 @@
 
                         
                         <div class="likePlace">
-                            <a href="#" data-id="<?php echo $c['post_id']; ?>" class="likes btn btn-primary">thumb_u</a> 
+                            <a href="#" data-id="<?php echo $c['post_id']; ?>" class="likes btn btn-primary"><img class="report_Icon" src="images/like.svg" alt="report icon"></a> 
                             <span class='likesAmount'><?php echo Like::getLikes($c['post_id']); ?></span> people liked this 
                         </div>
 
