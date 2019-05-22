@@ -20,7 +20,7 @@ class Thumbnail
                 $errors[] = 'extension not allowed, please choose a JPEG or PNG file.';
             }
 
-            if ($file_size > 2097152) {
+            if ($file_size > 6291456) {
                 $errors[] = 'File size must be excately 2 MB';
             }
             if (empty($errors) == true) {
