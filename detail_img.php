@@ -21,7 +21,7 @@ if (!empty($_POST)) {
     try {
         $comment = new Comment();
         $comment->setText($_POST['comment']);
-        $comment->Save($postsId, $usersId);
+        $comment->Save($postsId, $usersId, $text);
     } catch (\Throwable $th) {
         //throw $th;
     }
