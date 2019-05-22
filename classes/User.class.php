@@ -106,7 +106,14 @@
             $this->passwordConfirmation = $passwordConfirmation;
 
             return $this;
-        }
+        } public static function getAvatar($userId) {
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("SELECT users.avatar_url FROM users WHERE users.id = :id");
+            $statement->bindValue(':id', $userId, PDO::PARAM_INT);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+            
+    }
 
         //@todo: form validation
         public function register()
@@ -231,23 +238,124 @@
             }
         }
 
-        public static function getAvatar($userId)
-        {
-            $conn = Db::getInstance();
-            $statement = $conn->prepare('SELECT users.avatar_url FROM users WHERE users.id = :id');
-            $statement->bindValue(':id', $userId, PDO::PARAM_INT);
-            $statement->execute();
-
-            return $statement->fetchAll(PDO::FETCH_ASSOC);
-        }
-
         public function setAvatar($image)
         {
-            if (empty($image)) {
-                throw new Exception('An error uploading image');
-            }
-            $this->image = $image;
-
-            return $this;
+                if (empty($image)){
+                        throw new Exception ("An error uploading image");
+                    }
+                    $this->image = $image;
+            
+                    return $this;
+                    
         }
+
+        public function saveAvatar($image) {
+                $width = 200;
+                $height = 200;
+
+                if(isset($_POST)) {
+                    $target_dir = "images/";
+                    $fileName = md5(microtime());
+                    $target_file = $target_dir . basename($this->image["name"]);
+                    $uploadOk = 1;
+                    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                    // Check if image file is an image
+                    if(isset($_POST["submit"])) {
+                        if(!empty($this->image["tmp_name"])){
+                                $check = getimagesize($this->image["tmp_name"]);
+                        } else {
+                                throw new Exception ("Error uploading image");
+                            $uploadOk = 0;
+                        }
+                        
+                        if($check !== false) {
+                            $uploadOk = 1;
+                        } else {
+                            throw new Exception ("Error uploading image");
+                            $uploadOk = 0;
+                        }
+                    }
+                
+                    // Check if file already exists
+                    if (file_exists($target_file)) {
+                        throw new Exception ("Error uploading image");
+                        $uploadOk = 0;
+                    }
+                    // Check file size
+                    if ($this->image["size"] > 6291456) {
+                        throw new Exception ("Upload size limit is 6MB");
+                        $uploadOk = 0;
+                    }
+                    // Allow only jpg, pbg and gif
+                    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                    && $imageFileType != "gif" ) {
+                        throw new Exception ("Image must be JPG, PNG or GIF");
+                        $uploadOk = 0;
+                    }
+                    $target_file = $target_dir .$fileName.".".$imageFileType;
+                    // Check if $uploadOk is set to 0 by an error
+                    if ($uploadOk == 0) {
+                        throw new Exception ("Error uploading image");
+                    // if everything is ok, try to upload file
+                    } else {
+                        if ($uploadOk == 1) {
+                        // upload full image to /uploads        
+                                $name = $this->image["tmp_name"];
+                                list($img_width, $img_height) = getimagesize($name); // get sizes of image
+                                $img_ratio = $img_width/$img_height; // get aspect ratio of image
+                        
+                        
+                            
+                            // scale image to thmb size with corrrect aspect ratio
+                            $crop_x = 0;
+                            $crop_y = 0; 
+
+                            if ($width/$height > $img_ratio) {
+                                // portrait image
+                                $height = $width/$img_ratio;
+                                $crop_y = ceil(($img_height - $img_width) / 2);
+                                $img_height = $img_width;
+                            } else {
+                                //landscape image
+                                $width = $height*$img_ratio;
+                                $crop_x = ceil(($img_width - $img_height) / 2);
+                                $img_width = $img_height;
+                            }
+                            
+                            // create resized image
+                            $output_image = imagecreatetruecolor(200, 200);
+                            switch ($imageFileType) {
+                                case "gif"  : $image = imagecreatefromgif($name); $check = 1; break;
+                                case "jpeg" : $image = imagecreatefromjpeg($name); $check = 1; break;
+                                case "jpg" : $image = imagecreatefromjpeg($name); $check = 1; break;
+                                case "png"  : $image = imagecreatefrompng($name); $check = 1; break;
+                                default : $check = 0;
+                            }
+                            
+                            // save resized image
+                            if($check == 1){
+                                imagecopyresampled($output_image, $image, 0, 0, $crop_x, $crop_y, 200, 200, $img_width, $img_height);
+                                imagejpeg( $output_image,"./images/".$fileName."_thmb.jpg", 90 );
+                                $this->fileName = $fileName;
+                                $this->imageFileType = $imageFileType;
+                            }
+                        } else {
+                            throw new Exception ("Error uploading image");
+                        }
+                    }
+                }
+            }
+        
+            public function postAvatar($userId){
+                //connectie 
+                $conn = Db::getInstance();
+                $thmb_url = "./images/".$this->fileName."_thmb.jpg";
+                $statement = $conn->prepare("UPDATE users set avatar_url = :thmb_url WHERE id = :users_id");
+                $statement->bindParam(":thmb_url", $thmb_url);
+                $statement->bindParam(":users_id", $userId);
+                
+                    // execute
+                $result = $statement->execute();
+                return $result;
+            }
     }

@@ -7,6 +7,8 @@ require_once 'bootstrap.php';
 if ($_GET['user'] == $_SESSION['user_id']) {
     $profile = User::loadProfile($_SESSION['user_id']);
     $edit = 1;
+    
+    
 } else {
     $profile = User::loadProfile($_GET['user']);
 }
@@ -40,6 +42,23 @@ if (!empty($_POST['oldpass']) && !empty($_POST['newpass']) && !empty($_POST['con
     }
 }
 
+
+if(!empty($_FILES["avatarFile"])){
+  try {
+
+      $user = new User();
+      $user->setAvatar($_FILES["avatarFile"]);     
+      $user->saveAvatar($_POST["submit"]);
+      $user->postAvatar($_SESSION['user_id']);
+      
+  }
+
+  catch (Exception $e){
+
+  }
+}
+
+
 ?>
 
 
@@ -72,13 +91,14 @@ if (!empty($_POST['oldpass']) && !empty($_POST['newpass']) && !empty($_POST['con
             <div class="col-md-6 ml-auto mr-auto">
 
               <div class="profile">
-                <div class="avatar">
-
-
-
+              <div class="avatar">
+                  <img src="<?php if($profile['avatar_url']){  $avatar = $profile['avatar_url'];
+                    echo "$avatar";} else{echo " ./avatars/avatar.jpg ";}  ?>" alt="Circle Image"
+                    class="img-raised rounded-circle img-fluid">
                 </div>
-                <input type="file" name="image" ">
-                <input type="submit " value="Save avatar " name="submit " class="btn btn-primary "  style="margin-bottom:20px;>
+                <form method="post" enctype="multipart/form-data"  action="editProfile.php?user=<?php echo $_SESSION['user_id']?>">
+                <input type="file" name="avatarFile" id="avatarFile" accept="avatarFile/*" capture="camera" />
+              <input type="submit"  class="btn btn-primary" name="submit" value="Upload Avatar" >
 
 
               </div>
@@ -91,13 +111,14 @@ if (!empty($_POST['oldpass']) && !empty($_POST['newpass']) && !empty($_POST['con
 
             </div>
             <?php else: ?>
-            <div class="btn <?php echo $btnClass; ?>" data-post="<?php echo  htmlspecialchars($_GET[' user ']); ?>">
+            <div class="btn <?php echo $btnClass; ?>" data-post="<?php echo  htmlspecialchars($_GET['user']); ?>">
               <?php echo $btnText; ?>
             </div>
             <?php endif; ?>
 
 
-            <form method="post">
+          
+          
 
 
               <div class="form-group">

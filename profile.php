@@ -53,12 +53,21 @@ else {
             <div class="col-md-6 ml-auto mr-auto">
               <div class="profile">
                 <div class="avatar">
-                  <img src="<?php if($profile['profilePic']){echo $profile['profilePic'];} else{echo " ./images/avatar.jpg ";}  ?>" alt="Circle Image"
+                  <img src="<?php
+                  
+                  if($profile['avatar_url']){
+                      $avatar = $profile['avatar_url'];
+                    echo "$avatar";}
+                    
+                    else{
+                      echo " ./avatars/avatar.jpg ";
+                    
+                    }  ?>" alt="Circle Image"
                     class="img-raised rounded-circle img-fluid">
                 </div>
                 <div class="name">
                   <h3 class="title">
-                    <?php echo $profile['firstname'].'<br> '.$profile['email']; ?>
+                    <?php echo htmlspecialchars($profile['firstname']).'<br>'.htmlspecialchars($profile['email']); ?>
                   </h3>
 
 
@@ -70,7 +79,7 @@ else {
           </div>
           <div class="description text-center">
             <p>
-              <?php if($profile['profileText']){echo $profile['profileText'];} else{ echo "Nog geen beschrijving toegevoegd...";}                ?>
+              <?php if($profile['profileText']){echo htmlspecialchars( $profile['profileText']);} else{ echo "Nog geen beschrijving toegevoegd...";}                ?>
             </p>
             <?php if (isset($edit)): ?>
                     
