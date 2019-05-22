@@ -160,7 +160,14 @@ class Post
     {
         $conn = Db::getInstance();
         $innerhtml = $this->checkIfSearchIsEmpty();
-        $allResults = $conn->prepare("SELECT*FROM posts WHERE visibility = 1 AND message LIKE '%$innerhtml%' ORDER BY id DESC");
+        if (strpos($innerhtml, '@') === 0) {
+            $innerhtml = str_replace('@', '', $innerhtml);
+            $allResults = $conn->prepare('SELECT * FROM posts JOIN users on users.id = posts.usersId WHERE posts.visibility = 1 AND users.firstname LIKE :innerhtml ORDER BY posts.id DESC');
+            $allResults->bindValue(':innerhtml', '%'.$innerhtml.'%');
+        } else {
+            $allResults = $conn->prepare('SELECT*FROM posts WHERE visibility = 1 AND message LIKE :innerhtml ORDER BY id DESC');
+            $allResults->bindValue(':innerhtml', '%'.$innerhtml.'%');
+        }
         $allResults->execute();
         $countAll = $allResults->rowCount();
 
@@ -171,19 +178,46 @@ class Post
     {
         $conn = Db::getInstance();
         $innerhtml = $this->checkIfSearchIsEmpty();
-        // $result = $conn->prepare("SELECT*FROM posts JOIN users on users.id = posts.usersId WHERE posts.visibility = 1 AND posts.message LIKE '%$innerhtml%' ORDER BY posts.id DESC  limit 20");
-        $result = $conn->prepare('SELECT posts.id as post_id, users.id as user_id, posts.visibility, posts.message, posts.image, posts.filter, posts.`color1`, posts.`color2`, posts.`color3`, posts.`color4`, users.`firstname`, users.`lastname`, users.`email`, posts.timePost FROM posts JOIN users on users.id = posts.usersId WHERE posts.visibility = 1 AND posts.message LIKE :innerhtml ORDER BY posts.id DESC  limit 20');
-        $result->bindValue(':innerhtml', '%'.$innerhtml.'%');
-        $result->execute();
+
+        if (!empty($innerhtml)) {
+            $firstLink = $innerhtml[0];
+        } else {
+            $firstLink = '';
+        }
+
+        // var_dump($firstLink);
+        // die();
+
+        if ($firstLink === '@') {
+            $innerhtml = str_replace('@', '', $innerhtml);
+
+            $result = $conn->prepare('SELECT posts.id as post_id, users.id as user_id, posts.visibility, posts.message, posts.image, posts.filter, posts.`color1`, posts.`color2`, posts.`color3`, posts.`color4`, users.firstname, users.lastname, users.email, posts.timePost FROM posts JOIN users on users.id = posts.usersId WHERE posts.visibility = 1 AND users.firstname LIKE :innerhtml ORDER BY posts.id DESC  limit 20');
+            $result->bindValue(':innerhtml', '%'.$innerhtml.'%');
+
+            $result->execute();
+        } else {
+            $result = $conn->prepare('SELECT posts.id as post_id, users.id as user_id, posts.visibility, posts.message, posts.image, posts.filter, posts.`color1`, posts.`color2`, posts.`color3`, posts.`color4`, users.firstname, users.lastname, users.email, posts.timePost FROM posts JOIN users on users.id = posts.usersId WHERE posts.visibility = 1 AND posts.message LIKE :innerhtml ORDER BY posts.id DESC  limit 20');
+            $result->bindValue(':innerhtml', '%'.$innerhtml.'%');
+            $result->execute();
+        }
+        // var_dump($collection);
+        // die();
 
         return $result;
+    }
+
+    public function getViewable()
+    {
+        $result = $this->selectSearchAndLimit();
+        $collection = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        return $collection;
     }
 
     //zichtbare resultaten tellen (voorbereiding load-more feature)
     public function countViewable()
     {
         $result = $this->selectSearchAndLimit();
-        $collection = $result->fetchAll();
         $count = $result->rowCount();
 
         return $count;
@@ -197,9 +231,9 @@ class Post
         return $collection;
     }
 
-    public function noResult()
+    public function noResult($result)
     {
-        if ($this->countAll() == 0) {
+        if ($result == 0) {
             $nothing = 'No results';
 
             return $nothing;

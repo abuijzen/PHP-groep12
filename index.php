@@ -7,14 +7,16 @@
         header('location:login.php');
     }
 
-    $post = new Post();
-    $countResults = $post->countAll();
-    $viewResults = $post->countViewable();
-    $noResult = $post->noResult();
+        $post = new Post();
+        $countResults = $post->countAll();
+        $viewResults = $post->countViewable();
+        $noResult = $post->noResult($viewResults);
 
     if (!empty($_GET['color'])) {
         $color = $_GET['color'];
         $results = Post::getImagesWithSameColors($color);
+    } elseif (!empty($_GET['search'])) {
+        $results = $post->getViewable();
     } else {
         $results = $post->showResults();
         // var_dump($results);
